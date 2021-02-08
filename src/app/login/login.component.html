@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="body-image">
+    <div class="logo"></div>
+  </div>
+  <div class="body">
+    <div class="body-login">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" style="border: white">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="username"
+            placeholder="ID Employee"
+          />
+          <mat-error *ngIf="!loginForm.hasError('required')">
+            Please enter you're Username.
+          </mat-error></mat-form-field
+        >
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Password"
+          /><mat-error *ngIf="!loginForm.hasError('required')">
+            Please enter you're Password.
+          </mat-error>
+        </mat-form-field>
+        <button mat-flat-button type="submit" class="login">Login</button>
+        <button mat-flat-button class="register">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
