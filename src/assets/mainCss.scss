@@ -1,8 +1,11 @@
 .container {
-  width: fit-content;
+  width: 90%;
   height: auto;
   background: #ffffff;
   color: #000000;
-  padding: 20px;
+  padding: 40px;
   position: relative;
 }
+
+$greenButton: rgb(0, 235, 156);
+$redButton: rgb(255, 98, 98);

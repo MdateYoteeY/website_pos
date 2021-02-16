@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="side-bar">
+    <div class="logout" (click)="logout()">
+      <span class="material-icons"> exit_to_app </span>
+    </div>
+    <div class="menu">
+      <p
+        id="header"
+        routerLink="/home/main"
+        style="cursor: pointer"
+        (click)="logout()"
+      >
+        Hello {{ userModel.data_user.fristname }}!
+      </p>
+      <a style="padding: 0 0 10px 10px; color: #00fff2">
+        status : {{ userModel.data_user.status }}</a
+      >
+      <mat-list role="list" dense>
+        <p>Products</p>
+        <div class="list-menu">
+          <mat-list-item
+            routerLink="product"
+            [routerLinkActive]="['is-active']"
+          >
+            Product
+          </mat-list-item>
+          <mat-list-item
+            routerLink="stock-product"
+            [routerLinkActive]="['is-active']"
+          >
+            Stock product
+          </mat-list-item>
+          <mat-list-item
+            routerLink="promotion"
+            [routerLinkActive]="['is-active']"
+          >
+            Promotion
+          </mat-list-item>
+          <mat-list-item [routerLinkActive]="['is-active']">
+            Category
+          </mat-list-item>
+        </div>
+
+        <p>Table</p>
+        <div class="list-menu">
+          <mat-list-item routerLink="page3" [routerLinkActive]="['is-active']">
+            Zone
+          </mat-list-item>
+          <mat-list-item routerLink="page3" [routerLinkActive]="['is-active']">
+            Reserve table
+          </mat-list-item>
+        </div>
+
+        <p>Report</p>
+        <div class="list-menu">
+          <mat-list-item routerLink="page3" [routerLinkActive]="['is-active']">
+            Report
+          </mat-list-item>
+        </div>
+
+        <p>Manage data</p>
+        <div class="list-menu">
+          <mat-list-item routerLink="users" [routerLinkActive]="['is-active']">
+            Users account
+          </mat-list-item>
+        </div>
+      </mat-list>
+    </div>
+  </div>
+  <div class="box-main"><router-outlet></router-outlet></div>
+</div>

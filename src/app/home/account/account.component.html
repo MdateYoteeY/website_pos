@@ -1,0 +1,91 @@
+<div class="container">
+  <div style="position: relative; padding-bottom: 20px">
+    <p style="color: black; font-size: 30pt">จัดการบัญชีผู้ใช้งาน</p>
+  </div>
+  <div class="search">
+    <div class="text-container">
+      ค้นหารายการ<input type="text" placeholder="ค้นหา..." /><span
+        class="material-icons"
+      >
+        search
+      </span>
+    </div>
+    <div>
+      <button mat-raised-button (click)="openDialog()">
+        เพิ่มบัญชีผู้ใช้งาน
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <table mat-table [dataSource]="user">
+      <!-- Position Column -->
+      <ng-container matColumnDef="staff">
+        <th mat-header-cell *matHeaderCellDef>สถานะ</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.status }}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>รหัสพนักงาน</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="First name">
+        <th mat-header-cell *matHeaderCellDef>ชื่อจริง</th>
+        <td
+          style="text-align: left; padding-left: 20px"
+          mat-cell
+          *matCellDef="let element"
+        >
+          {{ element.firstname }}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Last name">
+        <th mat-header-cell *matHeaderCellDef>นามสกุล</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastname }}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Phone NO.">
+        <th mat-header-cell *matHeaderCellDef>เบอร์โทรศัพท์</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.phone_number }}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Username">
+        <th mat-header-cell *matHeaderCellDef>Username</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.username }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <span class="material-icons edit" (click)="editData()">
+            mode_edit_outline
+          </span>
+          <span class="material-icons delete" (click)="deleteData(element)">
+            delete_forever
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

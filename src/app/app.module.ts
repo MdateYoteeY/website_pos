@@ -1,3 +1,4 @@
+import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -5,9 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
-import { LoginModule } from './login/login.module';
-import { HomeModule } from './login/home/home.module';
+import { HomeModule } from './home/home.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,15 +38,28 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatListModule } from '@angular/material/list';
+
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AuthorizationComponent } from './authorization/authorization.component';
+import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    AuthorizationComponent,
+  ],
   imports: [
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LoginModule,
     HomeModule,
     MatButtonModule,
     MatInputModule,
@@ -75,9 +89,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    LoginModule,
+    MatListModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BasicAuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,3 +1,18 @@
+body,
+html {
+
+  /* Border */
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white;
+  }
+
+  /* Font color */
+  input.mat-input-element {
+    color: white;
+  }
+
+}
+
 .container {
   display: flex;
   width: 100%;

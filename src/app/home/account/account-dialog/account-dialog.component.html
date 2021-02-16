@@ -1,0 +1,84 @@
+<div class="container">
+  <form [formGroup]="accountAddForm" (ngSubmit)="onSubmit()">
+    <div class="acc-box-1">
+      <p>เพิ่มบัญชีผู้ใช้งาน</p>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>ชื่อจริง</mat-label>
+          <input
+            id="firstname"
+            formControlName="firstname"
+            matInput
+            placeholder="ชื่อจริง.."
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>นามสกุล</mat-label>
+          <input
+            id="lastname"
+            formControlName="lastname"
+            matInput
+            placeholder="นามสกุล.."
+          />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>เบอร์โทรศัพท์</mat-label>
+        <input
+          matInput
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          placeholder="เบอร์โทรศัพท์.."
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>สถานะ</mat-label>
+        <mat-select formControlName="status">
+          <!-- <div *ngFor="let item of data.staff; let i = index">
+            <mat-option value="{{ i }}">{{ item.staff.status }}</mat-option>
+          </div> -->
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          id="username"
+          formControlName="username"
+          placeholder="Username.."
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Password.."
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password Confirm</mat-label>
+        <input
+          matInput
+          id="passwordConfirmation"
+          type="password"
+          formControlName="passwordConfirmation"
+          placeholder="Password Confirmation.."
+        />
+      </mat-form-field>
+    </div>
+    <div style="text-align: center">
+      <button id="confirm" type="submit">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+  <div class="acc-box-2"></div>
+</div>

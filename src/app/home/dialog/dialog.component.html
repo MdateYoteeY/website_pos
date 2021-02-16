@@ -1,0 +1,40 @@
+<div class="container">
+  <div *ngIf="productAdd" class="product-add">
+    <p>เพิ่มสินค้า</p>
+    <div class="box-2">
+      <div class="input-box">
+        <mat-form-field appearance="outline">
+          <mat-label>ชื่อสินค้า</mat-label>
+          <input matInput placeholder="ชื่อสินค้า" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>หมวดหมู่สินค้า</mat-label>
+          <mat-select>
+            <!-- Category -->
+            <mat-option value="option1">Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>ราคาสินค้า</mat-label>
+          <input matInput pattern="[0-9]+" value="" placeholder="ราคาสินค้า" />
+        </mat-form-field>
+      </div>
+
+      <div class="image-box">
+        รูปภาพ :
+        <div class="img"></div>
+      </div>
+    </div>
+    <div class="box-3">
+      <button mat-raised-button class="button add">เพิ่ม</button
+      ><button mat-raised-button class="button cancle">ยกเลิก</button>
+    </div>
+  </div>
+
+  <div *ngIf="users" class="user-add">
+    <p>เพิ่มบัญชีผู้ใช้งาน</p>
+    <div class="user-box1"></div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+@import "../../../assets/mainCss.scss";
+
+.container {
+  width: auto;
+  height: auto;
+  font-size: 13pt;
+  padding: 0;
+
+  .product-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    padding: 5px;
+
+    p {
+      font-size: 20pt;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .box-2 {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: row;
+
+      .input-box {
+        display: flex;
+        flex-direction: column;
+        margin-right: 20px;
+        margin-top: 22px;
+
+        mat-form-field {
+          margin: 0;
+        }
+      }
+
+      .image-box {
+        .img {
+          border: 1px solid rgb(206, 206, 206);
+          width: 100%;
+          height: 85%;
+          min-width: 300px;
+          border-radius: 5px;
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .box-3 {
+      display: inline-block;
+      position: relative;
+
+      .button {
+        margin: 5px;
+        padding: 15px 25px 15px 25px;
+        font-size: 12pt;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .add {
+        background: $greenButton;
+      }
+
+      .cancle {
+        background: $redButton;
+      }
+    }
+
+  }
+
+  .user-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    padding: 5px;
+
+    .user-box1 {
+      width: 250px;
+      height: 250px;
+    }
+  }
+}
