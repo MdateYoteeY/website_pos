@@ -36,20 +36,22 @@
 
       <mat-form-field appearance="outline">
         <mat-label>สถานะ</mat-label>
-        <mat-select formControlName="staff_id" id="staffId">
-          <div *ngIf="check">
-            <div *ngFor="let item of status; let i = index">
-              <mat-option value="{{ i }}">{{ item.status }}</mat-option>
-            </div>
+        <mat-select
+          formControlName="staff_id"
+          id="staffId"
+          [(value)]="selected"
+        >
+          <div *ngFor="let item of dataDialog.staff; let i = index">
+            <mat-option value="{{ i + 1 }}">{{ item.status }}</mat-option>
           </div>
 
-          <div *ngIf="check">
+          <!-- <div *ngIf="check">
             <div *ngFor="let item of user">
               <mat-option value="{{ item.staff_id }}">{{
                 item.status
               }}</mat-option>
             </div>
-          </div>
+          </div> -->
 
           <!-- <div *ngIf="data.method" *ngFor="let item of status; let i = index">
             <mat-option value="{{ i }}">{{ item.status }}</mat-option>

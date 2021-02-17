@@ -1,11 +1,10 @@
-import { Staff, Users } from './../../../model/model.model';
+import { Staff, Users, method } from './../../../model/model.model';
 import { environment } from './../../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { method } from 'src/app/model/model.model';
 
 @Component({
   selector: 'app-account-dialog',
@@ -14,10 +13,10 @@ import { method } from 'src/app/model/model.model';
 })
 export class AccountDialogComponent implements OnInit {
   accountAddForm: FormGroup;
-  status: Array<Staff>;
-
-  user: Users;
-  check = true;
+  selected = '- - โปรดเลือกสถานะผู้ใช้งาน - -';
+  dataDialog: method;
+  user: Users = null;
+  isPasswordCheck = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,13 +35,12 @@ export class AccountDialogComponent implements OnInit {
       password: ['', Validators.required],
       password_confirmation: ['', Validators.required],
     });
-    this.accountAddForm.patchValue(this.data);
-    this.status = this.data.staff;
+    // this.accountAddForm.patchValue(this.data);
+    this.dataDialog = this.data;
 
     if (this.data.method === 'editAccount') {
       this.accountAddForm.patchValue(this.data.user);
-      this.check = !this.check;
-      this.user = this.data.user;
+      this.dataDialog = this.data;
     }
   }
 

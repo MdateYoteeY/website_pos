@@ -44,15 +44,12 @@ export class AccountComponent implements OnInit {
         .then((res) => {
           this.staff = res;
         });
-      console.log('get Staffs');
     }
-    console.log(method);
 
     if (method === 'editAccount') {
       const dialogRef = this.dialog.open(AccountDialogComponent, {
         data: { method: method, user: userEdit, staff: this.staff },
       });
-      console.log(userEdit);
 
       this.dialog.afterAllClosed.subscribe((res) => {
         this.getUser();
