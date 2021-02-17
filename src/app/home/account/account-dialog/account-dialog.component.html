@@ -29,16 +29,30 @@
         <input
           matInput
           id="phoneNumber"
-          formControlName="phoneNumber"
+          formControlName="phone_number"
           placeholder="เบอร์โทรศัพท์.."
         />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>สถานะ</mat-label>
-        <mat-select formControlName="status">
-          <!-- <div *ngFor="let item of data.staff; let i = index">
-            <mat-option value="{{ i }}">{{ item.staff.status }}</mat-option>
+        <mat-select formControlName="staff_id" id="staffId">
+          <div *ngIf="check">
+            <div *ngFor="let item of status; let i = index">
+              <mat-option value="{{ i }}">{{ item.status }}</mat-option>
+            </div>
+          </div>
+
+          <div *ngIf="check">
+            <div *ngFor="let item of user">
+              <mat-option value="{{ item.staff_id }}">{{
+                item.status
+              }}</mat-option>
+            </div>
+          </div>
+
+          <!-- <div *ngIf="data.method" *ngFor="let item of status; let i = index">
+            <mat-option value="{{ i }}">{{ item.status }}</mat-option>
           </div> -->
         </mat-select>
       </mat-form-field>
@@ -70,7 +84,7 @@
           matInput
           id="passwordConfirmation"
           type="password"
-          formControlName="passwordConfirmation"
+          formControlName="password_confirmation"
           placeholder="Password Confirmation.."
         />
       </mat-form-field>

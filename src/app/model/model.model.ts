@@ -1,6 +1,7 @@
 export interface method {
-  method: string;
-  staff: Array<Staff>;
+  method?: string;
+  staff?: Array<Staff>;
+  user?: Users;
 }
 
 export interface Users {

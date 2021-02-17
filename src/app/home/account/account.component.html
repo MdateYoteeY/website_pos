@@ -22,7 +22,7 @@
       <!-- Position Column -->
       <ng-container matColumnDef="staff">
         <th mat-header-cell *matHeaderCellDef>สถานะ</th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" value="{{ i }}">
           {{ element.status }}
         </td>
       </ng-container>
@@ -70,7 +70,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <span class="material-icons edit" (click)="editData()">
+          <span class="material-icons edit" (click)="editData(element)">
             mode_edit_outline
           </span>
           <span class="material-icons delete" (click)="deleteData(element)">

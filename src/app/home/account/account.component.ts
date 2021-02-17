@@ -36,7 +36,7 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  async openDialog() {
+  async openDialog(method?: string, userEdit?: Users) {
     if (!this.staff) {
       await this.http
         .get<Staff[]>(`${environment.apiUrl}staffs`)
@@ -44,19 +44,33 @@ export class AccountComponent implements OnInit {
         .then((res) => {
           this.staff = res;
         });
-      console.log(this.staff);
+      console.log('get Staffs');
     }
+    console.log(method);
 
-    const dialogRef = this.dialog.open(AccountDialogComponent, {
-      data: { method: 'users', staff: this.staff },
-    });
+    if (method === 'editAccount') {
+      const dialogRef = this.dialog.open(AccountDialogComponent, {
+        data: { method: method, user: userEdit, staff: this.staff },
+      });
+      console.log(userEdit);
 
-    this.dialog.afterAllClosed.subscribe((res) => {
-      this.getUser();
-    });
+      this.dialog.afterAllClosed.subscribe((res) => {
+        this.getUser();
+      });
+    } else {
+      const dialogRef = this.dialog.open(AccountDialogComponent, {
+        data: { staff: this.staff },
+      });
+
+      this.dialog.afterAllClosed.subscribe((res) => {
+        this.getUser();
+      });
+    }
   }
 
-  editData(): void {}
+  editData(data: Users): void {
+    this.openDialog('editAccount', data);
+  }
 
   deleteData(data: Users): void {
     if (data.status !== 'Admin') {

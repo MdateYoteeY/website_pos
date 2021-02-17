@@ -1,4 +1,3 @@
-import { AuthGuard } from './../_helpers/auth.guard';
 import { LoginComponent } from './../login/login.component';
 import { AccountComponent } from './account/account.component';
 import { MainComponent } from './main/main.component';
@@ -15,7 +14,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    // canActivate: [AuthGuard],
     children: [
       {
         path: 'main',

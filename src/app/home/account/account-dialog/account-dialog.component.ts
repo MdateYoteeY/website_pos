@@ -1,3 +1,4 @@
+import { Staff, Users } from './../../../model/model.model';
 import { environment } from './../../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -13,6 +14,10 @@ import { method } from 'src/app/model/model.model';
 })
 export class AccountDialogComponent implements OnInit {
   accountAddForm: FormGroup;
+  status: Array<Staff>;
+
+  user: Users;
+  check = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,26 +30,32 @@ export class AccountDialogComponent implements OnInit {
     this.accountAddForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      status: ['', Validators.required],
+      phone_number: ['', Validators.required],
+      staff_id: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required],
-      passwordConfirmation: ['', Validators.required],
+      password_confirmation: ['', Validators.required],
     });
     this.accountAddForm.patchValue(this.data);
-    console.log(this.data);
+    this.status = this.data.staff;
+
+    if (this.data.method === 'editAccount') {
+      this.accountAddForm.patchValue(this.data.user);
+      this.check = !this.check;
+      this.user = this.data.user;
+    }
   }
 
   onSubmit(): void {
     let body = {
       firstname: this.accountAddForm.getRawValue().firstname,
       lastname: this.accountAddForm.getRawValue().lastname,
-      phone_number: this.accountAddForm.getRawValue().phoneNumber,
-      staff_id: this.accountAddForm.getRawValue().status,
+      phone_number: this.accountAddForm.getRawValue().phone_number,
+      staff_id: this.accountAddForm.getRawValue().staff_id,
       username: this.accountAddForm.getRawValue().username,
       password: this.accountAddForm.getRawValue().password,
       password_confirmation: this.accountAddForm.getRawValue()
-        .passwordConfirmation,
+        .password_confirmation,
     };
 
     this.http
