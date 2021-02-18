@@ -16,7 +16,7 @@ import { debounceTime, isEmpty } from 'rxjs/operators';
 export class ZoneComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   zones: Zone[] = [];
-  zoneControl = new FormControl();
+  zoneControl = new FormControl(' ');
   displayedColumns: string[] = [
     'table-number',
     'seat-amount',
