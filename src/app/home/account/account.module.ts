@@ -6,6 +6,9 @@ import { AccountDialogComponent } from './account-dialog/account-dialog.componen
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [AccountDialogComponent],
@@ -14,7 +17,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatSortModule,
     MatSelectModule,
+    MatTableModule,
+    MatTabsModule,
   ],
 })
 export class AccountModule {}

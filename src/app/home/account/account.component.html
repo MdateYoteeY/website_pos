@@ -18,7 +18,7 @@
   </div>
 
   <div>
-    <table mat-table [dataSource]="user">
+    <table mat-table [dataSource]="dataSource">
       <!-- Position Column -->
       <ng-container matColumnDef="staff">
         <th mat-header-cell *matHeaderCellDef>สถานะ</th>
@@ -84,7 +84,7 @@
     </table>
 
     <mat-paginator
-      [pageSizeOptions]="[10, 20]"
+      [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
     ></mat-paginator>
   </div>
