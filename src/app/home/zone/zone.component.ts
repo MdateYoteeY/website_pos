@@ -6,11 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, isEmpty } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
-interface param{
-  table_number: string;
-  zone_id: string;
-}
+
+
 @Component({
   selector: 'app-zone',
   templateUrl: './zone.component.html',
@@ -25,11 +22,9 @@ export class ZoneComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
-    private _route: ActivatedRoute,
     private http: HttpClient
     ){
-      console.log(this._route.snapshot.params);
-      console.log(this._route.snapshot.data);
+
     }
   ngOnInit(): void {
     this.getZone();
@@ -37,7 +32,7 @@ export class ZoneComponent implements AfterViewInit, OnInit {
     this.form = new FormGroup({
       zone: this.zoneControl,
     });
-    this.zoneControl.valueChanges.pipe().subscribe((params) => {
+    this.zoneControl.valueChanges.pipe(debounceTime(50)).subscribe((params) => {
       this.getTable({zone_id: params});
     })
   }
