@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, isEmpty } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-interface param{
+interface param {
   table_number: string;
   zone_id: string;
 }
@@ -20,17 +20,16 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   zones: Zone[] = [];
   zoneControl = new FormControl();
-  displayedColumns: string[] = ['table-number', 'seat-amount', 'zone', 'status'];
+  displayedColumns: string[] = [
+    'table-number',
+    'seat-amount',
+    'zone',
+    'status',
+  ];
   dataSource = new MatTableDataSource<Table>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(
-    private _route: ActivatedRoute,
-    private http: HttpClient
-    ){
-      console.log(this._route.snapshot.params);
-      console.log(this._route.snapshot.data);
-    }
+  constructor(private http: HttpClient) {}
   ngOnInit(): void {
     this.getZone();
     this.getTable();
@@ -38,19 +37,16 @@ export class ZoneComponent implements AfterViewInit, OnInit {
       zone: this.zoneControl,
     });
     this.zoneControl.valueChanges.pipe().subscribe((params) => {
-      this.getTable({zone_id: params});
-    })
+      this.getTable({ zone_id: params });
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  getZone(){
-    this.http
-    .get<Zone[]>(`${environment.apiUrl}zones`)
-    .subscribe((res) => {
+  getZone() {
+    this.http.get<Zone[]>(`${environment.apiUrl}zones`).subscribe((res) => {
       this.zones = res;
-
     });
   }
   getTable(params?: any) {
@@ -63,5 +59,3 @@ export class ZoneComponent implements AfterViewInit, OnInit {
 }
 
 const ELEMENT_DATA: Table[] = [];
-
-
