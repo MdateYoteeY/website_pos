@@ -1,3 +1,4 @@
+import { ZoneComponent } from './zone/zone.component';
 import { LoginComponent } from './../login/login.component';
 import { AccountComponent } from './account/account.component';
 import { MainComponent } from './main/main.component';
@@ -34,6 +35,9 @@ const routes: Routes = [
       {
         path: 'report',
         component: ReportComponent,
+      },{
+        path: 'zone',
+        component: ZoneComponent,
       },
       {
         path: 'users',
