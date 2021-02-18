@@ -1,3 +1,6 @@
+$greenButton: rgb(0, 235, 156);
+$redButton: rgb(255, 98, 98);
+
 .container {
   width: 90%;
   height: auto;
@@ -5,7 +8,61 @@
   color: #000000;
   padding: 40px;
   position: relative;
-}
 
-$greenButton: rgb(0, 235, 156);
-$redButton: rgb(255, 98, 98);
+  p {
+    color: black;
+    font-size: 30pt;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+
+  table {
+    position: inline;
+    width: 95%;
+    margin: 40px 20px 20px 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    tr {
+      cursor: pointer;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      th {
+        color: white;
+        font-size: 12pt;
+        text-align: center;
+        background-color: rgb(121, 121, 121);
+        cursor: default;
+        width: max-content;
+      }
+
+      .edit {
+        cursor: pointer;
+        opacity: 0;
+        color: rgb(0, 174, 255);
+
+      }
+
+      .delete {
+        cursor: pointer;
+        opacity: 0;
+        margin-left: 5px;
+        color: $redButton;
+      }
+
+      &:hover {
+        td {
+          background-color: #DEF9FF;
+
+        }
+
+        .edit,
+        .delete {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

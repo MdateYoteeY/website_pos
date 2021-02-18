@@ -18,27 +18,21 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AccountDialogComponent implements OnInit {
   accountAddForm: FormGroup;
-  selected: number;
   dataDialog: method;
   user: Users;
   check = true;
   passwordView = true;
-  c: any;
-  foodControl = new FormControl('1');
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
   ) {
-    this.accountAddForm = new FormGroup({
-      food: this.foodControl,
-    });
     this.accountAddForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       phone_number: ['', Validators.required],
-      staff_id: ['2', Validators.required],
+      staff_id: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required],
       password_confirmation: ['', Validators.required],
@@ -50,17 +44,6 @@ export class AccountDialogComponent implements OnInit {
 
     if (this.data.method === 'editAccount') {
       this.accountAddForm.patchValue(this.data.user);
-      this.selected = this.data.user.staff_id;
-      console.log(this.accountAddForm.getRawValue().staff_id);
-      console.log(this.accountAddForm);
-
-      // this.accountAddForm.controls.staff_id.setValue(
-      //   `${this.data.user.status}`,
-      //   { onlySelf: true }
-      // );
-
-      // console.log(this.accountAddForm.controls['staff_id'].value);
-
       this.check = false;
       this.passwordView = false;
     }

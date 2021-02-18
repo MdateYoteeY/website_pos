@@ -18,22 +18,32 @@ $bgBoxMain: #555555;
   }
 
   .box-main {
-    position: relative;
+    position: absolute;
     background: white;
     width: 85%;
-    height: auto;
+    height: 2000px;
     margin: 0;
     right: 0;
   }
 
   .side-bar {
     background: $bgSideBar;
-    width: 15%;
+    position: sticky;
+    width: 20%;
     min-width: 250px;
-    height: auto;
+    height: 100%;
     left: 0;
     margin: 0;
     filter: drop-shadow(0 5px 15px #ffff);
+
+    .logout {
+      cursor: pointer;
+      color: white;
+      position: absolute;
+      margin: 10px;
+      bottom: 0;
+      left: 0;
+    }
 
     p {
       font-size: 12pt;
@@ -53,57 +63,51 @@ $bgBoxMain: #555555;
       position: sticky;
       top: 20px;
 
-
-
       p {
         color: white;
         margin-left: 10px;
       }
-    }
 
-    mat-list {
-      position: -webkit-sticky;
-      position: sticky;
-      margin: 5px;
-      margin-right: 0;
-      height: 100%;
-
-      .logout {
-        cursor: pointer;
-        color: white;
-        position: absolute;
-        margin: 10px;
-        bottom: 0;
-        left: 0;
-      }
-
-      mat-list-item {
-        margin: 2px 0 2px 2px;
+      mat-list {
         position: -webkit-sticky;
         position: sticky;
-        height: 25px;
-        color: #ffffff;
-        width: 100%;
-        cursor: pointer;
-        transition: .5s;
-        border-radius: 5px 0 0 5px;
+        margin: 5px;
+        margin-right: 0;
+        height: 100%;
 
-        &:hover {
-          // background: $bgBoxMain;
+        mat-list-item {
+          margin: 2px 0 2px 2px;
+          padding: 5px;
+          position: -webkit-sticky;
+          position: sticky;
+          height: 25px;
+          color: #ffffff;
+          width: 100%;
+          cursor: pointer;
+          transition: .5s;
+          border-radius: 5px 0 0 5px;
+
+          &:hover {
+            // background: $bgBoxMain;
+            color: cyan;
+          }
+        }
+
+        .is-active {
+          background: linear-gradient(90deg, #131313, #ffffff);
           color: cyan;
+          transition: .5s;
+
+          &:hover {
+            // transition: .5s;
+            // background: linear-gradient(90deg, #868686, #ffffff);
+          }
         }
       }
 
-      .is-active {
-        background: linear-gradient(90deg, #131313, #ffffff);
-        color: cyan;
-        transition: .5s;
 
-        &:hover {
-          // transition: .5s;
-          // background: linear-gradient(90deg, #868686, #ffffff);
-        }
-      }
     }
+
+
   }
 }

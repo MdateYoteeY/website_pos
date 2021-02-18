@@ -4,12 +4,7 @@
       <span class="material-icons"> exit_to_app </span>
     </div>
     <div class="menu">
-      <p
-        id="header"
-        routerLink="/home/main"
-        style="cursor: pointer"
-        (click)="logout()"
-      >
+      <p id="header" routerLink="/home/main" style="cursor: pointer">
         Hello {{ userModel.data_user.firstname }}!
       </p>
       <a style="padding: 0 0 10px 10px; color: #00fff2">
@@ -46,7 +41,10 @@
           <mat-list-item routerLink="zone" [routerLinkActive]="['is-active']">
             Zone
           </mat-list-item>
-          <mat-list-item routerLink="reserve-table" [routerLinkActive]="['is-active']">
+          <mat-list-item
+            routerLink="reserve-table"
+            [routerLinkActive]="['is-active']"
+          >
             Reserve table
           </mat-list-item>
         </div>

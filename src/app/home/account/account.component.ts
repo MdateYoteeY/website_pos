@@ -54,6 +54,8 @@ export class AccountComponent implements OnInit {
         .then((res) => {
           this.staff = res;
         });
+
+      console.log(this.staff);
     }
 
     if (method === 'editAccount') {
