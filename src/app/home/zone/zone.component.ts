@@ -17,15 +17,16 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   zones: Zone[] = [];
   zoneControl = new FormControl();
-  displayedColumns: string[] = ['table-number', 'seat-amount', 'zone', 'status'];
+  displayedColumns: string[] = [
+    'table-number',
+    'seat-amount',
+    'zone',
+    'status',
+  ];
   dataSource = new MatTableDataSource<Table>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(
-    private http: HttpClient
-    ){
-
-    }
+  constructor(private http: HttpClient) {}
   ngOnInit(): void {
     this.getZone();
     this.getTable();
@@ -40,12 +41,9 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  getZone(){
-    this.http
-    .get<Zone[]>(`${environment.apiUrl}zones`)
-    .subscribe((res) => {
+  getZone() {
+    this.http.get<Zone[]>(`${environment.apiUrl}zones`).subscribe((res) => {
       this.zones = res;
-
     });
   }
   getTable(params?: any) {
@@ -58,5 +56,3 @@ export class ZoneComponent implements AfterViewInit, OnInit {
 }
 
 const ELEMENT_DATA: Table[] = [];
-
-

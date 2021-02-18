@@ -2,8 +2,10 @@ import { AccountDialogComponent } from './account-dialog/account-dialog.componen
 import { Users, Staff } from './../../model/model.model';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-account',
@@ -21,10 +23,17 @@ export class AccountComponent implements OnInit {
     'action',
   ];
 
-  user: Array<Users>;
+  dataSource = new MatTableDataSource<Users>(ELEMENT_DATA);
+  user: Array<Users> = [];
   staff: Array<Staff>;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
     this.getUser();
@@ -33,6 +42,7 @@ export class AccountComponent implements OnInit {
   getUser(): void {
     this.http.get(`${environment.apiUrl}users`).subscribe((res: Users[]) => {
       this.user = res;
+      this.dataSource.data = res;
     });
   }
 
@@ -79,3 +89,5 @@ export class AccountComponent implements OnInit {
     }
   }
 }
+
+const ELEMENT_DATA: Users[] = [];
