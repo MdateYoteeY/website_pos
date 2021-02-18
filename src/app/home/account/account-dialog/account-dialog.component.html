@@ -32,12 +32,17 @@
           id="phoneNumber"
           formControlName="phone_number"
           placeholder="เบอร์โทรศัพท์.."
-        />
-      </mat-form-field>
+        /> </mat-form-field
+      >?
 
       <mat-form-field appearance="outline">
         <mat-label>สถานะ</mat-label>
-        <mat-select id="staff_id" formControlName="staff_id">
+        <mat-select
+          id="staff_id"
+          formControlName="staff_id"
+          name="food"
+          value="{{ data?.user?.status }}"
+        >
           <mat-option
             *ngFor="let item of data.staff; let i = index"
             value="{{ i + 1 }}"
@@ -45,7 +50,7 @@
           >
         </mat-select>
       </mat-form-field>
-
+      <p>You selected: {{ selected }}</p>
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
         <input
