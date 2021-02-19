@@ -1,6 +1,6 @@
 <div class="container">
   <p>จัดการบัญชีผู้ใช้งาน</p>
-  <div class="search">
+  <div class="header">
     <div class="text-container">
       ค้นหารายการ<input type="text" placeholder="ค้นหา..." /><span
         class="material-icons"
@@ -20,7 +20,7 @@
       <!-- Position Column -->
       <ng-container matColumnDef="staff">
         <th mat-header-cell *matHeaderCellDef>สถานะ</th>
-        <td mat-cell *matCellDef="let element" value="{{ i }}">
+        <td mat-cell *matCellDef="let element" value="{{ element.staff_id }}">
           {{ element.status }}
         </td>
       </ng-container>
@@ -80,9 +80,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
+      [pageSizeOptions]="[10, 20]"
       showFirstLastButtons
     ></mat-paginator>
   </div>

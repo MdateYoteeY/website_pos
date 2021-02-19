@@ -13,6 +13,14 @@
     .acc-box-1 {
       display: flex;
       flex-direction: column;
+
+      p {
+        .header {
+          font-size: 12pt;
+          font-weight: 500;
+          margin: 10px 0 10px 0;
+        }
+      }
     }
 
     .btn-changePass {
@@ -24,6 +32,7 @@
       height: fit-content;
       background: rgb(221, 221, 221);
       transition: .5s;
+      font-size: 10pt;
 
       &:hover {
         background: rgb(161, 255, 197);
