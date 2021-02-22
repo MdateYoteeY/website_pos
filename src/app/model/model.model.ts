@@ -1,10 +1,12 @@
-import { Zone } from './zone.model';
+import { Tables } from 'src/app/model/table.model';
+import { Zones } from './zone.model';
 
 export interface method {
   method?: string;
   staff?: Array<Staff>;
   user?: Users;
-  zone?: Zone;
+  zone?: Zones;
+  table?: Tables;
 }
 
 export interface Users {

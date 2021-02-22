@@ -1,0 +1,38 @@
+<div class="container">
+  <form [formGroup]="tableForm">
+    <div class="acc-box-1">
+      <p class="header">{{ header }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>หมายเลขโต๊ะ</mat-label>
+        <input
+          id="table_number"
+          formControlName="table_number"
+          matInput
+          placeholder="หมายเลขโต๊ะ.."
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>โซนที่นั่ง</mat-label>
+        <mat-select id="zone_id" formControlName="zone_id">
+          <mat-option *ngFor="let item of zone" [value]="item.id">{{
+            item.name_zone
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>จำนวนที่นั่ง</mat-label>
+        <input
+          id="seat_amount"
+          formControlName="seat_amount"
+          matInput
+          placeholder="จำนวนที่นั่ง.."
+        />
+      </mat-form-field>
+    </div>
+    <div class="btn-group">
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

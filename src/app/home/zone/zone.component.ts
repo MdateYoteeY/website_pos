@@ -1,6 +1,6 @@
 import { ZoneDialogComponent } from './zone-dialog/zone-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Zone } from './../../model/zone.model';
+import { Zones } from './../../model/zone.model';
 import { environment } from './../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
@@ -16,7 +16,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class ZoneComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   displayedColumns: string[] = ['zone', 'action'];
-  dataSource = new MatTableDataSource<Zone>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Zones>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private http: HttpClient, public dialog: MatDialog) {}
@@ -29,12 +29,12 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   }
 
   getZone() {
-    this.http.get<Zone[]>(`${environment.apiUrl}zones`).subscribe((res) => {
+    this.http.get<Zones[]>(`${environment.apiUrl}zones`).subscribe((res) => {
       this.dataSource.data = res;
     });
   }
 
-  openDialog(method: string, data?: Zone): void {
+  openDialog(method: string, data?: Zones): void {
     if (method === 'addZone') {
       const dialogRef = this.dialog.open(ZoneDialogComponent, {
         data: { method: 'addZone' },
@@ -50,11 +50,11 @@ export class ZoneComponent implements AfterViewInit, OnInit {
     });
   }
 
-  editData(data: Zone): void {
+  editData(data: Zones): void {
     this.openDialog('editZone', data);
   }
 
-  deleteData(data: Zone): void {
+  deleteData(data: Zones): void {
     this.http
       .delete(`${environment.apiUrl}zones/` + data.id)
       .subscribe((res) => {
@@ -64,4 +64,4 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   }
 }
 
-const ELEMENT_DATA: Zone[] = [];
+const ELEMENT_DATA: Zones[] = [];

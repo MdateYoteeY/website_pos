@@ -1,4 +1,4 @@
-export interface Zone {
+export interface Zones {
   id: number;
   name_zone: string;
   created_at: string;

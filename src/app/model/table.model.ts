@@ -1,4 +1,4 @@
-export interface Table {
+export interface Tables {
   id: number;
   status_table_id: number;
   zone_id: number;
@@ -8,4 +8,4 @@ export interface Table {
   updated_at: string;
   zone: string;
   status: string;
-  }
+}
