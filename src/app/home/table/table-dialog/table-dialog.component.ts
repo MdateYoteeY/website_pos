@@ -1,3 +1,4 @@
+import { StatusTables } from './../../../model/table.model';
 import { HttpClient } from '@angular/common/http';
 import { Tables } from 'src/app/model/table.model';
 import { Zones } from './../../../model/zone.model';
@@ -18,6 +19,8 @@ export class TableDialogComponent implements OnInit {
   zone: Zones;
   table: Tables;
   header: string;
+  status_table: StatusTables;
+  tableAdd = true;
 
   constructor(
     private http: HttpClient,
@@ -29,15 +32,18 @@ export class TableDialogComponent implements OnInit {
       table_number: ['', Validators.required],
       zone_id: ['', Validators.required],
       seat_amount: ['', Validators.required],
+      status_table_id: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.zone = this.data.zone;
+    this.status_table = this.data.tableStatus;
 
     if (this.data.method === 'editTable') {
       this.tableForm.patchValue(this.data.table);
       this.header = 'แก้ไขโต๊ะที่นั่ง';
+      this.tableAdd = false;
     } else if (this.data.method === 'addTable') {
       this.header = 'เพิ่มโต๊ะที่นั่ง';
     }
@@ -45,12 +51,40 @@ export class TableDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.data.method === 'editTable') {
-    } else if (this.data.method === 'addTable') {
       let body = {
         table_number: this.tableForm.getRawValue().table_number,
         zone_id: this.tableForm.getRawValue().zone_id,
         seat_amount: this.tableForm.getRawValue().seat_amount,
+        status_table_id: this.tableForm.getRawValue().status_table_id,
       };
+
+      this.http
+        .put(`${environment.apiUrl}tables/` + this.data.table.id, {
+          table: body,
+        })
+        .subscribe((res) => {
+          console.log('Table updated!');
+          this.dialogRef.close();
+        });
+    } else if (this.data.method === 'addTable') {
+      let id = this.tableForm.getRawValue().zone_id;
+      let zoneSelectName = '';
+
+      for (let i = 0; i < 3; i++) {
+        if (this.zone[i].id === id) {
+          console.log(this.zone[i].name_zone);
+          zoneSelectName = this.zone[i].name_zone;
+        }
+      }
+
+      let body = {
+        table_number:
+          zoneSelectName + this.tableForm.getRawValue().table_number,
+        zone_id: this.tableForm.getRawValue().zone_id,
+        seat_amount: this.tableForm.getRawValue().seat_amount,
+        status_table_id: this.tableForm.getRawValue().status_table_id,
+      };
+
       this.http
         .post(`${environment.apiUrl}tables`, { table: body })
         .subscribe((res) => {

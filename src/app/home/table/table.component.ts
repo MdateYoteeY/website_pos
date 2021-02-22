@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Tables } from 'src/app/model/table.model';
+import { StatusTables, Tables } from 'src/app/model/table.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,10 +14,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'zone', 'seat', 'action'];
+  displayedColumns: string[] = ['id', 'zone', 'seat', 'status', 'action'];
   dataSource = new MatTableDataSource<Tables>(ELEMENT_DATA);
   table: Tables;
   zone: Zones;
+  status_table: StatusTables;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -25,6 +26,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.getTable();
     this.getZone();
+    this.getStatusTable();
   }
 
   ngAfterViewInit() {
@@ -37,6 +39,14 @@ export class TableComponent implements OnInit {
     });
   }
 
+  getStatusTable(): void {
+    this.http
+      .get(`${environment.apiUrl}status_tables`)
+      .subscribe((res: StatusTables) => {
+        this.status_table = res;
+      });
+  }
+
   getTable(): void {
     this.http.get(`${environment.apiUrl}tables`).subscribe((res: Tables[]) => {
       this.dataSource.data = res;
@@ -46,11 +56,20 @@ export class TableComponent implements OnInit {
   openDialog(method: string, element?: Tables): void {
     if (method === 'editTable') {
       const dialogRef = this.dialog.open(TableDialogComponent, {
-        data: { method: method, table: element, zone: this.zone },
+        data: {
+          method: method,
+          table: element,
+          zone: this.zone,
+          tableStatus: this.status_table,
+        },
       });
     } else if (method === 'addTable') {
       const dialogRef = this.dialog.open(TableDialogComponent, {
-        data: { method: method, zone: this.zone },
+        data: {
+          method: method,
+          zone: this.zone,
+          tableStatus: this.status_table,
+        },
       });
     }
 

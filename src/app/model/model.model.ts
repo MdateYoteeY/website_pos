@@ -1,3 +1,4 @@
+import { StatusTables } from './table.model';
 import { Tables } from 'src/app/model/table.model';
 import { Zones } from './zone.model';
 
@@ -7,6 +8,7 @@ export interface method {
   user?: Users;
   zone?: Zones;
   table?: Tables;
+  tableStatus?: StatusTables;
 }
 
 export interface Users {

@@ -20,10 +20,20 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field appearance="outline" *ngIf="!tableAdd">
+        <mat-label>สถานะโต๊ะ</mat-label>
+        <mat-select id="status_table_id" formControlName="status_table_id">
+          <mat-option *ngFor="let item of status_table" [value]="item.id">
+            {{ item.table_status }}s
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>จำนวนที่นั่ง</mat-label>
         <input
           id="seat_amount"
+          type="number"
           formControlName="seat_amount"
           matInput
           placeholder="จำนวนที่นั่ง.."

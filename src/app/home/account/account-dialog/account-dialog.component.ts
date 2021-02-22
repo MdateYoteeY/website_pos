@@ -18,6 +18,7 @@ export class AccountDialogComponent implements OnInit {
   check = true;
   passwordView = true;
   errorRes: ErrorResponse;
+  header = 'เพิ่มบัญชีผู้ใช้งาน';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,6 +44,7 @@ export class AccountDialogComponent implements OnInit {
       this.accountAddForm.patchValue(this.data.user);
       this.check = false;
       this.passwordView = false;
+      this.header = 'แก้ไขบัญชีผู้ใช้งาน';
     }
   }
 

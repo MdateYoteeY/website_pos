@@ -9,3 +9,10 @@ export interface Tables {
   zone: string;
   status: string;
 }
+
+export interface StatusTables {
+  id: number;
+  table_status: string;
+  created_at: string;
+  updated_at: string;
+}

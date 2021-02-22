@@ -13,6 +13,7 @@ import { method } from 'src/app/model/model.model';
 })
 export class ZoneDialogComponent implements OnInit {
   zoneAddForm: FormGroup;
+  header = 'เพิ่มโซนที่นั่ง';
 
   constructor(
     public dialogRef: MatDialogRef<ZoneComponent>,
@@ -27,6 +28,7 @@ export class ZoneDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.method === 'editZone') {
+      this.header = 'แก้ไขโซนที่นั่ง';
       this.zoneAddForm.patchValue(this.data.zone);
     }
   }
