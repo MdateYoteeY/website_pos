@@ -1,3 +1,5 @@
+import { ZoneDialogComponent } from './zone-dialog/zone-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Zone } from './../../model/zone.model';
 import { environment } from './../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +22,7 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<Zone>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public dialog: MatDialog) {}
   ngOnInit(): void {
     this.getZone();
     this.form = new FormGroup({
@@ -36,6 +38,16 @@ export class ZoneComponent implements AfterViewInit, OnInit {
     this.http.get<Zone[]>(`${environment.apiUrl}zones`).subscribe((res) => {
       this.dataSource.data = res;
       console.log(res);
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ZoneDialogComponent, {
+      data: {},
+    });
+
+    this.dialog.afterAllClosed.subscribe((res) => {
+      this.getZone;
     });
   }
 

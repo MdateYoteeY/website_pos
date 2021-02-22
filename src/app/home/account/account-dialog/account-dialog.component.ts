@@ -1,13 +1,8 @@
-import { Staff, Users, method } from './../../../model/model.model';
+import { ErrorResponse, Users, method } from './../../../model/model.model';
 import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -22,6 +17,8 @@ export class AccountDialogComponent implements OnInit {
   user: Users;
   check = true;
   passwordView = true;
+  errorRes: ErrorResponse;
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -66,11 +63,15 @@ export class AccountDialogComponent implements OnInit {
           .password_confirmation,
       };
 
-      this.http
-        .post(`${environment.apiUrl}users`, { user: body })
-        .subscribe((res) => {
+      this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
+        (res) => {
           console.log('Add Account success!!');
-        });
+        },
+        (error) => {
+          this.errorRes = error;
+          console.log(this.errorRes.error.errors);
+        }
+      );
       this.dialogRef.close();
     } else if (this.data.method === 'editAccount') {
       let body = {
@@ -89,9 +90,15 @@ export class AccountDialogComponent implements OnInit {
         .put(`${environment.apiUrl}users/` + this.data.user.id, {
           user: body,
         })
-        .subscribe((res) => {
-          console.log('Update Account success!!');
-        });
+        .subscribe(
+          (res) => {
+            console.log('Update Account success!!');
+          },
+          (error) => {
+            this.errorRes = error;
+            console.log(this.errorRes.error);
+          }
+        );
       this.dialogRef.close();
     }
   }

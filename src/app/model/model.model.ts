@@ -44,3 +44,25 @@ export interface Staff {
   created_at: string;
   updated_at: string;
 }
+
+export interface ErrorResponse {
+  headers: Headers;
+  status: number;
+  statusText: string;
+  url: string;
+  ok: boolean;
+  name: string;
+  message: string;
+  error: Error;
+}
+
+interface Error {
+  errors: string[];
+}
+
+interface Headers {
+  normalizedNames: NormalizedNames;
+  lazyUpdate?: any;
+}
+
+interface NormalizedNames {}

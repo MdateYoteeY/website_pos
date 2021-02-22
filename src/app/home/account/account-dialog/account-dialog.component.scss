@@ -10,16 +10,16 @@
   align-items: center;
 
   form {
+    position: relative;
+
     .acc-box-1 {
       display: flex;
       flex-direction: column;
 
-      p {
-        .header {
-          font-size: 12pt;
-          font-weight: 500;
-          margin: 10px 0 10px 0;
-        }
+      .header {
+        font-size: 20pt;
+        font-weight: 500;
+        margin: 10px 0 10px 0;
       }
     }
 
@@ -33,33 +33,41 @@
       background: rgb(221, 221, 221);
       transition: .5s;
       font-size: 10pt;
+      position: relative;
 
       &:hover {
         background: rgb(161, 255, 197);
       }
     }
-  }
 
-  button {
-    padding: 10px 20px 10px 20px;
-    font-size: 12pt;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: .5s;
+    .btn-group {
+      text-align: center;
+      position: relative;
+      width: 100%;
+    }
 
-    &:hover {
-      background: inherit;
-      opacity: 0.8;
+    button {
+      padding: 10px 20px 10px 20px;
+      font-size: 12pt;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: .5s;
+      position: relative;
+
+      &:hover {
+        background: inherit;
+        opacity: 0.8;
+      }
     }
   }
+}
 
-  #confirm {
-    background: $greenButton;
-  }
+#confirm {
+  background: $greenButton;
+}
 
-  #cancle {
-    background: $redButton;
-  }
+#cancle {
+  background: $redButton;
 }
