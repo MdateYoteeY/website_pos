@@ -1,7 +1,10 @@
+import { Zone } from './zone.model';
+
 export interface method {
   method?: string;
   staff?: Array<Staff>;
   user?: Users;
+  zone?: Zone;
 }
 
 export interface Users {

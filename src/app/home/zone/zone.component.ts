@@ -15,19 +15,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class ZoneComponent implements AfterViewInit, OnInit {
   form: FormGroup;
-  zoneControl = new FormControl();
-
   displayedColumns: string[] = ['zone', 'action'];
-
   dataSource = new MatTableDataSource<Zone>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   ngOnInit(): void {
     this.getZone();
-    this.form = new FormGroup({
-      zone: this.zoneControl,
-    });
   }
 
   ngAfterViewInit() {
@@ -37,26 +31,35 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   getZone() {
     this.http.get<Zone[]>(`${environment.apiUrl}zones`).subscribe((res) => {
       this.dataSource.data = res;
-      console.log(res);
     });
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ZoneDialogComponent, {
-      data: {},
-    });
+  openDialog(method: string, data?: Zone): void {
+    if (method === 'addZone') {
+      const dialogRef = this.dialog.open(ZoneDialogComponent, {
+        data: { method: 'addZone' },
+      });
+    } else if (method === 'editZone') {
+      const dialogRef = this.dialog.open(ZoneDialogComponent, {
+        data: { method: 'editZone', zone: data },
+      });
+    }
 
     this.dialog.afterAllClosed.subscribe((res) => {
-      this.getZone;
+      this.getZone();
     });
   }
 
-  editData(data: Zone): void {}
+  editData(data: Zone): void {
+    this.openDialog('editZone', data);
+  }
+
   deleteData(data: Zone): void {
     this.http
       .delete(`${environment.apiUrl}zones/` + data.id)
       .subscribe((res) => {
-        console.log(data.name_zone + ' has delete!');
+        console.log('Zone ' + data.name_zone + ' has delete!');
+        this.getZone();
       });
   }
 }

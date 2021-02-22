@@ -1,15 +1,19 @@
 <div class="container">
-  <form>
+  <form [formGroup]="zoneAddForm">
     <div class="acc-box-1">
       <p class="header">เพิ่มโซนที่นั่ง</p>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>ชื่อโซนที่นั่ง</mat-label>
-        <input matInput placeholder="ชื่อโซนที่นั่ง.." />
+        <input
+          matInput
+          formControlName="name_zone"
+          placeholder="ชื่อโซนที่นั่ง.."
+        />
       </mat-form-field>
     </div>
     <div class="btn-group">
-      <button id="confirm" type="submit">ยืนยัน</button>
-      <button id="cancle">ยกเลิก</button>
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
     </div>
   </form>
 </div>

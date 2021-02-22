@@ -22,7 +22,7 @@ export class AccountDialogComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    public dialogRef: MatDialogRef<DialogComponent>,
+    public dialogRef: MatDialogRef<AccountDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
   ) {
     this.accountAddForm = this.formBuilder.group({

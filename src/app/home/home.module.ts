@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ZoneComponent } from './zone/zone.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ZoneDialogComponent } from './zone/zone-dialog/zone-dialog.component';
+import { TableComponent } from './table/table.component';
 @NgModule({
   declarations: [
     ProductComponent,
@@ -29,6 +30,7 @@ import { ZoneDialogComponent } from './zone/zone-dialog/zone-dialog.component';
     AccountComponent,
     ZoneComponent,
     ZoneDialogComponent,
+    TableComponent,
   ],
 
   imports: [

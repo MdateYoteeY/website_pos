@@ -1,3 +1,4 @@
+import { TableComponent } from './table/table.component';
 import { ZoneComponent } from './zone/zone.component';
 import { LoginComponent } from './../login/login.component';
 import { AccountComponent } from './account/account.component';
@@ -35,7 +36,8 @@ const routes: Routes = [
       {
         path: 'report',
         component: ReportComponent,
-      },{
+      },
+      {
         path: 'zone',
         component: ZoneComponent,
       },
@@ -47,6 +49,7 @@ const routes: Routes = [
             (m) => m.AccountModule
           ),
       },
+      { path: 'table', component: TableComponent },
     ],
   },
 ];

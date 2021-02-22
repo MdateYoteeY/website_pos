@@ -24,7 +24,6 @@ export class AccountComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource<Users>(ELEMENT_DATA);
-  user: Array<Users> = [];
   staff: Array<Staff>;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
@@ -41,7 +40,6 @@ export class AccountComponent implements OnInit {
 
   getUser(): void {
     this.http.get(`${environment.apiUrl}users`).subscribe((res: Users[]) => {
-      this.user = res;
       this.dataSource.data = res;
     });
   }
@@ -62,19 +60,15 @@ export class AccountComponent implements OnInit {
       const dialogRef = this.dialog.open(AccountDialogComponent, {
         data: { method: method, user: userEdit, staff: this.staff },
       });
-
-      this.dialog.afterAllClosed.subscribe((res) => {
-        this.getUser();
-      });
     } else {
       const dialogRef = this.dialog.open(AccountDialogComponent, {
         data: { staff: this.staff },
       });
-
-      this.dialog.afterAllClosed.subscribe((res) => {
-        this.getUser();
-      });
     }
+
+    this.dialog.afterAllClosed.subscribe((res) => {
+      this.getUser();
+    });
   }
 
   editData(data: Users): void {

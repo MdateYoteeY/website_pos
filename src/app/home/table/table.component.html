@@ -1,0 +1,26 @@
+<div class="container">
+  <p>โซนที่นั่ง</p>
+  <div class="header">
+    <div class="text-container">
+      ค้นหารายการ<input type="text" placeholder="ค้นหา..." /><span
+        class="material-icons"
+      >
+        search
+      </span>
+    </div>
+    <div>
+      <button mat-raised-button (click)="openDialog('addTable')">
+        เพิ่มโต๊ะที่นั่ง
+      </button>
+    </div>
+  </div>
+
+  <table mat-table>
+    <ng-container matColumnDef="id" [dataSource]="dataSource">
+      <th mat-header-cell *matHeaderCellDef>รหัสโต๊ะ</th>
+      <td mat-cell *matCellDef="let element" value="{{ element.staff_id }}">
+        {{ element.status }}
+      </td>
+    </ng-container>
+  </table>
+</div>
