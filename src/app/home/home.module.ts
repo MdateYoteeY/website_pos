@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ZoneDialogComponent } from './zone/zone-dialog/zone-dialog.component';
 import { TableComponent } from './table/table.component';
 import { TableDialogComponent } from './table/table-dialog/table-dialog.component';
+import { CategoryComponent } from './category/category.component';
 @NgModule({
   declarations: [
     ProductComponent,
@@ -33,6 +34,7 @@ import { TableDialogComponent } from './table/table-dialog/table-dialog.componen
     ZoneDialogComponent,
     TableComponent,
     TableDialogComponent,
+    CategoryComponent,
   ],
 
   imports: [
