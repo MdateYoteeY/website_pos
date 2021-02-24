@@ -8,7 +8,11 @@
           matInput
           formControlName="name_zone"
           placeholder="ชื่อโซนที่นั่ง.."
+          required
         />
+        <mat-error *ngIf="zoneAddForm.get('name_zone').errors?.required"
+          >กรุณาระบุ <strong>ชื่อโซนที่นั่ง</strong></mat-error
+        >
       </mat-form-field>
     </div>
     <div class="btn-group">

@@ -34,6 +34,10 @@ export class ZoneDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.zoneAddForm.invalid) {
+      console.log('asd');
+      return;
+    }
     let body = {
       name_zone: this.zoneAddForm.getRawValue().name_zone,
     };
@@ -43,6 +47,7 @@ export class ZoneDialogComponent implements OnInit {
         .post(`${environment.apiUrl}zones`, { zone: body })
         .subscribe((res) => {
           console.log('Zone has Added!');
+          this.dialogRef.close();
         });
       this.dialogRef.close();
     } else if (this.data.method === 'editZone') {
@@ -50,6 +55,7 @@ export class ZoneDialogComponent implements OnInit {
         .put(`${environment.apiUrl}zones/` + this.data.zone.id, { zone: body })
         .subscribe((res) => {
           console.log('Zone has edited!');
+          this.dialogRef.close();
         });
     }
   }

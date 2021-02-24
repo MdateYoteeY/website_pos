@@ -31,7 +31,10 @@ export class TableDialogComponent implements OnInit {
     this.tableForm = this.fb.group({
       table_number: ['', Validators.required],
       zone_id: ['', Validators.required],
-      seat_amount: ['', Validators.required],
+      seat_amount: [
+        '',
+        [Validators.required, Validators.pattern('(0|[1-9]d*)')],
+      ],
       status_table_id: ['', Validators.required],
     });
   }
