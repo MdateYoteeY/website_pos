@@ -76,9 +76,10 @@
         <mat-error *ngIf="accountAddForm.get('username').errors?.required"
           >กรุณาระบุ <strong>ชื่อบัญชีผู้ใช้งาน</strong></mat-error
         >
-        <mat-error *ngIf="userAlready"
-          >ชื่อบัญชีผู้ใช้งาน <strong>มีอยู่แล้ว</strong></mat-error
-        >
+        <!-- <div *ngIf="errors?.username"> -->
+        <mat-error *ngIf="accountAddForm.get('username').errors?.userAlready">
+          ชื่อบัญชีผู้ใช้งาน <strong>มีอยู่แล้ว</strong>
+        </mat-error>
       </mat-form-field>
       <div>
         <div *ngIf="!check">

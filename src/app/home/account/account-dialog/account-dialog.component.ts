@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
   FormControl,
+  AbstractControl,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MyErrorStateMatcher } from 'src/app/login/login.component';
@@ -20,12 +21,13 @@ import { MustMatch } from 'src/assets/matchCheck';
 export class AccountDialogComponent implements OnInit {
   accountAddForm: FormGroup;
 
+  errorRes: ErrorResponse;
+
   matcher = new MyErrorStateMatcher();
   dataDialog: method;
   user: Users;
   check = true;
   passwordView = true;
-  errorRes: ErrorResponse;
   passMatchCheck = false;
   header = 'เพิ่มบัญชีผู้ใช้งาน';
   forbiddenUsernames = ['admin'];
@@ -34,6 +36,7 @@ export class AccountDialogComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+
     private http: HttpClient,
     public dialogRef: MatDialogRef<AccountDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
@@ -68,12 +71,12 @@ export class AccountDialogComponent implements OnInit {
           ],
         ],
         staff_id: ['', Validators.required],
-        username: ['', Validators.required],
+        username: ['', [Validators.required]],
         password: [null, [Validators.minLength(8)]],
         password_confirmation: [null],
       },
       {
-        validators: MustMatch('password', 'password_confirmation'),
+        validators: [MustMatch('password', 'password_confirmation')],
       }
     );
   }
@@ -112,18 +115,11 @@ export class AccountDialogComponent implements OnInit {
           this.dialogRef.close();
         },
         (error) => {
-          this.errorRes = error.error.errros;
-          console.log(error.error.errors);
-          // Username has already been taken
-
-          error.error.errors.filter((res) => {
-            console.log(res);
-
-            if (res === 'Username has already been taken') {
-              this.userAlready = !this.userAlready;
-              console.log(this.userAlready);
-              return;
-            }
+          console.log(error);
+          this.errorRes = error.error;
+          console.log(this.errorRes.username[0]);
+          this.accountAddForm.controls['username'].setErrors({
+            userAlready: true,
           });
         }
       );
@@ -162,9 +158,6 @@ export class AccountDialogComponent implements OnInit {
             this.dialogRef.close();
           },
           (error) => {
-            this.errorRes = error;
-            console.log(this.errorRes.error.errors);
-
             return;
           }
         );

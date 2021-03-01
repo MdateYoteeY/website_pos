@@ -53,23 +53,6 @@ export interface Staff {
 }
 
 export interface ErrorResponse {
-  headers: Headers;
-  status: number;
-  statusText: string;
-  url: string;
-  ok: boolean;
-  name: string;
-  message: string;
-  error: Error;
+  password: string[];
+  username: string[];
 }
-
-interface Error {
-  errors: string[];
-}
-
-interface Headers {
-  normalizedNames: NormalizedNames;
-  lazyUpdate?: any;
-}
-
-interface NormalizedNames {}
