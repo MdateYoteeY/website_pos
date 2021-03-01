@@ -17,8 +17,9 @@ export class TableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'zone', 'seat', 'status', 'action'];
   dataSource = new MatTableDataSource<Tables>(ELEMENT_DATA);
   table: Tables;
-  zone: Zones;
+  zone: Zones[];
   status_table: StatusTables;
+  zoneLength: number;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,8 +35,10 @@ export class TableComponent implements OnInit {
   }
 
   getZone(): void {
-    this.http.get(`${environment.apiUrl}zones`).subscribe((res: Zones) => {
+    this.http.get(`${environment.apiUrl}zones`).subscribe((res: Zones[]) => {
       this.zone = res;
+      this.zoneLength = res.length;
+      console.log(res);
     });
   }
 
@@ -69,6 +72,7 @@ export class TableComponent implements OnInit {
           method: method,
           zone: this.zone,
           tableStatus: this.status_table,
+          zoneLength: this.zoneLength,
         },
       });
     }

@@ -1,12 +1,14 @@
 import { ZoneDialogComponent } from './zone-dialog/zone-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Zones } from './../../model/zone.model';
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-zone',
@@ -17,6 +19,7 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   displayedColumns: string[] = ['zone', 'action'];
   dataSource = new MatTableDataSource<Zones>(ELEMENT_DATA);
+  zoneLength: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private http: HttpClient, public dialog: MatDialog) {}
@@ -28,9 +31,10 @@ export class ZoneComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  getZone() {
-    this.http.get<Zones[]>(`${environment.apiUrl}zones`).subscribe((res) => {
+  getZone(): void {
+    this.http.get(`${environment.apiUrl}zones`).subscribe((res: Zones[]) => {
       this.dataSource.data = res;
+      this.zoneLength = res.length;
     });
   }
 
@@ -55,12 +59,17 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   }
 
   deleteData(data: Zones): void {
-    this.http
-      .delete(`${environment.apiUrl}zones/` + data.id)
-      .subscribe((res) => {
-        console.log('Zone ' + data.name_zone + ' has delete!');
-        this.getZone();
-      });
+    // this.http.delete(`${environment.apiUrl}zones/` + data.id).subscribe(
+    //   (res) => {
+    //     console.log('Zone ' + data.name_zone + ' has delete!');
+    //     this.getZone();
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
+
+    Swal.fire('Hello Angular');
   }
 }
 

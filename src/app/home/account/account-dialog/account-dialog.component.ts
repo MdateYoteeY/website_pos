@@ -2,13 +2,7 @@ import { ErrorResponse, Users, method } from './../../../model/model.model';
 import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-  AbstractControl,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MyErrorStateMatcher } from 'src/app/login/login.component';
 import { MustMatch } from 'src/assets/matchCheck';
@@ -28,7 +22,6 @@ export class AccountDialogComponent implements OnInit {
   user: Users;
   check = true;
   passwordView = true;
-  passMatchCheck = false;
   header = 'เพิ่มบัญชีผู้ใช้งาน';
   forbiddenUsernames = ['admin'];
 
@@ -101,23 +94,12 @@ export class AccountDialogComponent implements OnInit {
           .password_confirmation,
       };
 
-      if (
-        this.accountAddForm.getRawValue().password !==
-        this.accountAddForm.getRawValue().password_confirmation
-      ) {
-        console.log('pass not match!');
-        this.passMatchCheck = !this.passMatchCheck;
-      }
-
       this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
         (res) => {
           console.log('Add Account success!!');
           this.dialogRef.close();
         },
         (error) => {
-          console.log(error);
-          this.errorRes = error.error;
-          console.log(this.errorRes.username[0]);
           this.accountAddForm.controls['username'].setErrors({
             userAlready: true,
           });
@@ -158,7 +140,9 @@ export class AccountDialogComponent implements OnInit {
             this.dialogRef.close();
           },
           (error) => {
-            return;
+            this.accountAddForm.controls['username'].setErrors({
+              userAlready: true,
+            });
           }
         );
     }

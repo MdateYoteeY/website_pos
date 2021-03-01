@@ -38,18 +38,25 @@ export class ZoneDialogComponent implements OnInit {
       console.log('asd');
       return;
     }
+
     let body = {
       name_zone: this.zoneAddForm.getRawValue().name_zone,
     };
 
     if (this.data.method === 'addZone') {
-      this.http
-        .post(`${environment.apiUrl}zones`, { zone: body })
-        .subscribe((res) => {
+      this.http.post(`${environment.apiUrl}zones`, { zone: body }).subscribe(
+        (res) => {
           console.log('Zone has Added!');
           this.dialogRef.close();
-        });
-      this.dialogRef.close();
+        },
+        (error) => {
+          if (error.error.name_zone) {
+            this.zoneAddForm.controls['name_zone'].setErrors({
+              zoneAlready: true,
+            });
+          }
+        }
+      );
     } else if (this.data.method === 'editZone') {
       this.http
         .put(`${environment.apiUrl}zones/` + this.data.zone.id, { zone: body })

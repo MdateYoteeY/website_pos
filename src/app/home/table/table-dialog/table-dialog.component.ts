@@ -70,19 +70,8 @@ export class TableDialogComponent implements OnInit {
           this.dialogRef.close();
         });
     } else if (this.data.method === 'addTable') {
-      let id = this.tableForm.getRawValue().zone_id;
-      let zoneSelectName = '';
-
-      for (let i = 0; i < 3; i++) {
-        if (this.zone[i].id === id) {
-          console.log(this.zone[i].name_zone);
-          zoneSelectName = this.zone[i].name_zone;
-        }
-      }
-
       let body = {
-        table_number:
-          zoneSelectName + this.tableForm.getRawValue().table_number,
+        table_number: this.tableForm.getRawValue().table_number,
         zone_id: this.tableForm.getRawValue().zone_id,
         seat_amount: this.tableForm.getRawValue().seat_amount,
         status_table_id: this.tableForm.getRawValue().status_table_id,

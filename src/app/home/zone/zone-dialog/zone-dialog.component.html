@@ -13,6 +13,10 @@
         <mat-error *ngIf="zoneAddForm.get('name_zone').errors?.required"
           >กรุณาระบุ <strong>ชื่อโซนที่นั่ง</strong></mat-error
         >
+
+        <mat-error *ngIf="zoneAddForm.get('name_zone').errors?.zoneAlready"
+          >ชื่อโซนที่นั่ง <strong>มีอยู่แล้ว</strong></mat-error
+        >
       </mat-form-field>
     </div>
     <div class="btn-group">

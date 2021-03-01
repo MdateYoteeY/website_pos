@@ -39,6 +39,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 import { CommonModule } from '@angular/common';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.interceptor';
@@ -88,6 +90,7 @@ import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.intercepto
     MatSortModule,
     MatPaginatorModule,
     MatListModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     {
