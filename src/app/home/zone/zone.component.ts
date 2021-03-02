@@ -59,17 +59,39 @@ export class ZoneComponent implements AfterViewInit, OnInit {
   }
 
   deleteData(data: Zones): void {
-    // this.http.delete(`${environment.apiUrl}zones/` + data.id).subscribe(
-    //   (res) => {
-    //     console.log('Zone ' + data.name_zone + ' has delete!');
-    //     this.getZone();
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
-
-    Swal.fire('Hello Angular');
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบโซนที่นั่ง "' + data.name_zone + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete(`${environment.apiUrl}zones/` + data.id).subscribe(
+          (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'ลบเรียบร้อยแล้ว!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this.getZone();
+          },
+          (error) => {
+            Swal.fire({
+              icon: 'error',
+              text: 'โซนที่นั่งยังมีข้อมูล "โต๊ะที่นั่ง"',
+              title: 'เกิดข้อผิดพลาด!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            console.log(error);
+          }
+        );
+      }
+    });
   }
 }
 

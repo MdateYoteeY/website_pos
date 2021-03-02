@@ -7,6 +7,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MyErrorStateMatcher } from 'src/app/login/login.component';
 import { MustMatch } from 'src/assets/matchCheck';
 
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
   selector: 'app-account-dialog',
   templateUrl: './account-dialog.component.html',
@@ -96,7 +98,16 @@ export class AccountDialogComponent implements OnInit {
 
       this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
         (res) => {
-          console.log('Add Account success!!');
+          Swal.fire({
+            icon: 'success',
+            title: 'เพิ่มบัญชีสำเร็จ!',
+            text:
+              'บัญชี "' +
+              this.accountAddForm.getRawValue().username +
+              '" ถูกเพิ่มเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            timer: 1500,
+          });
           this.dialogRef.close();
         },
         (error) => {
@@ -136,8 +147,17 @@ export class AccountDialogComponent implements OnInit {
         })
         .subscribe(
           (res) => {
-            console.log('Update Account success!!');
             this.dialogRef.close();
+            Swal.fire({
+              icon: 'success',
+              title: 'แก้ไขบัญชีสำเร็จ!',
+              // text:
+              //   'บัญชี "' +
+              //   this.accountAddForm.getRawValue().username +
+              //   '" ถูกแก้ไขเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           },
           (error) => {
             this.accountAddForm.controls['username'].setErrors({

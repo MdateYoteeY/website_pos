@@ -8,6 +8,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { StatusTables, Tables } from 'src/app/model/table.model';
 import { environment } from 'src/environments/environment';
 
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -87,12 +89,29 @@ export class TableComponent implements OnInit {
   }
 
   deleteData(element: Tables): void {
-    this.http
-      .delete(`${environment.apiUrl}tables/` + element.id)
-      .subscribe((res) => {
-        console.log('Table ' + element.table_number + ' has delete!');
-        this.getTable();
-      });
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบโต๊ะ "' + element.table_number + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http
+          .delete(`${environment.apiUrl}tables/` + element.id)
+          .subscribe((res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'ลบเรียบร้อยแล้ว!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this.getTable();
+          });
+      }
+    });
   }
 }
 

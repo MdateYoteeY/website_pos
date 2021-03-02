@@ -188,9 +188,14 @@
     min-width: 600px;
     // padding: 20px;
     background: inherit;
-    height: fit-content;
+    height: auto;
 
     flex: 1;
+
+    .container {
+      width: 100%;
+      height: auto;
+    }
 
   }
 }

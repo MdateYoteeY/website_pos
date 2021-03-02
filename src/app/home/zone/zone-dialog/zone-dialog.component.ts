@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { method } from 'src/app/model/model.model';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-zone-dialog',
@@ -46,8 +47,17 @@ export class ZoneDialogComponent implements OnInit {
     if (this.data.method === 'addZone') {
       this.http.post(`${environment.apiUrl}zones`, { zone: body }).subscribe(
         (res) => {
-          console.log('Zone has Added!');
           this.dialogRef.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'เพิ่มโซนสำเร็จ!',
+            // text:
+            //   'โซน "' +
+            //   this.zoneAddForm.getRawValue().name_zone +
+            //   '" ถูกเพิ่มเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            timer: 1500,
+          });
         },
         (error) => {
           if (error.error.name_zone) {
@@ -60,10 +70,28 @@ export class ZoneDialogComponent implements OnInit {
     } else if (this.data.method === 'editZone') {
       this.http
         .put(`${environment.apiUrl}zones/` + this.data.zone.id, { zone: body })
-        .subscribe((res) => {
-          console.log('Zone has edited!');
-          this.dialogRef.close();
-        });
+        .subscribe(
+          (res) => {
+            this.dialogRef.close();
+            Swal.fire({
+              icon: 'success',
+              title: 'แก้ไขโซนสำเร็จ!',
+              // text:
+              //   'โซน "' +
+              //   this.zoneAddForm.getRawValue().name_zone +
+              //   '" ถูกแก้ไขเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          },
+          (error) => {
+            if (error.error.name_zone) {
+              this.zoneAddForm.controls['name_zone'].setErrors({
+                zoneAlready: true,
+              });
+            }
+          }
+        );
     }
   }
 

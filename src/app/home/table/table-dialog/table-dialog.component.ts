@@ -9,6 +9,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { environment } from 'src/environments/environment';
 
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
   selector: 'app-table-dialog',
   templateUrl: './table-dialog.component.html',
@@ -53,35 +55,43 @@ export class TableDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.data.method === 'editTable') {
-      let body = {
-        table_number: this.tableForm.getRawValue().table_number,
-        zone_id: this.tableForm.getRawValue().zone_id,
-        seat_amount: this.tableForm.getRawValue().seat_amount,
-        status_table_id: this.tableForm.getRawValue().status_table_id,
-      };
+    if (this.tableForm.invalid) {
+      return;
+    }
 
+    let body = {
+      table_number: this.tableForm.getRawValue().table_number,
+      zone_id: this.tableForm.getRawValue().zone_id,
+      seat_amount: this.tableForm.getRawValue().seat_amount,
+      status_table_id: this.tableForm.getRawValue().status_table_id,
+    };
+
+    if (this.data.method === 'editTable') {
       this.http
         .put(`${environment.apiUrl}tables/` + this.data.table.id, {
           table: body,
         })
         .subscribe((res) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'แก้ไขโต๊ะสำเร็จ!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
           console.log('Table updated!');
           this.dialogRef.close();
         });
     } else if (this.data.method === 'addTable') {
-      let body = {
-        table_number: this.tableForm.getRawValue().table_number,
-        zone_id: this.tableForm.getRawValue().zone_id,
-        seat_amount: this.tableForm.getRawValue().seat_amount,
-        status_table_id: this.tableForm.getRawValue().status_table_id,
-      };
-
       this.http
         .post(`${environment.apiUrl}tables`, { table: body })
         .subscribe((res) => {
-          console.log('Table Added!');
           this.dialogRef.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'เพิ่มโต๊ะสำเร็จ!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
     }
   }

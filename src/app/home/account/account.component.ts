@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -74,13 +76,38 @@ export class AccountComponent implements OnInit {
   }
 
   deleteData(data: Users): void {
-    if (data.status !== 'Admin') {
-      this.http
-        .delete(`${environment.apiUrl}users/` + data.id)
-        .subscribe((res) => {
-          this.getUser();
-        });
-    }
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบบัญชี "' + data.username + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete(`${environment.apiUrl}users/` + data.id).subscribe(
+          (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'ลบเรียบร้อยแล้ว!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this.getUser();
+          },
+          (error) => {
+            Swal.fire({
+              icon: 'error',
+              text: 'เกิดข้อผิดพลาดบางอย่างในการลบบัญชี',
+              title: 'เกิดข้อผิดพลาด!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        );
+      }
+    });
   }
 }
 
