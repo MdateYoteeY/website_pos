@@ -1,3 +1,4 @@
+import { CategoryComponent } from './category/category.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
@@ -45,6 +46,7 @@ import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion
     ProductsDialogComponent,
     StockDialogComponent,
     PromotionDialogComponent,
+    CategoryComponent,
   ],
 
   imports: [

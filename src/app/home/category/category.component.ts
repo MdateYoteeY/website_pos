@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Categories } from 'src/app/model/category';
+import { Categorys } from 'src/app/model/category';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class CategoryComponent implements OnInit {
   categoryForm: FormGroup;
   header = 'หมวดหมู่สินค้า';
-  category: Categories;
+  category: Categorys;
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
@@ -20,7 +20,7 @@ export class CategoryComponent implements OnInit {
   getCategory(): void {
     this.http
       .get(`${environment.apiUrl}categories`)
-      .subscribe((res: Categories) => {
+      .subscribe((res: Categorys) => {
         this.category = res;
       });
   }
