@@ -6,10 +6,11 @@ import { MainComponent } from './main/main.component';
 import { PromotionComponent } from './promotion/promotion.component';
 import { ReportComponent } from './report/page3.component';
 import { StockProductComponent } from './stock-product/page2.component';
-import { ProductComponent } from './product/page1.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,8 +23,8 @@ const routes: Routes = [
         component: MainComponent,
       },
       {
-        path: 'product',
-        component: ProductComponent,
+        path: 'products',
+        component: ProductsComponent,
       },
       {
         path: 'promotion',
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'stock-product',
         component: StockProductComponent,
+      },
+      {
+        path: 'categories',
+        component: CategoriesComponent,
       },
       {
         path: 'report',

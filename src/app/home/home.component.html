@@ -81,26 +81,34 @@
         <p>Products</p>
         <div class="list-menu">
           <mat-list-item
-            routerLink="product"
+            routerLink="products"
             [routerLinkActive]="['is-active']"
           >
             Product
           </mat-list-item>
+
           <mat-list-item
             routerLink="stock-product"
             [routerLinkActive]="['is-active']"
           >
             Stock product
           </mat-list-item>
+
           <mat-list-item
             routerLink="promotion"
             [routerLinkActive]="['is-active']"
           >
             Promotion
           </mat-list-item>
-          <mat-list-item [routerLinkActive]="['is-active']">
+
+          <mat-list-item
+            routerLink= "categories"
+            [routerLinkActive]="['is-active']"
+          >
             Category
           </mat-list-item>
+
+
         </div>
 
         <p>Table</p>

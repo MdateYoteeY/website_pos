@@ -1,0 +1,31 @@
+<div class="container">
+  <form [formGroup]="stockForm">
+    <div class="acc-box-1">
+      <p class="header">{{ header }}</p>
+
+      <table>
+        <tr>
+          <th>ชื่อ</th>
+          <th>จำนวน</th>
+          <th>ราคา</th>
+        </tr>
+
+        <tr
+          *ngFor="let item of stocklist?.Item; let i = index"
+          [attr.data-index]="i"
+        >
+          <td style="text-align: left">{{ item.name }}</td>
+          <td>{{ item.list_amount }}</td>
+          <td>{{ item.price }}</td>
+        </tr>
+
+      </table>
+
+
+    </div>
+    <div class="btn-group">
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

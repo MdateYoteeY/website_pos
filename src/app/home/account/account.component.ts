@@ -6,6 +6,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',
@@ -27,7 +29,7 @@ export class AccountComponent implements OnInit {
   staff: Array<Staff>;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
-
+  search = new FormControl();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
@@ -36,10 +38,13 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
+    this.search.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
+      this.getUser({ keywords: val });
+    });
   }
 
-  getUser(): void {
-    this.http.get(`${environment.apiUrl}users`).subscribe((res: Users[]) => {
+  getUser(params?: any): void {
+    this.http.get(`${environment.apiUrl}users`,{ params }).subscribe((res: Users[]) => {
       this.dataSource.data = res;
     });
   }

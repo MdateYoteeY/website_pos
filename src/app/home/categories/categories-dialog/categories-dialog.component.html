@@ -1,0 +1,19 @@
+<div class="container">
+  <form [formGroup]="categoryAddForm">
+    <div class="acc-box-1">
+      <p class="header">{{ header }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>ชื่อหมวดหมู่</mat-label>
+        <input
+          matInput
+          formControlName="category_name"
+          placeholder="ชื่อหมวดหมู่.."
+        />
+      </mat-form-field>
+    </div>
+    <div class="btn-group">
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

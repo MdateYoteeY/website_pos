@@ -1,14 +1,31 @@
+import { Types } from './type';
+import { PromotionItems } from './promotionitem';
+import { Promotion, PromotionList } from './promotion';
+import { StockList } from './stock';
+import { Categorys } from './category';
 import { StatusTables } from './table.model';
 import { Tables } from 'src/app/model/table.model';
 import { Zones } from './zone.model';
+import { StatusProducts } from './status';
+import { Stocks } from './stockproduct';
+import { Products } from './product';
 
 export interface method {
+  stock?: Stocks;
+  product?: Products;
+  category: Categorys;
   method?: string;
   staff?: Array<Staff>;
   user?: Users;
   zone?: Zones;
   table?: Tables;
   tableStatus?: StatusTables;
+  Category?: Categorys;
+  statusproduct?: StatusProducts;
+  stocklist?: StockList;
+  promotion?: Promotion;
+  promotionlist?: PromotionList;
+  type?: Types;
 }
 
 export interface Users {

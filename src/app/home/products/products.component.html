@@ -1,0 +1,81 @@
+<div class="container">
+  <p>สินค้า</p>
+  <div class="header">
+    <div class="text-container">
+      ค้นหารายการ<input type="text" placeholder="ค้นหา..." [formControl]="search" /><span
+        class="material-icons"
+      >
+        search
+      </span>
+    </div>
+    <div>
+      <button mat-raised-button (click)="openDialog('addProduct')">
+        เพิ่มสินค้า
+      </button>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>รหัสสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.id">
+        {{ element.id }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>ชื่อสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.product_name">
+        {{ element.product_name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>ประเภทสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.type">
+        {{ element.type }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>ราคาสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.product_price">
+        {{ element.product_price }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>จำนวนสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.product_amount">
+        {{ element.product_amount }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>สถานะสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.status_product_id">
+        {{ element.status }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <span class="material-icons edit" (click)="editData(element)">
+          mode_edit_outline
+        </span>
+        <span class="material-icons delete" (click)="deleteData(element)">
+          delete_forever
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

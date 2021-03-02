@@ -20,6 +20,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ZoneDialogComponent } from './zone/zone-dialog/zone-dialog.component';
 import { TableComponent } from './table/table.component';
 import { TableDialogComponent } from './table/table-dialog/table-dialog.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { CategoriesDialogComponent } from './categories/categories-dialog/categories-dialog.component';
+import { ProductsComponent } from './products/products.component';
+import { ProductsDialogComponent } from './products/products-dialog/products-dialog.component';
+import { StockDialogComponent } from './stock-product/stock-dialog/stock-dialog.component';
+import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion-dialog.component';
 @NgModule({
   declarations: [
     ProductComponent,
@@ -33,6 +39,12 @@ import { TableDialogComponent } from './table/table-dialog/table-dialog.componen
     ZoneDialogComponent,
     TableComponent,
     TableDialogComponent,
+    CategoriesComponent,
+    CategoriesDialogComponent,
+    ProductsComponent,
+    ProductsDialogComponent,
+    StockDialogComponent,
+    PromotionDialogComponent,
   ],
 
   imports: [

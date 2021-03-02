@@ -1,0 +1,61 @@
+<div class="container">
+  <p>หมวดหมู่สินค้า</p>
+  <div class="header">
+    <div class="text-container">
+      ค้นหารายการ<input type="text" placeholder="ค้นหา..." /><span
+        class="material-icons"
+      >
+        search
+      </span>
+    </div>
+    <div>
+      <button mat-raised-button (click)="openDialog('addCategory')">
+        เพิ่มหมวดหมู่
+      </button>
+    </div>
+
+    <!-- <form [formGroup]="form">
+      <p>จัดการโซนที่นั่ง</p>
+      <mat-form-field appearance="outline">
+        <mat-label value=" ">Zone</mat-label>
+        <mat-select [formControl]="zoneControl" name="zone">
+          <mat-option value=" ">All</mat-option>
+          <mat-option *ngFor="let zone of zones" [value]="zone.id">{{
+            zone.name_zone
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div> -->
+
+    <div class="body">
+      <div style="position: relative">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef>ชื่อหมวดหมู่</th>
+            <td mat-cell *matCellDef="let element">{{ element.category_name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell class="action" *matHeaderCellDef></th>
+            <td mat-cell class="action" *matCellDef="let element">
+              <span class="material-icons edit" (click)="editData(element)">
+                mode_edit_outline
+              </span>
+              <span class="material-icons delete" (click)="deleteData(element)">
+                delete_forever
+              </span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

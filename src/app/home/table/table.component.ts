@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { StatusTables, Tables } from 'src/app/model/table.model';
 import { environment } from 'src/environments/environment';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-table',
@@ -21,12 +23,16 @@ export class TableComponent implements OnInit {
   status_table: StatusTables;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
+  search = new FormControl();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
     this.getTable();
     this.getZone();
     this.getStatusTable();
+    this.search.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
+      this.getTable({ zone_id: val });
+    });
   }
 
   ngAfterViewInit() {
@@ -47,8 +53,8 @@ export class TableComponent implements OnInit {
       });
   }
 
-  getTable(): void {
-    this.http.get(`${environment.apiUrl}tables`).subscribe((res: Tables[]) => {
+  getTable(params?: any): void {
+    this.http.get(`${environment.apiUrl}tables` , { params }).subscribe((res: Tables[]) => {
       this.dataSource.data = res;
     });
   }
@@ -63,6 +69,8 @@ export class TableComponent implements OnInit {
           tableStatus: this.status_table,
         },
       });
+
+
     } else if (method === 'addTable') {
       const dialogRef = this.dialog.open(TableDialogComponent, {
         data: {
@@ -72,6 +80,7 @@ export class TableComponent implements OnInit {
         },
       });
     }
+
 
     this.dialog.afterAllClosed.subscribe((res) => {
       this.getTable();

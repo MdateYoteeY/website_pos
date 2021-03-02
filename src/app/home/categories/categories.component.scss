@@ -1,0 +1,16 @@
+
+@import "../../../assets/mainCss.scss";
+.container {
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    table {
+      width: 40%;
+      margin-left: 30%;
+    }
+  }
+
+}
