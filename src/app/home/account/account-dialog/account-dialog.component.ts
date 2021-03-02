@@ -3,8 +3,11 @@ import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DialogComponent } from '../../dialog/dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MyErrorStateMatcher } from 'src/app/login/login.component';
+import { MustMatch } from 'src/assets/matchCheck';
+
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-account-dialog',
@@ -13,31 +16,29 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AccountDialogComponent implements OnInit {
   accountAddForm: FormGroup;
+
+  errorRes: ErrorResponse;
+
+  matcher = new MyErrorStateMatcher();
   dataDialog: method;
   user: Users;
   check = true;
   passwordView = true;
-  errorRes: ErrorResponse;
   header = 'เพิ่มบัญชีผู้ใช้งาน';
+  forbiddenUsernames = ['admin'];
+
+  userAlready = true;
 
   constructor(
     private formBuilder: FormBuilder,
+
     private http: HttpClient,
     public dialogRef: MatDialogRef<AccountDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
-  ) {
-    this.accountAddForm = this.formBuilder.group({
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
-      phone_number: ['', Validators.required],
-      staff_id: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      password_confirmation: ['', Validators.required],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.createForm();
     this.dataDialog = this.data;
 
     if (this.data.method === 'editAccount') {
@@ -48,12 +49,42 @@ export class AccountDialogComponent implements OnInit {
     }
   }
 
+  createForm(): void {
+    this.accountAddForm = this.formBuilder.group(
+      {
+        firstname: ['', Validators.required],
+        lastname: ['', Validators.required],
+        phone_number: [
+          '',
+          [
+            Validators.compose([
+              Validators.required,
+              Validators.minLength(9),
+              Validators.maxLength(10),
+              Validators.pattern('[0][0-9]{9}'),
+            ]),
+          ],
+        ],
+        staff_id: ['', Validators.required],
+        username: ['', [Validators.required]],
+        password: [null, [Validators.minLength(8)]],
+        password_confirmation: [null],
+      },
+      {
+        validators: [MustMatch('password', 'password_confirmation')],
+      }
+    );
+  }
+
   editPass(): void {
     this.passwordView = !this.passwordView;
   }
 
   onSubmit(): void {
     if (this.data.method !== 'editAccount') {
+      if (this.accountAddForm.invalid) {
+        return;
+      }
       let body = {
         firstname: this.accountAddForm.getRawValue().firstname,
         lastname: this.accountAddForm.getRawValue().lastname,
@@ -67,41 +98,73 @@ export class AccountDialogComponent implements OnInit {
 
       this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
         (res) => {
-          console.log('Add Account success!!');
+          Swal.fire({
+            icon: 'success',
+            title: 'เพิ่มบัญชีสำเร็จ!',
+            text:
+              'บัญชี "' +
+              this.accountAddForm.getRawValue().username +
+              '" ถูกเพิ่มเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.dialogRef.close();
         },
         (error) => {
-          this.errorRes = error;
-          console.log(this.errorRes.error.errors);
+          this.accountAddForm.controls['username'].setErrors({
+            userAlready: true,
+          });
         }
       );
-      this.dialogRef.close();
     } else if (this.data.method === 'editAccount') {
-      let body = {
-        firstname: this.accountAddForm.getRawValue().firstname,
-        lastname: this.accountAddForm.getRawValue().lastname,
-        phone_number: this.accountAddForm.getRawValue().phone_number,
-        staff_id: this.accountAddForm.getRawValue().staff_id,
-        username: this.accountAddForm.getRawValue().username,
-      };
-      if (
-        this.accountAddForm.get('password').value &&
-        this.accountAddForm.get('password_confirmation').value !== null
-      ) {
+      if (this.accountAddForm.invalid) {
+        return;
       }
+      let body = {};
+
+      if (this.accountAddForm.getRawValue().password !== null) {
+        body = {
+          firstname: this.accountAddForm.getRawValue().firstname,
+          lastname: this.accountAddForm.getRawValue().lastname,
+          phone_number: this.accountAddForm.getRawValue().phone_number,
+          staff_id: this.accountAddForm.getRawValue().staff_id,
+          username: this.accountAddForm.getRawValue().username,
+          password: this.accountAddForm.getRawValue().password,
+        };
+      } else {
+        body = {
+          firstname: this.accountAddForm.getRawValue().firstname,
+          lastname: this.accountAddForm.getRawValue().lastname,
+          phone_number: this.accountAddForm.getRawValue().phone_number,
+          staff_id: this.accountAddForm.getRawValue().staff_id,
+          username: this.accountAddForm.getRawValue().username,
+        };
+      }
+
       this.http
         .put(`${environment.apiUrl}users/` + this.data.user.id, {
           user: body,
         })
         .subscribe(
           (res) => {
-            console.log('Update Account success!!');
+            this.dialogRef.close();
+            Swal.fire({
+              icon: 'success',
+              title: 'แก้ไขบัญชีสำเร็จ!',
+              // text:
+              //   'บัญชี "' +
+              //   this.accountAddForm.getRawValue().username +
+              //   '" ถูกแก้ไขเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           },
           (error) => {
-            this.errorRes = error;
-            console.log(this.errorRes.error);
+            this.accountAddForm.controls['username'].setErrors({
+              userAlready: true,
+            });
           }
         );
-      this.dialogRef.close();
     }
   }
 

@@ -11,6 +11,9 @@
             matInput
             placeholder="ชื่อจริง.."
           />
+          <mat-error *ngIf="accountAddForm.get('firstname').errors?.required"
+            >กรุณาระบุ <strong>ชื่อจริง</strong></mat-error
+          >
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -21,6 +24,9 @@
             matInput
             placeholder="นามสกุล.."
           />
+          <mat-error *ngIf="accountAddForm.get('lastname').errors?.required"
+            >กรุณาระบุ <strong>นามสกุล</strong></mat-error
+          >
         </mat-form-field>
       </div>
 
@@ -32,7 +38,18 @@
           id="phoneNumber"
           formControlName="phone_number"
           placeholder="เบอร์โทรศัพท์.."
+          maxlength="10"
+          minlength="10"
+          #tel
         />
+
+        <mat-hint align="end">{{ tel.value?.length || 0 }}/10</mat-hint>
+        <mat-error *ngIf="accountAddForm.get('phone_number').errors?.required"
+          >กรุณาระบุ <strong>เบอร์โทรศัพท์</strong></mat-error
+        >
+        <mat-error *ngIf="accountAddForm.get('phone_number').errors?.pattern"
+          >กรุณาระบุ <strong>รูปแบบเบอร์โทรศัพท์</strong> ให้ถูกต้อง</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -42,7 +59,11 @@
             item.status
           }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="accountAddForm.get('staff_id').errors?.required"
+          >กรุณาระบุ <strong>สถานะ</strong></mat-error
+        >
       </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
         <input
@@ -50,7 +71,15 @@
           id="username"
           formControlName="username"
           placeholder="Username.."
+          required
         />
+        <mat-error *ngIf="accountAddForm.get('username').errors?.required"
+          >กรุณาระบุ <strong>ชื่อบัญชีผู้ใช้งาน</strong></mat-error
+        >
+        <!-- <div *ngIf="errors?.username"> -->
+        <mat-error *ngIf="accountAddForm.get('username').errors?.userAlready">
+          ชื่อบัญชีผู้ใช้งาน <strong>มีอยู่แล้ว</strong>
+        </mat-error>
       </mat-form-field>
       <div>
         <div *ngIf="!check">
@@ -68,7 +97,14 @@
           type="password"
           formControlName="password"
           placeholder="Password.."
+          required
         />
+        <mat-error *ngIf="accountAddForm.get('password').errors?.required"
+          >กรุณาระบุ <strong>รหัสผ่าน</strong></mat-error
+        >
+        <mat-error *ngIf="accountAddForm.get('password').errors?.minlength"
+          >กรุณาระบุรหัสผ่าน <strong>อย่างน้อย 8 ตัว </strong></mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline" *ngIf="passwordView">
@@ -78,8 +114,18 @@
           id="passwordConfirmation"
           type="password"
           formControlName="password_confirmation"
+          required
           placeholder="Password Confirmation.."
         />
+        <mat-error
+          *ngIf="accountAddForm.get('password_confirmation').errors?.required"
+          >กรุณา <strong>ยืนยันรหัสผ่าน</strong></mat-error
+        >
+        <mat-error
+          *ngIf="accountAddForm.get('password_confirmation').errors?.mustMatch"
+        >
+          รหัสผ่าน <strong>ไม่ตรงกัน</strong>
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="btn-group">

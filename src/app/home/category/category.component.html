@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="tableForm">
+  <form [formGroup]="categoryForm">
     <div class="acc-box-1">
       <p class="header">{{ header }}</p>
       <mat-form-field appearance="outline">
@@ -10,32 +10,23 @@
           matInput
           placeholder="หมายเลขโต๊ะ.."
         />
-        <mat-error *ngIf="tableForm.get('table_number').errors?.required"
-          >กรุณาระบุ <strong>หมายเลขโต๊ะ</strong></mat-error
-        >
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>โซนที่นั่ง</mat-label>
-        <mat-select id="zone_id" formControlName="zone_id">
-          <mat-option *ngFor="let item of zone" [value]="item.id">{{
+        <mat-label>ชื่อหมวดหมู่</mat-label>
+        <mat-select id="category_name" formControlName="category_name">
+          <mat-option *ngFor="let item of category" [value]="item.id">{{
             item.name_zone
           }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="tableForm.get('zone_id').errors?.required"
-          >กรุณาระบุ <strong>โซนที่นั่ง</strong></mat-error
-        >
       </mat-form-field>
 
-      <mat-form-field appearance="outline" *ngIf="!tableAdd">
+      <mat-form-field appearance="outline">
         <mat-label>สถานะโต๊ะ</mat-label>
         <mat-select id="status_table_id" formControlName="status_table_id">
-          <mat-option *ngFor="let item of status_table" [value]="item.id">
+          <mat-option *ngFor="let item of category" [value]="item.id">
             {{ item.table_status }}s
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="tableForm.get('status_table_id').errors?.required"
-          >กรุณาระบุ <strong>สถานะโต๊ะ</strong></mat-error
-        >
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -47,9 +38,6 @@
           matInput
           placeholder="จำนวนที่นั่ง.."
         />
-        <mat-error *ngIf="tableForm.get('seat_amount').errors?.required"
-          >กรุณาระบุ <strong>จำนวนที่นั่ง</strong></mat-error
-        >
       </mat-form-field>
     </div>
     <div class="btn-group">

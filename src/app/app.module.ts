@@ -1,7 +1,7 @@
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,6 +38,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
+
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { CommonModule } from '@angular/common';
 import { AuthorizationComponent } from './authorization/authorization.component';
@@ -88,6 +90,7 @@ import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.intercepto
     MatSortModule,
     MatPaginatorModule,
     MatListModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     {

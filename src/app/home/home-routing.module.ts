@@ -1,3 +1,4 @@
+import { CategoryComponent } from './category/category.component';
 import { TableComponent } from './table/table.component';
 import { ZoneComponent } from './zone/zone.component';
 import { LoginComponent } from './../login/login.component';
@@ -55,6 +56,9 @@ const routes: Routes = [
           ),
       },
       { path: 'table', component: TableComponent },
+      {
+        path: 'category',component: CategoryComponent
+      },
     ],
   },
 ];
