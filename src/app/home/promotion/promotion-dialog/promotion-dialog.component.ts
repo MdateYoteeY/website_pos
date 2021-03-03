@@ -2,7 +2,6 @@ import { PromotionList } from './../../../model/promotion';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { Promotion } from 'src/app/model/promotion';
 import { StockList } from 'src/app/model/stock';
