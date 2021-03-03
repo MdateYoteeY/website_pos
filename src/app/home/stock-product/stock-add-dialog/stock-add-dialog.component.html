@@ -1,0 +1,49 @@
+<div class="container">
+  <form [formGroup]="stocklistForm">
+    <div class="acc-box-1">
+      <p class="header">{{ header }}</p>
+      <div class="form-row" *ngFor="let obj of dataarray; let i=index">
+
+      <mat-form-field appearance="outline">
+        <mat-label>สินค้า</mat-label>
+        <mat-select id="product_id{{i}}" formControlName="product_id">
+          <mat-option *ngFor="let item of product" [value]="item.product_id">{{
+            item.product_name
+          }}</mat-option>
+        </mat-select>
+
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>จำนวนสินค้า</mat-label>
+        <input
+          id="list_amount{{i}}"
+          formControlName="list_amount"
+          matInput
+          placeholder="จำนวนสินค้า.."
+        />
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>ราคาสินค้า</mat-label>
+        <input
+          id="price{{i}}"
+
+          formControlName="price"
+          matInput
+          placeholder="ราคาสินค้า.."
+        />
+
+      </mat-form-field>
+      <div class="btn-group" *ngIf="i!=0">
+      <button id="remove" type="remove"  (click)="removeForm(i)">-</button>
+    </div>
+    </div>
+    </div>
+    <div class="btn-group">
+      <button id="add" type="add" (click)="addForm()">+</button>
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

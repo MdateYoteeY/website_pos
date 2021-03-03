@@ -19,3 +19,15 @@ interface Item {
   created_at: string;
   updated_at: string;
 }
+interface RootObject {
+  stock: StockProduct;
+}
+
+ interface StockProduct {
+  stoct_list: Stoctlistproduct[];
+}
+export interface Stoctlistproduct {
+  product_id: number;
+  list_amount: number;
+  price: number;
+}

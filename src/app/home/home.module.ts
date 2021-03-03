@@ -27,6 +27,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductsDialogComponent } from './products/products-dialog/products-dialog.component';
 import { StockDialogComponent } from './stock-product/stock-dialog/stock-dialog.component';
 import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion-dialog.component';
+import { StockAddDialogComponent } from './stock-product/stock-add-dialog/stock-add-dialog.component';
 @NgModule({
   declarations: [
     ProductComponent,
@@ -47,6 +48,7 @@ import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion
     StockDialogComponent,
     PromotionDialogComponent,
     CategoryComponent,
+    StockAddDialogComponent,
   ],
 
   imports: [
