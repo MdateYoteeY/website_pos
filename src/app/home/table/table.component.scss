@@ -54,7 +54,7 @@ table {
   border-top-right-radius: 5px;
   box-sizing: border-box;
 
-  .Blank,
+  .Ready,
   .Busy,
   .Reserve {
     text-align: center;
@@ -65,7 +65,7 @@ table {
     margin: auto;
   }
 
-  .Blank {
+  .Ready {
     color: #fff;
     background: $greenButton;
   }

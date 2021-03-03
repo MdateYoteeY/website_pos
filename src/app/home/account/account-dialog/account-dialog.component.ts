@@ -29,6 +29,9 @@ export class AccountDialogComponent implements OnInit {
 
   userAlready = true;
 
+  fileToUpload: File = null;
+  img: any;
+
   constructor(
     private formBuilder: FormBuilder,
 
@@ -69,6 +72,7 @@ export class AccountDialogComponent implements OnInit {
         username: ['', [Validators.required]],
         password: [null, [Validators.minLength(8)]],
         password_confirmation: [null],
+        img: [''],
       },
       {
         validators: [MustMatch('password', 'password_confirmation')],
@@ -76,15 +80,40 @@ export class AccountDialogComponent implements OnInit {
     );
   }
 
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.accountAddForm.get('img').setValue(file);
+    }
+  }
+
   editPass(): void {
     this.passwordView = !this.passwordView;
   }
 
   onSubmit(): void {
+    const formData = new FormData();
+
     if (this.data.method !== 'editAccount') {
       if (this.accountAddForm.invalid) {
         return;
       }
+
+      // formData.append('firstname', this.accountAddForm.get('firstname').value);
+      // formData.append('lastname', this.accountAddForm.get('lastname').value);
+      // formData.append(
+      //   'phone_number',
+      //   this.accountAddForm.get('phone_number').value
+      // );
+      // formData.append('staff_id', this.accountAddForm.get('staff_id').value);
+      // formData.append('username', this.accountAddForm.get('username').value);
+      // formData.append('password', this.accountAddForm.get('password').value);
+      // formData.append(
+      //   'password_confirmation',
+      //   this.accountAddForm.get('password_confirmation').value
+      // );
+      formData.append('img', this.accountAddForm.get('img').value);
+
       let body = {
         firstname: this.accountAddForm.getRawValue().firstname,
         lastname: this.accountAddForm.getRawValue().lastname,
@@ -94,7 +123,15 @@ export class AccountDialogComponent implements OnInit {
         password: this.accountAddForm.getRawValue().password,
         password_confirmation: this.accountAddForm.getRawValue()
           .password_confirmation,
+        img: formData.get('img'),
       };
+
+      // let body = {};
+      // formData.forEach(function (value, key) {
+      //   body[key] = value;
+      // });
+      // let bodys = JSON.stringify(body);
+      console.log(body);
 
       this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
         (res) => {
@@ -121,7 +158,6 @@ export class AccountDialogComponent implements OnInit {
         return;
       }
       let body = {};
-
       if (this.accountAddForm.getRawValue().password !== null) {
         body = {
           firstname: this.accountAddForm.getRawValue().firstname,
@@ -130,6 +166,7 @@ export class AccountDialogComponent implements OnInit {
           staff_id: this.accountAddForm.getRawValue().staff_id,
           username: this.accountAddForm.getRawValue().username,
           password: this.accountAddForm.getRawValue().password,
+          img: formData.get('img').toString(),
         };
       } else {
         body = {
@@ -138,6 +175,7 @@ export class AccountDialogComponent implements OnInit {
           phone_number: this.accountAddForm.getRawValue().phone_number,
           staff_id: this.accountAddForm.getRawValue().staff_id,
           username: this.accountAddForm.getRawValue().username,
+          img: formData.get('img').toString(),
         };
       }
 
@@ -151,10 +189,6 @@ export class AccountDialogComponent implements OnInit {
             Swal.fire({
               icon: 'success',
               title: 'แก้ไขบัญชีสำเร็จ!',
-              // text:
-              //   'บัญชี "' +
-              //   this.accountAddForm.getRawValue().username +
-              //   '" ถูกแก้ไขเรียบร้อยแล้ว',
               showConfirmButton: false,
               timer: 1500,
             });

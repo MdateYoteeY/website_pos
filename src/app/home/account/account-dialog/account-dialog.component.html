@@ -2,6 +2,14 @@
   <form [formGroup]="accountAddForm">
     <div class="acc-box-1">
       <p class="header">{{ header }}</p>
+      <!-- <a (change)="onFileSelect($event)" type="file" name="image">เลือกไฟล์</a> -->
+      <input
+        type="file"
+        class="chooseFile"
+        (change)="onFileSelect($event)"
+        name="img"
+        placeholder="เลือกไฟล์.."
+      />
       <div>
         <mat-form-field appearance="outline" style="margin-right: 15px">
           <mat-label>ชื่อจริง</mat-label>

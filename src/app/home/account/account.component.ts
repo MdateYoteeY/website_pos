@@ -46,9 +46,11 @@ export class AccountComponent implements OnInit {
   }
 
   getUser(params?: any): void {
-    this.http.get(`${environment.apiUrl}users`,{ params }).subscribe((res: Users[]) => {
-      this.dataSource.data = res;
-    });
+    this.http
+      .get(`${environment.apiUrl}users`, { params })
+      .subscribe((res: Users[]) => {
+        this.dataSource.data = res;
+      });
   }
 
   async openDialog(method?: string, userEdit?: Users) {

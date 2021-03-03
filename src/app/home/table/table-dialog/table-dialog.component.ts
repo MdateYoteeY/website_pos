@@ -4,7 +4,12 @@ import { Tables } from 'src/app/model/table.model';
 import { Zones } from './../../../model/zone.model';
 import { TableComponent } from './../table.component';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  PatternValidator,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { environment } from 'src/environments/environment';
@@ -29,44 +34,40 @@ export class TableDialogComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<TableComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.tableForm = this.fb.group({
       table_number: ['', Validators.required],
       zone_id: ['', Validators.required],
-      seat_amount: [
-        '',
-        [Validators.required, Validators.pattern('(0|[1-9]d*)')],
-      ],
+      seat_amount: ['', Validators.min(0)],
       status_table_id: ['', Validators.required],
     });
-  }
 
-  ngOnInit(): void {
     this.zone = this.data.zone;
     this.status_table = this.data.tableStatus;
 
     if (this.data.method === 'editTable') {
       this.tableForm.patchValue(this.data.table);
       this.header = 'แก้ไขโต๊ะที่นั่ง';
-      this.tableAdd = false;
     } else if (this.data.method === 'addTable') {
       this.header = 'เพิ่มโต๊ะที่นั่ง';
+      this.tableAdd = !this.tableAdd;
     }
   }
 
   onSubmit(): void {
-    if (this.tableForm.invalid) {
-      return;
-    }
-
-    let body = {
-      table_number: this.tableForm.getRawValue().table_number,
-      zone_id: this.tableForm.getRawValue().zone_id,
-      seat_amount: this.tableForm.getRawValue().seat_amount,
-      status_table_id: this.tableForm.getRawValue().status_table_id,
-    };
-
     if (this.data.method === 'editTable') {
+      if (this.tableForm.invalid) {
+        return;
+      }
+      let body = {
+        table_number: this.tableForm.getRawValue().table_number,
+        zone_id: this.tableForm.getRawValue().zone_id,
+        seat_amount: this.tableForm.getRawValue().seat_amount,
+        status_table_id: this.tableForm.getRawValue().status_table_id,
+      };
+
       this.http
         .put(`${environment.apiUrl}tables/` + this.data.table.id, {
           table: body,
@@ -82,24 +83,19 @@ export class TableDialogComponent implements OnInit {
           this.dialogRef.close();
         });
     } else if (this.data.method === 'addTable') {
-      // let id = this.tableForm.getRawValue().zone_id;
-      // let zoneSelectName = '';
-
-      // for (let i = 0; i < 3; i++) {
-      //   if (this.zone[i].id === id) {
-      //     console.log(this.zone[i].name_zone);
-      //     zoneSelectName = this.zone[i].name_zone;
-      //   }
-      // }
-
+      if (
+        this.tableForm.controls['table_number'].invalid &&
+        this.tableForm.controls['zone_id'].invalid
+      ) {
+        return;
+      }
       let body = {
-        table_number:
-          this.tableForm.getRawValue().table_number,
+        table_number: this.tableForm.getRawValue().table_number,
         zone_id: this.tableForm.getRawValue().zone_id,
         seat_amount: this.tableForm.getRawValue().seat_amount,
-        status_table_id: this.tableForm.getRawValue().status_table_id,
       };
 
+      console.log('add table');
       this.http
         .post(`${environment.apiUrl}tables`, { table: body })
         .subscribe((res) => {

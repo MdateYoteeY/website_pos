@@ -18,12 +18,17 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'zone', 'seat', 'status', 'action'];
+  displayedColumns: string[] = [
+    'id',
+    'zone',
+    'seat_amount',
+    'status',
+    'action',
+  ];
   dataSource = new MatTableDataSource<Tables>(ELEMENT_DATA);
   table: Tables;
   zone: Zones[];
   status_table: StatusTables;
-  zoneLength: number;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   search = new FormControl();
@@ -45,7 +50,6 @@ export class TableComponent implements OnInit {
   getZone(): void {
     this.http.get(`${environment.apiUrl}zones`).subscribe((res: Zones[]) => {
       this.zone = res;
-      this.zoneLength = res.length;
       console.log(res);
     });
   }
@@ -59,9 +63,11 @@ export class TableComponent implements OnInit {
   }
 
   getTable(params?: any): void {
-    this.http.get(`${environment.apiUrl}tables` , { params }).subscribe((res: Tables[]) => {
-      this.dataSource.data = res;
-    });
+    this.http
+      .get(`${environment.apiUrl}tables`, { params })
+      .subscribe((res: Tables[]) => {
+        this.dataSource.data = res;
+      });
   }
 
   openDialog(method: string, element?: Tables): void {
@@ -74,19 +80,15 @@ export class TableComponent implements OnInit {
           tableStatus: this.status_table,
         },
       });
-
-
     } else if (method === 'addTable') {
       const dialogRef = this.dialog.open(TableDialogComponent, {
         data: {
           method: method,
           zone: this.zone,
           tableStatus: this.status_table,
-          zoneLength: this.zoneLength,
         },
       });
     }
-
 
     this.dialog.afterAllClosed.subscribe((res) => {
       this.getTable();
