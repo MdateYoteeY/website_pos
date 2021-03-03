@@ -1,3 +1,5 @@
+import { MatSortModule } from '@angular/material/sort';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CategoryComponent } from './category/category.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -27,6 +29,8 @@ import { ProductsComponent } from './products/products.component';
 import { ProductsDialogComponent } from './products/products-dialog/products-dialog.component';
 import { StockDialogComponent } from './stock-product/stock-dialog/stock-dialog.component';
 import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion-dialog.component';
+import { ListPromotionDialogComponent } from './promotion/list-promotion-dialog/list-promotion-dialog.component';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     ProductComponent,
@@ -47,6 +51,7 @@ import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion
     StockDialogComponent,
     PromotionDialogComponent,
     CategoryComponent,
+    ListPromotionDialogComponent,
   ],
 
   imports: [
@@ -60,6 +65,9 @@ import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSortModule,
   ],
 })
 export class HomeModule {}

@@ -1,27 +1,63 @@
 <div class="container">
-  <form [formGroup]="promotionForm">
+  <form [formGroup]="promotionAddForm">
     <div class="acc-box-1">
       <p class="header">{{ header }}</p>
+      <div>
+        <mat-form-field appearance="outline" style="margin-right: 15px">
+          <mat-label>ชื่อโปรโมชั่น</mat-label>
+          <input
+            id="promotion_name"
+            formControlName="promotion_name"
+            matInput
+            placeholder="ชื่อโปรโมชั่น..."
+          />
+          <mat-error
+            *ngIf="promotionAddForm.get('promotion_name').errors?.required"
+            >กรุณาระบุ <strong>ชื่อโปรโมชั่น</strong></mat-error
+          >
+        </mat-form-field>
 
-      <table>
-        <tr>
-          <th>ชื่อ</th>
-          <th>จำนวน</th>
-          <th>ราคา</th>
-        </tr>
+        <mat-form-field appearance="outline">
+          <mat-label>ส่วนลด %</mat-label>
+          <input
+            id="discount"
+            formControlName="discount"
+            matInput
+            placeholder="ส่วนลด %.."
+          />
+          <mat-error *ngIf="promotionAddForm.get('discount').errors?.required"
+            >กรุณาระบุ <strong>ส่วนลด</strong></mat-error
+          >
+        </mat-form-field>
+      </div>
 
-        <tr
-          *ngFor="let item of promotionlist?.item; let i = index"
-          [attr.data-index]="i"
+      <mat-form-field appearance="outline">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            matStartDate
+            placeholder="Ex:1/01/2021"
+            id="start_date"
+            formControlName="start_date"
+          />
+          <input
+            matEndDate
+            placeholder="Ex:2/01/2021"
+            id="end_date"
+            formControlName="end_date"
+          />
+        </mat-date-range-input>
+        <mat-error *ngIf="promotionAddForm.get('start_date').errors?.required"
+          >กรุณาระบุ <strong>วันเริ่มโปรโมชั่น</strong></mat-error
         >
-          <td style="text-align: left">{{ item.product }}</td>
-          <td>{{ item.promotion_item_amount}}</td>
-          <td>{{ item.promotion_item_price }}</td>
-        </tr>
-
-      </table>
-
-
+        <mat-error *ngIf="promotionAddForm.get('end_date').errors?.required"
+          >กรุณาระบุ <strong>วันสิ้นสุดโปรโมชั่น</strong></mat-error
+        >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      <p class="header" style="margin-top: 5%">เพิ่มสินค้า</p>
+      
     </div>
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
