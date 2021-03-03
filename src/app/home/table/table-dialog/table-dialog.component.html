@@ -26,7 +26,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field appearance="outline" *ngIf="!tableAdd">
+      <mat-form-field appearance="outline" *ngIf="tableAdd">
         <mat-label>สถานะโต๊ะ</mat-label>
         <mat-select id="status_table_id" formControlName="status_table_id">
           <mat-option *ngFor="let item of status_table" [value]="item.id">
@@ -46,9 +46,14 @@
           formControlName="seat_amount"
           matInput
           placeholder="จำนวนที่นั่ง.."
+          value="0"
         />
         <mat-error *ngIf="tableForm.get('seat_amount').errors?.required"
           >กรุณาระบุ <strong>จำนวนที่นั่ง</strong></mat-error
+        >
+
+        <mat-error *ngIf="tableForm.get('seat_amount').errors?.seatAmountError"
+          >จำนวนที่นั่ง <strong>ไม่ถูกต้อง</strong></mat-error
         >
       </mat-form-field>
     </div>
