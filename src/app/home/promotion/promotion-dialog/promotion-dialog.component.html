@@ -22,6 +22,7 @@
           <input
             id="discount"
             formControlName="discount"
+            type="number"
             matInput
             placeholder="ส่วนลด %.."
           />
@@ -57,7 +58,6 @@
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
       <p class="header" style="margin-top: 5%">เพิ่มสินค้า</p>
-      
     </div>
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
