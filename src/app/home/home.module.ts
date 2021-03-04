@@ -32,6 +32,9 @@ import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion
 import { StockAddDialogComponent } from './stock-product/stock-add-dialog/stock-add-dialog.component';
 import { ListPromotionDialogComponent } from './promotion/list-promotion-dialog/list-promotion-dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+
 @NgModule({
   declarations: [
     ProductComponent,
@@ -70,6 +73,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSortModule,
+    MatAutocompleteModule,
+    MaterialFileInputModule,
   ],
 })
 export class HomeModule {}

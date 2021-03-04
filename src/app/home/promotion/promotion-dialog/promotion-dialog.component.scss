@@ -1,0 +1,89 @@
+@import "../../../../assets/mainCss.scss";
+
+.container {
+  width: auto;
+  height: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+  form {
+    position: relative;
+
+    .acc-box-1 {
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        font-size: 20pt;
+        font-weight: 500;
+        margin: 10px 0 10px 0;
+      }
+
+      .mat-select-panel {
+        background: red;
+      }
+
+      datalist {
+        position: relative;
+        background-color: #fff;
+        color: #131313;
+        font-size: 11pt;
+      }
+
+      .have,
+      .nothave {
+        text-align: center;
+        width: 60px;
+        padding: 0 4px 0 4px;
+        border-radius: 20px;
+        font-size: 11pt;
+        margin: auto;
+      }
+
+      .have {
+        color: #fff;
+        background: $greenButton;
+      }
+
+      .nothave {
+        color: #fff;
+        background: $redButton;
+      }
+
+    }
+  }
+
+  .btn-group {
+    text-align: center;
+    position: relative;
+    width: 100%;
+  }
+
+  button {
+    padding: 10px 20px 10px 20px;
+    font-size: 12pt;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .5s;
+    position: relative;
+
+    &:hover {
+      background: inherit;
+      opacity: 0.8;
+    }
+  }
+}
+
+#confirm {
+  background: $greenButton;
+}
+
+#cancle {
+  background: $redButton;
+}

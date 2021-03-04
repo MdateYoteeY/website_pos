@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSelectModule,
     MatTableModule,
     MatTabsModule,
+    MaterialFileInputModule,
   ],
 })
 export class AccountModule {}
