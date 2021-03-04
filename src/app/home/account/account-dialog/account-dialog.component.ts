@@ -55,7 +55,7 @@ export class AccountDialogComponent implements OnInit {
   createForm(): void {
     this.accountAddForm = this.formBuilder.group(
       {
-        firstname: ['', Validators.required],
+        firstname: [{ value: '', disabled: true }, Validators.required],
         lastname: ['', Validators.required],
         phone_number: [
           '',
@@ -81,10 +81,14 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onFileSelect(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.accountAddForm.get('img').setValue(file);
-    }
+    console.log(event);
+
+    const file = (event.target as HTMLInputElement).files[0];
+    this.accountAddForm.patchValue({
+      img: file,
+    });
+    this.accountAddForm.get('img').updateValueAndValidity();
+    console.log(this.accountAddForm.value.img);
   }
 
   editPass(): void {
@@ -92,7 +96,11 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const formData = new FormData();
+    console.log(this.accountAddForm.getRawValue());
+    console.log(this.accountAddForm.value);
+    var formData: any = new FormData();
+    formData.append('img', this.accountAddForm.get('img').value);
+    console.log(formData);
 
     if (this.data.method !== 'editAccount') {
       if (this.accountAddForm.invalid) {

@@ -33,7 +33,7 @@
 
 
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" >
         <mat-label>ราคาสินค้า</mat-label>
         <input
           id="product_price"
@@ -43,7 +43,17 @@
         />
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" *ngIf="productAdd">
+        <mat-label>จำนวนสินค้า</mat-label>
+        <input
+          id="product_amount"
+          formControlName="product_amount"
+          matInput
+          placeholder=" จำนวนสินค้า.."
+        />
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline">
         <mat-label>จำนวนสินค้า</mat-label>
         <input
           id="product_amount"
@@ -52,7 +62,7 @@
           matInput
           placeholder="จำนวนสินค้า.."
         />
-      </mat-form-field>
+      </mat-form-field> -->
 <!--
       <mat-form-field appearance="outline">
         <mat-label>สถานะสินค้า</mat-label>

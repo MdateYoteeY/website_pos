@@ -2,48 +2,71 @@
   <form [formGroup]="stocklistForm">
     <div class="acc-box-1">
       <p class="header">{{ header }}</p>
-      <div class="form-row" *ngFor="let obj of dataarray; let i=index">
 
-      <mat-form-field appearance="outline">
-        <mat-label>สินค้า</mat-label>
-        <mat-select id="product_id{{i}}" formControlName="product_id">
-          <mat-option *ngFor="let item of product" [value]="item.product_id">{{
-            item.product_name
-          }}</mat-option>
-        </mat-select>
+      <ng-container
+        formArrayName="items"
+        *ngFor="
+          let item of stocklistForm.get('items')['controls'];
+          let i = index;
+          let isFirst = first
+        "
+      >
+        <div class="custom-form" [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>สินค้า</mat-label>
+            <mat-select id="product_id" formControlName="product_id">
+              <mat-option *ngFor="let item of product" [value]="item.id">
+                {{ item.product_name }}s
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="item.get('product_id').hasError('required')">
+              กรุณากรอกเลือกสินค้า
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>จำนวนสินค้า</mat-label>
+            <input
+              formControlName="amount"
+              matInput
+              placeholder="จำนวนสินค้า.."
+            />
+            <mat-error *ngIf="item.get('amount').hasError('required')">
+              กรุณากรอกจำนวนสินค้า
+            </mat-error>
+          </mat-form-field>
 
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>จำนวนสินค้า</mat-label>
-        <input
-          id="list_amount{{i}}"
-          formControlName="list_amount"
-          matInput
-          placeholder="จำนวนสินค้า.."
-        />
+          <mat-form-field appearance="outline">
+            <mat-label>ราคาสินค้า</mat-label>
+            <input
+              formControlName="price"
+              matInput
+              placeholder="ราคาสินค้า.."
+            />
+            <mat-error *ngIf="item.get('price').hasError('required')">
+              กรุณากรอกราคาสินค้า
+            </mat-error>
+          </mat-form-field>
 
-      </mat-form-field>
+          <div class="form-btn">
+            <button
+              *ngIf="!isFirst"
+              id="remove"
+              type="remove"
+              (click)="removeForm(i)"
+            >
+              ลบ
+            </button>
+          </div>
+        </div>
+      </ng-container>
 
-      <mat-form-field appearance="outline">
-        <mat-label>ราคาสินค้า</mat-label>
-        <input
-          id="price{{i}}"
-
-          formControlName="price"
-          matInput
-          placeholder="ราคาสินค้า.."
-        />
-
-      </mat-form-field>
-      <div class="btn-group" *ngIf="i!=0">
-      <button id="remove" type="remove"  (click)="removeForm(i)">-</button>
-    </div>
-    </div>
-    </div>
-    <div class="btn-group">
-      <button id="add" type="add" (click)="addForm()">+</button>
-      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
-      <button id="cancle" (click)="close()">ยกเลิก</button>
+      <div class="btn-group">
+        <button id="add" type="add" (click)="addForm()">เพิ่ม</button>
+      </div>
+      <div class="btn-group">
+        <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+        <button id="cancle" (click)="close()">ยกเลิก</button>
+      </div>
     </div>
   </form>
 </div>

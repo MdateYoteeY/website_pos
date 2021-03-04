@@ -53,9 +53,10 @@ export class ProductsDialogComponent implements OnInit {
     if (this.data.method === 'editProduct') {
       this.productForm.patchValue(this.data.product);
       this.header = 'แก้ไขสินค้า';
-      this.productAdd = false;
+
     } else if (this.data.method === 'addProduct') {
       this.header = 'เพิ่มสินค้า';
+      this.productAdd = !this.productAdd;
     }
   }
 
@@ -89,13 +90,15 @@ export class ProductsDialogComponent implements OnInit {
       // }
 
       let body = {
-        product_name:
-          this.productForm.getRawValue().product_name,
+          product_name: this.productForm.getRawValue().product_name,
           type_id: this.productForm.getRawValue().type_id,
           product_price: this.productForm.getRawValue().product_price,
-          product_amount: this.productForm.getRawValue().product_amount,
+          // product_amount: this.productForm.getRawValue().product_amount,
 
-      };
+        };
+
+
+
 
       this.http
         .post(`${environment.apiUrl}products`, { product: body })
