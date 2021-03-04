@@ -8,6 +8,7 @@ import { MyErrorStateMatcher } from 'src/app/login/login.component';
 import { MustMatch } from 'src/assets/matchCheck';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-account-dialog',
@@ -107,37 +108,31 @@ export class AccountDialogComponent implements OnInit {
         return;
       }
 
-      // formData.append('firstname', this.accountAddForm.get('firstname').value);
-      // formData.append('lastname', this.accountAddForm.get('lastname').value);
-      // formData.append(
-      //   'phone_number',
-      //   this.accountAddForm.get('phone_number').value
-      // );
-      // formData.append('staff_id', this.accountAddForm.get('staff_id').value);
-      // formData.append('username', this.accountAddForm.get('username').value);
-      // formData.append('password', this.accountAddForm.get('password').value);
-      // formData.append(
-      //   'password_confirmation',
-      //   this.accountAddForm.get('password_confirmation').value
-      // );
+      // console.log(this.accountAddForm.getRawValue());
 
-      let body = {
-        firstname: this.accountAddForm.getRawValue().firstname,
-        lastname: this.accountAddForm.getRawValue().lastname,
-        phone_number: this.accountAddForm.getRawValue().phone_number,
-        staff_id: this.accountAddForm.getRawValue().staff_id,
-        username: this.accountAddForm.getRawValue().username,
-        password: this.accountAddForm.getRawValue().password,
-        password_confirmation: this.accountAddForm.getRawValue()
-          .password_confirmation,
-      };
+      let body = this.accountAddForm.getRawValue();
+      console.log(body);
+
+      // formData.append('img', this.accountAddForm.get('img').value);
+
+      // let body = {
+      //   firstname: this.accountAddForm.controls['firstname'].value,
+      //   lastname: this.accountAddForm.getRawValue().lastname,
+      //   phone_number: this.accountAddForm.getRawValue().phone_number,
+      //   staff_id: this.accountAddForm.getRawValue().staff_id,
+      //   username: this.accountAddForm.getRawValue().username,
+      //   password: this.accountAddForm.getRawValue().password,
+      //   password_confirmation: this.accountAddForm.getRawValue()
+      //     .password_confirmation,
+      //   img: formData.get('img'),
+      // };
 
       // let body = {};
       // formData.forEach(function (value, key) {
       //   body[key] = value;
       // });
       // let bodys = JSON.stringify(body);
-      console.log(body);
+      // console.log(body);
 
       this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
         (res) => {
