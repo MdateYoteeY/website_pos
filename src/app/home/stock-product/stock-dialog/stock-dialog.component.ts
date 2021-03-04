@@ -1,3 +1,4 @@
+import { StockList } from './../../../model/stock';
 
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
@@ -5,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { environment } from 'src/environments/environment';
-import { StockList } from 'src/app/model/stock';
 import { StockProductComponent } from '../page2.component';
 import { Stocks } from 'src/app/model/stockproduct';
 
