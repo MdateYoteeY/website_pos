@@ -29,6 +29,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductsDialogComponent } from './products/products-dialog/products-dialog.component';
 import { StockDialogComponent } from './stock-product/stock-dialog/stock-dialog.component';
 import { PromotionDialogComponent } from './promotion/promotion-dialog/promotion-dialog.component';
+import { StockAddDialogComponent } from './stock-product/stock-add-dialog/stock-add-dialog.component';
 import { ListPromotionDialogComponent } from './promotion/list-promotion-dialog/list-promotion-dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
@@ -51,6 +52,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     StockDialogComponent,
     PromotionDialogComponent,
     CategoryComponent,
+    StockAddDialogComponent,
     ListPromotionDialogComponent,
   ],
 

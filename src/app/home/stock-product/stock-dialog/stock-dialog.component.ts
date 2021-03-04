@@ -38,16 +38,18 @@ export class StockDialogComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.http.get(`${environment.apiUrl}stocks/`+this.data.stock.id).subscribe((res: StockList)=>{
-      this.stocklist = res;
-      console.log(this.stocklist);
 
-    })
 
     if (this.data.method === 'editStock') {
       this.stockForm.patchValue(this.data.stock);
-      this.header = 'แก้ไขสินค้า';
+      this.header = 'รายการสินค้า';
+
       this.stockAdd = false;
+      this.http.get(`${environment.apiUrl}stocks/`+this.data.stock.id).subscribe((res: StockList)=>{
+        this.stocklist = res;
+        console.log(this.stocklist);
+
+      })
     } else if (this.data.method === 'addStock') {
       this.header = 'เพิ่มสินค้า';
     }

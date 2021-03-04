@@ -1,13 +1,13 @@
 import { Types } from './type';
 import { PromotionItems } from './promotionitem';
 import { Promotion, PromotionList } from './promotion';
-import { StockList } from './stock';
+import { StockList, Stoctlistproduct } from './stock';
 import { Categorys } from './category';
 import { StatusTables } from './table.model';
 import { Tables } from 'src/app/model/table.model';
 import { Zones } from './zone.model';
 import { StatusProducts } from './status';
-import { Stocks } from './stockproduct';
+import { Stock, Stocks } from './stockproduct';
 import { Products } from './product';
 
 export interface method {
@@ -26,6 +26,9 @@ export interface method {
   promotion?: Promotion;
   promotionlist?: PromotionList;
   type?: Types;
+  stocklistproduct?: Stoctlistproduct;
+  addstock?: Stock;
+
 }
 
 export interface Users {
