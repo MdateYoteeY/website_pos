@@ -8,6 +8,7 @@ import { MyErrorStateMatcher } from 'src/app/login/login.component';
 import { MustMatch } from 'src/assets/matchCheck';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-account-dialog',
@@ -55,7 +56,7 @@ export class AccountDialogComponent implements OnInit {
   createForm(): void {
     this.accountAddForm = this.formBuilder.group(
       {
-        firstname: ['', Validators.required],
+        firstname: [{ value: '', disabled: true }, Validators.required],
         lastname: ['', Validators.required],
         phone_number: [
           '',
@@ -72,7 +73,7 @@ export class AccountDialogComponent implements OnInit {
         username: ['', [Validators.required]],
         password: [null, [Validators.minLength(8)]],
         password_confirmation: [null],
-        img: [''],
+        img: [null],
       },
       {
         validators: [MustMatch('password', 'password_confirmation')],
@@ -81,10 +82,14 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onFileSelect(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.accountAddForm.get('img').setValue(file);
-    }
+    console.log(event);
+
+    const file = (event.target as HTMLInputElement).files[0];
+    this.accountAddForm.patchValue({
+      img: file,
+    });
+    this.accountAddForm.get('img').updateValueAndValidity();
+    console.log(this.accountAddForm.value.img);
   }
 
   editPass(): void {
@@ -92,46 +97,42 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const formData = new FormData();
+    console.log(this.accountAddForm.getRawValue());
+    console.log(this.accountAddForm.value);
+    var formData: any = new FormData();
+    formData.append('img', this.accountAddForm.get('img').value);
+    console.log(formData);
 
     if (this.data.method !== 'editAccount') {
       if (this.accountAddForm.invalid) {
         return;
       }
 
-      // formData.append('firstname', this.accountAddForm.get('firstname').value);
-      // formData.append('lastname', this.accountAddForm.get('lastname').value);
-      // formData.append(
-      //   'phone_number',
-      //   this.accountAddForm.get('phone_number').value
-      // );
-      // formData.append('staff_id', this.accountAddForm.get('staff_id').value);
-      // formData.append('username', this.accountAddForm.get('username').value);
-      // formData.append('password', this.accountAddForm.get('password').value);
-      // formData.append(
-      //   'password_confirmation',
-      //   this.accountAddForm.get('password_confirmation').value
-      // );
-      formData.append('img', this.accountAddForm.get('img').value);
+      // console.log(this.accountAddForm.getRawValue());
 
-      let body = {
-        firstname: this.accountAddForm.getRawValue().firstname,
-        lastname: this.accountAddForm.getRawValue().lastname,
-        phone_number: this.accountAddForm.getRawValue().phone_number,
-        staff_id: this.accountAddForm.getRawValue().staff_id,
-        username: this.accountAddForm.getRawValue().username,
-        password: this.accountAddForm.getRawValue().password,
-        password_confirmation: this.accountAddForm.getRawValue()
-          .password_confirmation,
-        img: formData.get('img'),
-      };
+      let body = this.accountAddForm.getRawValue();
+      console.log(body);
+
+      // formData.append('img', this.accountAddForm.get('img').value);
+
+      // let body = {
+      //   firstname: this.accountAddForm.controls['firstname'].value,
+      //   lastname: this.accountAddForm.getRawValue().lastname,
+      //   phone_number: this.accountAddForm.getRawValue().phone_number,
+      //   staff_id: this.accountAddForm.getRawValue().staff_id,
+      //   username: this.accountAddForm.getRawValue().username,
+      //   password: this.accountAddForm.getRawValue().password,
+      //   password_confirmation: this.accountAddForm.getRawValue()
+      //     .password_confirmation,
+      //   img: formData.get('img'),
+      // };
 
       // let body = {};
       // formData.forEach(function (value, key) {
       //   body[key] = value;
       // });
       // let bodys = JSON.stringify(body);
-      console.log(body);
+      // console.log(body);
 
       this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
         (res) => {
