@@ -22,7 +22,7 @@ export class StockAddDialogComponent implements OnInit {
   dataarray = [];
   stock: Stocks;
   header: string;
- stockAdd = true;
+  stockAdd = true;
   stocklistproduct: Stoctlistproduct;
   addstock: Stock;
 
