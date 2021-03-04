@@ -3,13 +3,25 @@
     <div class="acc-box-1">
       <p class="header">{{ header }}</p>
       <!-- <a (change)="onFileSelect($event)" type="file" name="image">เลือกไฟล์</a> -->
-      <input
+      <!-- <input
         type="file"
         class="chooseFile"
         (change)="onFileSelect($event)"
         name="img"
         placeholder="เลือกไฟล์.."
-      />
+      /> -->
+      <mat-form-field appearance="outline">
+        <mat-label>เลือกรูปโปรไฟล์</mat-label>
+        <ngx-mat-file-input
+          type="file"
+          class="chooseFile"
+          (change)="onFileSelect($event)"
+          name="img"
+          placeholder="เลือกไฟล์.."
+        ></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+      </mat-form-field>
+
       <div>
         <mat-form-field appearance="outline" style="margin-right: 15px">
           <mat-label>ชื่อจริง</mat-label>

@@ -21,44 +21,70 @@
           <mat-label>ส่วนลด %</mat-label>
           <input
             id="discount"
-            formControlName="discount"
+            formControlName="promotion_discount"
             type="number"
             matInput
             placeholder="ส่วนลด %.."
           />
-          <mat-error *ngIf="promotionAddForm.get('discount').errors?.required"
+          <mat-error
+            *ngIf="promotionAddForm.get('promotion_discount').errors?.required"
             >กรุณาระบุ <strong>ส่วนลด</strong></mat-error
           >
         </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline">
-        <mat-label>Enter a date range</mat-label>
+        <mat-label>ช่วงเวลาของโปรโมชั่น</mat-label>
         <mat-date-range-input [rangePicker]="picker">
-          <input
-            matStartDate
-            placeholder="Ex:1/01/2021"
-            id="start_date"
-            formControlName="start_date"
-          />
-          <input
-            matEndDate
-            placeholder="Ex:2/01/2021"
-            id="end_date"
-            formControlName="end_date"
-          />
+          <input matStartDate id="start_date" formControlName="date_start" />
+          <input matEndDate id="end_date" formControlName="date_end" />
         </mat-date-range-input>
-        <mat-error *ngIf="promotionAddForm.get('start_date').errors?.required"
-          >กรุณาระบุ <strong>วันเริ่มโปรโมชั่น</strong></mat-error
-        >
-        <mat-error *ngIf="promotionAddForm.get('end_date').errors?.required"
-          >กรุณาระบุ <strong>วันสิ้นสุดโปรโมชั่น</strong></mat-error
+        <mat-error
+          *ngIf="
+            promotionAddForm.get('date_start').errors?.required ||
+            promotionAddForm.get('date_end').errors?.required
+          "
+          >กรุณาระบุ <strong>ช่วงเวลาของโปรโมชั่น</strong></mat-error
         >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
-      <p class="header" style="margin-top: 5%">เพิ่มสินค้า</p>
+
+      <div style="display: flex">
+        <mat-form-field
+          appearance="outline"
+          style="margin-right: 15px; width: 120px"
+        >
+          <mat-label>เลือกหมวดหมู่</mat-label>
+          <mat-select id="categoryList" formControlName="categoryList">
+            <mat-option value="ทุกหมวดหมู่">ทุกหมวดหมู่</mat-option>
+            <mat-option *ngFor="let item of categoryList" [value]="item.id">{{
+              item.category_name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 100%; flex: 1">
+          <mat-label>เลือกรายการสินค้า</mat-label>
+          <input
+            matInput
+            [matAutocomplete]="auto"
+            list="suggestions"
+            formControlName="productList"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option value="ทุกรายการ">ทุกรายการ</mat-option>
+            <mat-option
+              *ngFor="let item of productList"
+              value="{{ item.product_name }}"
+            >
+              {{ item.product_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
     </div>
+
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
       <button id="cancle" (click)="close()">ยกเลิก</button>

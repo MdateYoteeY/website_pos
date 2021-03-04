@@ -32,6 +32,7 @@ export class PromotionComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
@@ -82,26 +83,39 @@ export class PromotionComponent implements OnInit, AfterViewInit {
 
   deleteData(element: Promotion): void {
     console.log(element.id);
-
-    this.http.delete(`${environment.apiUrl}promotions/` + element.id).subscribe(
-      (res) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'ลบโปรโมชั่นสำเร็จ!',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.getPromotion;
-      },
-      (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'เกิดข้อผิดพลาด!',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบ "' + element.promotion_name + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http
+          .delete(`${environment.apiUrl}promotions/` + element.id)
+          .subscribe(
+            (res) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'ลบโปรโมชั่นสำเร็จ!',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              this.getPromotion();
+            },
+            (error) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'เกิดข้อผิดพลาด!',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          );
       }
-    );
+    });
   }
 
   openList(list): void {

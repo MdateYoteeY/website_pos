@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "^11.2.3",
     "@angular/router": "^11.2.3",
     "@sweetalert2/ngx-sweetalert2": "^9.0.0",
+    "ngx-bootstrap": "^6.2.0",
+    "ngx-material-file-input": "^2.1.1",
     "rxjs": "^6.6.6",
     "sweetalert2": "^10.15.5",
     "tslib": "^2.0.0",

@@ -54,9 +54,8 @@ table {
   border-top-right-radius: 5px;
   box-sizing: border-box;
 
-  .Ready,
-  .Busy,
-  .Reserve {
+  .have,
+  .nothave {
     text-align: center;
     width: 60px;
     padding: 0 4px 0 4px;
@@ -65,20 +64,16 @@ table {
     margin: auto;
   }
 
-  .Ready {
+  .have {
     color: #fff;
     background: $greenButton;
   }
 
-  .Busy {
+  .nothave {
     color: #fff;
     background: $redButton;
   }
 
-  .Reserve {
-    color: #fff;
-    background: rgb(255, 230, 0);
-  }
 
   tr {
     cursor: pointer;
