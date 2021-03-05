@@ -55,7 +55,7 @@ export class AccountDialogComponent implements OnInit {
   createForm(): void {
     this.accountAddForm = this.formBuilder.group(
       {
-        firstname: [{ value: '', disabled: true }, Validators.required],
+        firstname: ['', Validators.required],
         lastname: ['', Validators.required],
         phone_number: [
           '',
@@ -72,7 +72,7 @@ export class AccountDialogComponent implements OnInit {
         username: ['', [Validators.required]],
         password: [null, [Validators.minLength(8)]],
         password_confirmation: [null],
-        img: [null],
+        img: [''],
       },
       {
         validators: [MustMatch('password', 'password_confirmation')],
@@ -81,14 +81,11 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onFileSelect(event) {
-    console.log(event);
-
     const file = (event.target as HTMLInputElement).files[0];
     this.accountAddForm.patchValue({
       img: file,
     });
-    this.accountAddForm.get('img').updateValueAndValidity();
-    console.log(this.accountAddForm.value.img);
+    this.accountAddForm.get('img');
   }
 
   editPass(): void {
@@ -96,11 +93,7 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.accountAddForm.getRawValue());
-    console.log(this.accountAddForm.value);
-    var formData: any = new FormData();
-    formData.append('img', this.accountAddForm.get('img').value);
-    console.log(formData);
+
 
     if (this.data.method !== 'editAccount') {
       if (this.accountAddForm.invalid) {
@@ -110,9 +103,15 @@ export class AccountDialogComponent implements OnInit {
       // console.log(this.accountAddForm.getRawValue());
 
       let body = this.accountAddForm.getRawValue();
-      console.log(body);
-
-      // formData.append('img', this.accountAddForm.get('img').value);
+      var formData: any = new FormData();
+      formData.append('user[firstname]',body.firstname);
+      formData.append('user[lastname]',body.lastname);
+      formData.append('user[phone_number]',body.phone_number);
+      formData.append('user[staff_id]',body.staff_id);
+      formData.append('user[username]',body.username);
+      formData.append('user[password]',body.password);
+      formData.append('user[password_confirmation]',body.password_confirmation);
+      formData.append('user[img]',body.img);
 
       // let body = {
       //   firstname: this.accountAddForm.controls['firstname'].value,
@@ -131,9 +130,9 @@ export class AccountDialogComponent implements OnInit {
       //   body[key] = value;
       // });
       // let bodys = JSON.stringify(body);
-      // console.log(body);
 
-      this.http.post(`${environment.apiUrl}users`, { user: body }).subscribe(
+
+      this.http.post(`${environment.apiUrl}users`,  formData).subscribe(
         (res) => {
           Swal.fire({
             icon: 'success',
@@ -166,7 +165,7 @@ export class AccountDialogComponent implements OnInit {
           staff_id: this.accountAddForm.getRawValue().staff_id,
           username: this.accountAddForm.getRawValue().username,
           password: this.accountAddForm.getRawValue().password,
-          img: formData.get('img').toString(),
+
         };
       } else {
         body = {
@@ -175,7 +174,7 @@ export class AccountDialogComponent implements OnInit {
           phone_number: this.accountAddForm.getRawValue().phone_number,
           staff_id: this.accountAddForm.getRawValue().staff_id,
           username: this.accountAddForm.getRawValue().username,
-          img: formData.get('img').toString(),
+
         };
       }
 
