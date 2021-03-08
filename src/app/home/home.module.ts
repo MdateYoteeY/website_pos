@@ -34,6 +34,9 @@ import { ListPromotionDialogComponent } from './promotion/list-promotion-dialog/
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { StockEditDailogComponent } from './stock-product/stock-edit-dailog/stock-edit-dailog.component';
+import { TypesComponent } from './types/types.component';
+import { TypeDialogComponent } from './types/type-dialog/type-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     CategoryComponent,
     StockAddDialogComponent,
     ListPromotionDialogComponent,
+    StockEditDailogComponent,
+    TypesComponent,
+    TypeDialogComponent,
   ],
 
   imports: [

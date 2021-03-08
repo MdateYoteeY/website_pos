@@ -46,10 +46,12 @@ export class StockAddDialogComponent implements OnInit {
   ngOnInit(): void {
     this.product = this.data.product;
     this.getProduct();
-    this.http.get(`${environment.apiUrl}stocks`).subscribe((res: Stock) => {
-      this.addstock = res;
-      console.log(this.addstock);
-    });
+    //  this.http
+    //    .post(`${environment.apiUrl}stocks`, { stock: payload })
+    //    .subscribe((res) => {
+    //      console.log(res);
+    //      this.dialogRef.close();
+    //    });
 
     if (this.data.method === 'addStock') {
       this.header = 'สต็อคสินค้า';
@@ -62,7 +64,8 @@ export class StockAddDialogComponent implements OnInit {
 
   initForm(): void {
     this.stocklistForm = this.fb.group({
-      items: this.fb.array([this.createItem()]),
+
+      stoct_list: this.fb.array([this.createItem()]),
     });
   }
 
@@ -70,17 +73,17 @@ export class StockAddDialogComponent implements OnInit {
     return this.fb.group({
       product_id: ['', Validators.required],
       price: ['', Validators.required],
-      amount: ['', Validators.required],
+      list_amount: ['', Validators.required],
     });
   }
 
   addForm() {
-    this.items = this.stocklistForm.get('items') as FormArray;
+    this.items = this.stocklistForm.get('stoct_list') as FormArray;
     this.items.push(this.createItem());
   }
 
   removeForm(index) {
-    this.items = this.stocklistForm.get('items') as FormArray;
+    this.items = this.stocklistForm.get('stoct_list') as FormArray;
     this.items.removeAt(index);
   }
 
@@ -102,14 +105,8 @@ export class StockAddDialogComponent implements OnInit {
       .post(`${environment.apiUrl}stocks`, { stock: payload })
       .subscribe((res) => {
         console.log(res);
-        // this.stoctlist = [];
-        // this.dialogRef.close();
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: 'เพิ่มสต็อคสำเร็จ!',
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
+        this.dialogRef.close();
+
       });
   }
 

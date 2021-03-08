@@ -1,22 +1,25 @@
-@import '~@angular/material/theming';
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300&display=swap');
+@import "~@angular/material/theming";
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300&display=swap");
 
 @include mat-core();
 $POS-primary: mat-palette($mat-indigo);
 $POS-accent: mat-palette($mat-pink, A200, A100, A400);
 $POS-warn: mat-palette($mat-red);
-$POS-theme: mat-light-theme((color: (primary: $POS-primary,
+$POS-theme: mat-light-theme(
+  (
+    color: (
+      primary: $POS-primary,
       accent: $POS-accent,
       warn: $POS-warn,
-    )));
+    ),
+  )
+);
 
 @include angular-material-theme($POS-theme);
 
-
 html * {
   box-sizing: border-box;
-  font-family: 'Kanit',
-    sans-serif;
+  font-family: "Kanit", sans-serif;
 }
 
 html,
@@ -27,7 +30,6 @@ body {
   padding: 0;
   background: rgb(236, 236, 236);
   position: relative;
-
 
   ::-webkit-scrollbar {
     background-color: white;
@@ -54,8 +56,37 @@ body {
   // input.mat-input-element {
   //   color: white;
   // }
-
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.custom-form {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .mat-form-field {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  .form-btn {
+    transform: translateY(-8px);
+
+    button {
+      &:hover {
+        background-color: #00eb9c !important;
+      }
+    }
+  }
+}

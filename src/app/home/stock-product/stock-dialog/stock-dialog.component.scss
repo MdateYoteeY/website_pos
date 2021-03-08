@@ -11,18 +11,21 @@
   align-items: center;
 
   form {
-    position: relative;
+    // position: relative;
 
     .acc-box-1 {
-      display: flex;
+      display: flexbox;
       flex-direction: column;
+
 
       .header {
         font-size: 20pt;
         font-weight: 500;
         margin: 10px 0 10px 0;
       }
-
+table {
+  margin: 0;
+}
       .mat-select-panel {
         background: red;
       }
