@@ -1,6 +1,52 @@
 <div class="container">
   <form [formGroup]="stockForm">
-    <div class="acc-box-1">
+    <ng-container>
+      <ng-container
+        formArrayName="stock_items"
+        *ngFor="
+          let item of stockForm.get('stock_items')['controls'];
+          let i = index;
+          let isFirst = first
+        "
+      >
+        <div class="custom-form" [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>สินค้า</mat-label>
+            <mat-select id="product_id" formControlName="product_id">
+              <mat-option *ngFor="let item of product" [value]="item.id">
+                {{ item.product_name }}
+              </mat-option>
+            </mat-select>
+
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>จำนวนสินค้า</mat-label>
+            <input
+              formControlName="list_amount"
+              matInput
+              type="number"
+              placeholder="จำนวนสินค้า.."
+            />
+
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>ราคาสินค้า</mat-label>
+            <input
+              formControlName="price"
+              matInput
+              placeholder="ราคาสินค้า.."
+              type="number"
+            />
+
+          </mat-form-field>
+          <div class="form-btn">
+            <button type="button" (click)="removeForm(i)">ลบ</button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- <div class="acc-box-1">
       <p class="header">{{ header }}</p>
 
       <table>
@@ -14,15 +60,19 @@
           *ngFor="let item of stocklist?.Item; let i = index"
           [attr.data-index]="i"
         >
-          <td style="text-align: left">{{ item.name }}</td>
-          <td>{{ item.list_amount }}</td>
-          <td>{{ item.price }}</td>
+          <td style="text-align: left"><input type="text" [value]="item.name"></td>
+          <td><input type="text" [value]="item.list_amount"></td>
+          <td><input type="text" [value]="item.price"></td>
+          <td>
+          <span class="material-icons edit" (click)="editstock(item.id)">
+            mode_edit_outline
+          </span> </td>
         </tr>
 
       </table>
 
 
-    </div>
+    </div> -->
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
       <button id="cancle" (click)="close()">ยกเลิก</button>

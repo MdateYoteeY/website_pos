@@ -48,6 +48,8 @@ export class TableDialogComponent implements OnInit {
     this.status_table = this.data.tableStatus;
 
     if (this.data.method === 'editTable') {
+      
+
       this.tableForm.patchValue(this.data.table);
       this.header = 'แก้ไขโต๊ะที่นั่ง';
     } else if (this.data.method === 'addTable') {
