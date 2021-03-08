@@ -1,3 +1,10 @@
+export interface StatusProducts {
+  id: number;
+  product_status: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Products {
   id: number;
   status_product_id: number;
@@ -11,10 +18,4 @@ export interface Products {
   image: string;
   status: string;
   type: string;
-}
-export interface StatusProducts {
-  id: number;
-  product_status: string;
-  created_at: string;
-  updated_at: string;
 }

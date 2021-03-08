@@ -33,6 +33,7 @@ import { StockAddDialogComponent } from './stock-product/stock-add-dialog/stock-
 import { ListPromotionDialogComponent } from './promotion/list-promotion-dialog/list-promotion-dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
