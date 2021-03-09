@@ -1,5 +1,3 @@
-
-
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,6 +17,7 @@ import { StockEditDailogComponent } from './stock-edit-dailog/stock-edit-dailog.
 })
 export class StockProductComponent implements OnInit {
   displayedColumns: string[] = [
+    'head',
     'id',
     'amount',
     'price',
@@ -30,6 +29,9 @@ export class StockProductComponent implements OnInit {
 
   product: Products;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
   constructor(private http: HttpClient, public dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -68,7 +70,6 @@ export class StockProductComponent implements OnInit {
         },
       });
     }
- 
 
     this.dialog.afterAllClosed.subscribe((res) => {
       this.getStock();
@@ -78,7 +79,6 @@ export class StockProductComponent implements OnInit {
   showstock(element: Stocks): void {
     this.openDialog('showStock', element);
   }
-
 
   deleteData(element: Stocks): void {
     Swal.fire({
@@ -107,10 +107,7 @@ export class StockProductComponent implements OnInit {
   }
 }
 
-
-
 const ELEMENT_DATA: Stocks[] = [];
-
 
 export interface Stocks {
   id: number;
@@ -120,4 +117,3 @@ export interface Stocks {
   created_at: string;
   updated_at: string;
 }
-

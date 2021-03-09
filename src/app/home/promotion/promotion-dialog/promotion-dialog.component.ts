@@ -106,7 +106,7 @@ export class PromotionDialogComponent implements OnInit {
       date_start: ['', Validators.required],
       date_end: ['', Validators.required],
       time: [''],
-      productList: ['', Validators.required],
+      productList: [this.formBuilder.array([]), Validators.required],
       categoryList: [''],
       typeList: [''],
       img: [null],

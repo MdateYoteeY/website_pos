@@ -64,7 +64,6 @@ export class StockAddDialogComponent implements OnInit {
 
   initForm(): void {
     this.stocklistForm = this.fb.group({
-
       stoct_list: this.fb.array([this.createItem()]),
     });
   }
@@ -106,7 +105,6 @@ export class StockAddDialogComponent implements OnInit {
       .subscribe((res) => {
         console.log(res);
         this.dialogRef.close();
-
       });
   }
 
