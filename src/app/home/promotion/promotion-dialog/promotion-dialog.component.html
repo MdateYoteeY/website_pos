@@ -127,15 +127,15 @@
   </div>
 
   <div class="box2" *ngIf="promotionItem">
-    <table mat-table [dataSource]="promotionItem" matSort>
-      <ng-container matColumnDef="productID">
+    <table mat-table [dataSource]="productList">
+      <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>รหัสสินค้า</th>
         <td mat-cell *matCellDef="let element" [value]="element.id">
           {{ element.id }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="product_name">
         <th mat-header-cell *matHeaderCellDef>ชื่อสินค้า</th>
         <td mat-cell *matCellDef="let element" [value]="element.product_name">
           {{ element.product_name }}

@@ -23,9 +23,9 @@ import { MatTableDataSource } from '@angular/material/table';
 export class PromotionDialogComponent implements OnInit {
   promotionAddForm: FormGroup;
   header = 'เพิ่มโปรโมชัน';
-  product: Products[];
+  products: Products[];
   productList: Products[];
-  promotionItem: Products[];
+  promotionItem: Array<Products> = [];
   categoryList: Categorys;
   types: Types[];
   typeList: Types[];
@@ -35,16 +35,15 @@ export class PromotionDialogComponent implements OnInit {
 
   productSelected: Products;
 
-  displayedColumns: string[] = ['productID', 'name', 'action'];
+  displayedColumns: string[] = ['id', 'product_name', 'action'];
 
   constructor(
     private formBuilder: FormBuilder,
-
     private http: HttpClient,
     public dialogRef: MatDialogRef<PromotionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
   ) {}
-  dataSource = new MatTableDataSource<Products>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Products>(this.promotionItem);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -63,7 +62,7 @@ export class PromotionDialogComponent implements OnInit {
   checkCateValue(event): void {
     if (event.value === 0) {
       this.categoryValueCheck = false;
-      this.productList = this.product;
+      this.productList = this.products;
     } else {
       this.categoryValueCheck = true;
 
@@ -74,7 +73,7 @@ export class PromotionDialogComponent implements OnInit {
         );
       });
 
-      this.productList = this.product.filter((list) => {
+      this.productList = this.products.filter((list) => {
         return (
           list.category_id ===
           this.promotionAddForm.controls['categoryList'].value
@@ -85,14 +84,14 @@ export class PromotionDialogComponent implements OnInit {
 
   checkTypeValue(event, product: Products): void {
     if (event.value === 0) {
-      this.productList = this.product.filter((list) => {
+      this.productList = this.products.filter((list) => {
         return (
           list.category_id ===
           this.promotionAddForm.controls['categoryList'].value
         );
       });
     } else {
-      this.productList = this.product.filter((list) => {
+      this.productList = this.products.filter((list) => {
         return (
           list.type_id === this.promotionAddForm.controls['typeList'].value
         );
@@ -118,7 +117,7 @@ export class PromotionDialogComponent implements OnInit {
     this.http
       .get(`${environment.apiUrl}products`)
       .subscribe((res: Products[]) => {
-        this.product = res;
+        this.products = res;
       });
   }
 
@@ -141,6 +140,7 @@ export class PromotionDialogComponent implements OnInit {
       return;
     }
     this.promotionItem.push(this.productSelected);
+    this.dataSource.data = this.promotionItem;
     console.log(this.promotionItem);
   }
 
@@ -182,17 +182,5 @@ export class PromotionDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 }
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
 
 const ELEMENT_DATA: Products[] = [];
