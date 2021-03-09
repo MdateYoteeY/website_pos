@@ -26,6 +26,7 @@ export class ProductsComponent implements OnInit {
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   search = new FormControl();
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
