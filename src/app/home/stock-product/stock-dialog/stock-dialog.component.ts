@@ -81,13 +81,13 @@ export class StockDialogComponent implements OnInit, OnDestroy {
       amount_all: ['', Validators.required],
       price_all: ['', Validators.required],
       stock_date: ['', Validators.required],
-      stock_items: this.fb.array([]),
+      Item: this.fb.array([]),
     });
 
     if (this.data && this.data.stock) {
       this.stockForm.patchValue(this.data.stock);
 
-      const items = <FormArray>this.stockForm.controls.stock_items;
+      const items = <FormArray>this.stockForm.controls.Item;
 
       for (const item of this.data.stock.Item) {
         items.push(this.createItem(item));
@@ -128,7 +128,7 @@ export class StockDialogComponent implements OnInit, OnDestroy {
   }
 
   removeForm(index) {
-    const items = <FormArray>this.stockForm.get('stock_items');
+    const items = <FormArray>this.stockForm.get('Item');
     console.log(items);
     items.removeAt(index);
   }
@@ -138,7 +138,7 @@ export class StockDialogComponent implements OnInit, OnDestroy {
       this.stockForm.valueChanges
         .pipe(debounceTime(1000))
         .subscribe((change) => {
-          const items = change.stock_items;
+          const items = change.Item;
 
           console.log(items);
 

@@ -12,6 +12,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ProductsComponent } from './products/products.component';
+import { TypesComponent } from './types/types.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,6 +41,10 @@ const routes: Routes = [
         component: CategoriesComponent,
       },
       {
+        path: 'type',
+        component: TypesComponent,
+      },
+      {
         path: 'report',
         component: ReportComponent,
       },
@@ -57,7 +62,8 @@ const routes: Routes = [
       },
       { path: 'table', component: TableComponent },
       {
-        path: 'category',component: CategoryComponent
+        path: 'category',
+        component: CategoryComponent,
       },
     ],
   },

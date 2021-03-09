@@ -108,7 +108,12 @@
             Category
           </mat-list-item>
 
-
+          <mat-list-item
+            routerLink= "type"
+            [routerLinkActive]="['is-active']"
+          >
+            Type
+          </mat-list-item>
         </div>
 
         <p>Table</p>
@@ -130,7 +135,7 @@
 
         <p>Report</p>
         <div class="list-menu">
-          <mat-list-item routerLink="page3" [routerLinkActive]="['is-active']">
+          <mat-list-item routerLink="report" [routerLinkActive]="['is-active']">
             Report
           </mat-list-item>
         </div>

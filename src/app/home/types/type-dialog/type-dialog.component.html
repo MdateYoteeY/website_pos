@@ -1,1 +1,36 @@
-<p>type-dialog works!</p>
+<div class="container">
+  <form [formGroup]="typeForm">
+    <div class="acc-box-1">
+      <p class="header">{{ header }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>ชื่อประเภทสินค้า</mat-label>
+        <input
+          id="type_name"
+          formControlName="type_name"
+          matInput
+          placeholder=" ชื่อประเภทสินค้า.."
+        />
+        <mat-error *ngIf="typeForm.get('type_name').errors?.required"
+          >กรุณาระบุ <strong>ชื่อประเภทสินค้า</strong></mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>หมวดหมู่</mat-label>
+        <mat-select id="category_id" formControlName="category_id">
+          <mat-option *ngFor="let item of category" [value]="item.id">{{
+            item.category_name
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="typeForm.get('category_id').errors?.required"
+          >กรุณาระบุ <strong>หมวดหมู่</strong></mat-error
+        >
+      </mat-form-field>
+
+
+    </div>
+    <div class="btn-group">
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

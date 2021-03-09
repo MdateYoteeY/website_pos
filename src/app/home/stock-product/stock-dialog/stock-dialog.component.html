@@ -2,9 +2,9 @@
   <form [formGroup]="stockForm">
     <ng-container>
       <ng-container
-        formArrayName="stock_items"
+        formArrayName="Item"
         *ngFor="
-          let item of stockForm.get('stock_items')['controls'];
+          let item of stockForm.get('Item')['controls'];
           let i = index;
           let isFirst = first
         "

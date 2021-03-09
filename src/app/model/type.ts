@@ -4,4 +4,5 @@ export interface Types {
   category_id: number;
   created_at: string;
   updated_at: string;
+  category: string;
 }

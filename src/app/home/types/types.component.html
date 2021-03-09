@@ -1,1 +1,62 @@
-<p>types works!</p>
+<div class="container">
+  <p>โต๊ะที่นั่ง</p>
+  <div class="header">
+    <div class="text-container">
+      ค้นหารายการ<input
+        type="text"
+        placeholder="ค้นหา..."
+        [formControl]="search"
+      /><span class="material-icons"> search </span>
+    </div>
+    <div>
+      <button mat-raised-button (click)="openDialog('addType')">
+        เพิ่มประเภทสินค้า
+      </button>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>รหัสประเภทสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.id">
+        {{ element.id }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>ชื่อประเภทสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.type_name">
+        {{ element.type_name }}
+      </td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="category">
+       <th mat-header-cell *matHeaderCellDef>ชื่อประเภทสินค้า</th>
+      <td mat-cell *matCellDef="let element" [value]="element.category_id">
+        {{ element.category }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <span class="material-icons edit" (click)="editType(element)">
+          mode_edit_outline
+        </span>
+        <span class="material-icons delete" (click)="deleteData(element)">
+          delete_forever
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
