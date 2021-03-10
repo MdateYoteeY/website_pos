@@ -9,7 +9,11 @@
       </span>
     </div>
     <div>
-      <button mat-raised-button (click)="openDialog('addCategory')">
+      <button
+        class="add-button"
+        mat-raised-button
+        (click)="openDialog('addCategory')"
+      >
         เพิ่มหมวดหมู่
       </button>
     </div>
@@ -33,7 +37,9 @@
         <table mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>ชื่อหมวดหมู่</th>
-            <td mat-cell *matCellDef="let element">{{ element.category_name }}</td>
+            <td mat-cell *matCellDef="let element">
+              {{ element.category_name }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="action">

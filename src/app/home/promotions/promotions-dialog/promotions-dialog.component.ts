@@ -31,12 +31,15 @@ export class PromotionsDialogComponent implements OnInit {
 
   product: Products;
   products: Products[];
+
+  displayedColumns: string[] = ['product'];
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<PromotionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
   ) {}
+
   getProduct() {
     this.http
       .get(`${environment.apiUrl}products`)
@@ -59,13 +62,12 @@ export class PromotionsDialogComponent implements OnInit {
     if (this.data.method === 'addPromotion') {
       this.header = 'เพิ่มโปรโมชั่น';
       this.dataarray.push(this.promotion);
-    }else if (this.data.method === 'editTable') {
+    } else if (this.data.method === 'editTable') {
       this.promotionForm.patchValue(this.data.promotion);
       this.header = 'แก้ไขโปรโมชั่น';
     }
     this.initForm();
   }
-
 
   initForm(): void {
     this.promotionForm = this.fb.group({
@@ -94,52 +96,49 @@ export class PromotionsDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
- if (this.data.method === 'editPromotion') {
+    if (this.data.method === 'editPromotion') {
       if (this.promotionForm.invalid) {
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      const payload = this.promotionForm.value;
 
-      Swal.fire({
-        icon: 'error',
-        title: 'เกิดข้อผิดพลาด!',
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
+      console.log(payload);
+
+      this.http
+        .put(`${environment.apiUrl}promotions/` + this.data.promotion.id, {
+          promotion: payload,
+        })
+        .subscribe((res) => {
+          console.log(res);
+          this.dialogRef.close();
+        });
     }
-    const payload = this.promotionForm.value;
+    if (this.data.method === 'addPromotion') {
+      if (this.promotionForm.invalid) {
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      const payload = this.promotionForm.value;
 
-    console.log(payload);
+      console.log(payload);
 
-    this.http
-      .put(`${environment.apiUrl}promotions/` + this.data.promotion.id, {
-        promotion: payload,
-      })
-      .subscribe((res) => {
-        console.log(res);
-        this.dialogRef.close();
-      });
-
-
-    }
- if (this.data.method === 'addPromotion') {
-    if (this.promotionForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'เกิดข้อผิดพลาด!',
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
-    const payload = this.promotionForm.value;
-
-    console.log(payload);
-
-    this.http
-      .post(`${environment.apiUrl}promotions`, { promotion: payload })
-      .subscribe((res) => {
-        console.log(res);
-        this.dialogRef.close();
-      });
+      this.http
+        .post(`${environment.apiUrl}promotions`, { promotion: payload })
+        .subscribe((res) => {
+          console.log(res);
+          this.dialogRef.close();
+        });
     }
   }
 
@@ -147,7 +146,6 @@ export class PromotionsDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 }
-
 
 interface Promotionitem {
   product_id: number;

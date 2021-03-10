@@ -62,17 +62,22 @@ export class StockAddDialogComponent implements OnInit {
       console.log(this.stock);
       this.dataarray.push(this.stocklistproduct);
     }
-
-    this.search.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
-      this.getProduct({ keywords: val });
-    });
-
+    this.searchFunction();
     this.initForm();
+  }
+
+  searchFunction(): void {
+    this.stocklistForm
+      .get('stock_list')
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((val) => {
+        this.getProduct({ keywords: val });
+      });
   }
 
   initForm(): void {
     this.stocklistForm = this.fb.group({
-      stoct_list: this.fb.array([this.createItem()]),
+      stock_list: this.fb.array([this.createItem()]),
     });
   }
 
@@ -85,12 +90,12 @@ export class StockAddDialogComponent implements OnInit {
   }
 
   addForm() {
-    this.items = this.stocklistForm.get('stoct_list') as FormArray;
+    this.items = this.stocklistForm.get('stock_list') as FormArray;
     this.items.push(this.createItem());
   }
 
   removeForm(index) {
-    this.items = this.stocklistForm.get('stoct_list') as FormArray;
+    this.items = this.stocklistForm.get('stock_list') as FormArray;
     this.items.removeAt(index);
   }
 
@@ -126,7 +131,7 @@ interface RootObject {
 }
 
 interface Stock {
-  stoct_list: Stoctlist[];
+  stock_list: Stoctlist[];
 }
 
 interface Stoctlist {

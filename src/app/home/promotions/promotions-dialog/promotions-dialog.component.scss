@@ -26,27 +26,30 @@
       }
     }
 
-    .btn-changePass {
-      border: none;
-      border-radius: 5px;
-      padding: 15px;
-      cursor: pointer;
-      width: fit-content;
-      height: fit-content;
-      background: rgb(221, 221, 221);
-      transition: 0.5s;
-      font-size: 10pt;
-      position: relative;
-
-      &:hover {
-        background: rgb(161, 255, 197);
-      }
-    }
-
     .btn-group {
       text-align: center;
       position: relative;
       width: 100%;
+    }
+
+    table {
+      margin: 0 0 10px 0;
+    }
+
+    .add-promotion-item {
+      margin: 10px 0 10px 10px;
+      width: fit-content;
+      height: fit-content;
+    }
+
+    .rm-btn {
+      background: $redButton;
+      transition: .2s;
+
+      &:hover {
+        background: $redButton;
+        opacity: 0.6;
+      }
     }
 
     button {
@@ -82,5 +85,3 @@
 #remove {
   background: $redButton;
 }
-
-

@@ -15,6 +15,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./account-dialog.component.scss'],
 })
 export class AccountDialogComponent implements OnInit {
+  profile: string;
   accountAddForm: FormGroup;
 
   errorRes: ErrorResponse;
@@ -81,11 +82,12 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onFileSelect(event) {
+    this.profile = event.target.value;
     const file = (event.target as HTMLInputElement).files[0];
     this.accountAddForm.patchValue({
       img: file,
     });
-    this.accountAddForm.get('img');
+    console.log(this.profile);
   }
 
   editPass(): void {
@@ -93,8 +95,6 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-
-
     if (this.data.method !== 'editAccount') {
       if (this.accountAddForm.invalid) {
         return;
@@ -104,14 +104,17 @@ export class AccountDialogComponent implements OnInit {
 
       let body = this.accountAddForm.getRawValue();
       var formData: any = new FormData();
-      formData.append('user[firstname]',body.firstname);
-      formData.append('user[lastname]',body.lastname);
-      formData.append('user[phone_number]',body.phone_number);
-      formData.append('user[staff_id]',body.staff_id);
-      formData.append('user[username]',body.username);
-      formData.append('user[password]',body.password);
-      formData.append('user[password_confirmation]',body.password_confirmation);
-      formData.append('user[img]',body.img);
+      formData.append('user[firstname]', body.firstname);
+      formData.append('user[lastname]', body.lastname);
+      formData.append('user[phone_number]', body.phone_number);
+      formData.append('user[staff_id]', body.staff_id);
+      formData.append('user[username]', body.username);
+      formData.append('user[password]', body.password);
+      formData.append(
+        'user[password_confirmation]',
+        body.password_confirmation
+      );
+      formData.append('user[img]', body.img);
 
       // let body = {
       //   firstname: this.accountAddForm.controls['firstname'].value,
@@ -131,8 +134,7 @@ export class AccountDialogComponent implements OnInit {
       // });
       // let bodys = JSON.stringify(body);
 
-
-      this.http.post(`${environment.apiUrl}users`,  formData).subscribe(
+      this.http.post(`${environment.apiUrl}users`, formData).subscribe(
         (res) => {
           Swal.fire({
             icon: 'success',
@@ -165,7 +167,6 @@ export class AccountDialogComponent implements OnInit {
           staff_id: this.accountAddForm.getRawValue().staff_id,
           username: this.accountAddForm.getRawValue().username,
           password: this.accountAddForm.getRawValue().password,
-
         };
       } else {
         body = {
@@ -174,7 +175,6 @@ export class AccountDialogComponent implements OnInit {
           phone_number: this.accountAddForm.getRawValue().phone_number,
           staff_id: this.accountAddForm.getRawValue().staff_id,
           username: this.accountAddForm.getRawValue().username,
-
         };
       }
 

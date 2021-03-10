@@ -5,15 +5,11 @@
 $POS-primary: mat-palette($mat-indigo);
 $POS-accent: mat-palette($mat-pink, A200, A100, A400);
 $POS-warn: mat-palette($mat-red);
-$POS-theme: mat-light-theme(
-  (
-    color: (
-      primary: $POS-primary,
+$POS-theme: mat-light-theme((color: (primary: $POS-primary,
       accent: $POS-accent,
       warn: $POS-warn,
     ),
-  )
-);
+  ));
 
 @include angular-material-theme($POS-theme);
 
@@ -47,6 +43,11 @@ body {
     border-radius: 5px;
   }
 
+  table {
+    min-width: 450px;
+    overflow: scroll;
+  }
+
   // /* Border */
   // .mat-form-field-appearance-outline .mat-form-field-outline {
   //   color: white;
@@ -62,9 +63,9 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .custom-form {
@@ -77,16 +78,6 @@ body {
   .mat-form-field {
     &:not(:last-child) {
       margin-right: 10px;
-    }
-  }
-
-  .form-btn {
-    transform: translateY(-8px);
-
-    button {
-      &:hover {
-        background-color: #00eb9c !important;
-      }
     }
   }
 }
