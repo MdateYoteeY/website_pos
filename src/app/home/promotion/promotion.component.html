@@ -171,7 +171,8 @@
           *matCellDef="let element"
           (click)="openList(element.promotion_items)"
         >
-          {{ element.date_start | date: "dd/MM/YYYY , H:mm:ss" }}
+          {{ element.date_start | date: "dd/MM/YYYY " }}
+          <!-- | date: "dd/MM/YYYY , H:mm:ss"  -->
         </td>
       </ng-container>
 
@@ -182,7 +183,7 @@
           *matCellDef="let element"
           (click)="openList(element.promotion_items)"
         >
-          {{ element.date_end | date: "dd/MM/YYYY , H:mm:ss" }}
+          {{ element.date_end | date: "dd/MM/YYYY " }}
         </td>
       </ng-container>
 

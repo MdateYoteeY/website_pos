@@ -55,8 +55,6 @@ export class PromotionComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(method: string, element?: Promotion): void {
-    console.log(method);
-
     if (method === 'editPromotion') {
       const dialogRef = this.dialog.open(PromotionDialogComponent, {
         data: {

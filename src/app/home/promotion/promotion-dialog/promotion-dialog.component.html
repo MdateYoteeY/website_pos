@@ -1,9 +1,12 @@
 <div class="container">
-  <form [formGroup]="promotionAddForm">
-    <div class="acc-box-1">
+  <div class="box1">
+    <form [formGroup]="promotionAddForm">
       <p class="header">{{ header }}</p>
-      <div>
-        <mat-form-field appearance="outline" style="margin-right: 15px">
+      <div style="display: flex; width: 100%">
+        <mat-form-field
+          appearance="outline"
+          style="margin-right: 15px; flex: 1"
+        >
           <mat-label>ชื่อโปรโมชั่น</mat-label>
           <input
             id="promotion_name"
@@ -17,7 +20,7 @@
           >
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" style="width: 100px">
           <mat-label>ส่วนลด %</mat-label>
           <input
             id="discount"
@@ -33,12 +36,13 @@
         </mat-form-field>
       </div>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>ช่วงเวลาของโปรโมชั่น</mat-label>
         <mat-date-range-input [rangePicker]="picker">
           <input matStartDate id="start_date" formControlName="date_start" />
           <input matEndDate id="end_date" formControlName="date_end" />
         </mat-date-range-input>
+        <!-- <ngx-mat-timepicker [(ngModel)]="myTimePicker"> </ngx-mat-timepicker> -->
         <mat-error
           *ngIf="
             promotionAddForm.get('date_start').errors?.required ||
@@ -53,13 +57,35 @@
       <div style="display: flex">
         <mat-form-field
           appearance="outline"
-          style="margin-right: 15px; width: 120px"
+          style="margin-right: 15px; width: 100px"
         >
-          <mat-label>เลือกหมวดหมู่</mat-label>
-          <mat-select id="categoryList" formControlName="categoryList">
-            <mat-option value="ทุกหมวดหมู่">ทุกหมวดหมู่</mat-option>
+          <mat-label>หมวดหมู่</mat-label>
+          <mat-select
+            id="categoryList"
+            formControlName="categoryList"
+            (selectionChange)="checkCateValue($event)"
+          >
+            <mat-option [value]="0">ทุกหมวดหมู่</mat-option>
             <mat-option *ngFor="let item of categoryList" [value]="item.id">{{
               item.category_name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          style="margin-right: 15px; width: 100px"
+          *ngIf="categoryValueCheck"
+        >
+          <mat-label>ประเภท</mat-label>
+          <mat-select
+            id="typeList"
+            formControlName="typeList"
+            (selectionChange)="checkTypeValue($event)"
+          >
+            <mat-option [value]="0">ทุกประเภท</mat-option>
+            <mat-option *ngFor="let item of typeList" [value]="item.id">{{
+              item.type_name
             }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -76,18 +102,60 @@
             <mat-option value="ทุกรายการ">ทุกรายการ</mat-option>
             <mat-option
               *ngFor="let item of productList"
-              value="{{ item.product_name }}"
+              (click)="selectedProduct(item)"
+              [value]="item.product_name"
             >
               {{ item.product_name }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        <a
+          class="add-promotion"
+          id="confirm"
+          type="submit"
+          (click)="addPromotionItem()"
+        >
+          เพิ่มสินค้า
+        </a>
       </div>
-    </div>
+    </form>
+  </div>
 
-    <div class="btn-group">
-      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
-      <button id="cancle" (click)="close()">ยกเลิก</button>
-    </div>
-  </form>
+  <div class="btn-group">
+    <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+    <button id="cancle" (click)="close()">ยกเลิก</button>
+  </div>
+
+  <div class="box2" *ngIf="promotionItem">
+    <table mat-table [dataSource]="productList">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>รหัสสินค้า</th>
+        <td mat-cell *matCellDef="let element" [value]="element.id">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="product_name">
+        <th mat-header-cell *matHeaderCellDef>ชื่อสินค้า</th>
+        <td mat-cell *matCellDef="let element" [value]="element.product_name">
+          {{ element.product_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <span class="material-icons edit" (click)="editData(element)">
+            mode_edit_outline
+          </span>
+          <span class="material-icons delete" (click)="deleteData(element)">
+            delete_forever
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
 </div>
