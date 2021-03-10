@@ -5,7 +5,7 @@
         <p class="header">{{ header }}</p>
 
         <button
-          style="position: absolute; right: 0"
+          style="position: absolute; right: 0; top: 0"
           id="add"
           type="add"
           (click)="addForm()"
@@ -68,11 +68,14 @@
               กรุณากรอกราคาสินค้า
             </mat-error>
           </mat-form-field>
-          <div class="form-btn">
-            <button *ngIf="!isFirst" type="remove" (click)="removeForm(i)">
-              ลบ
-            </button>
-          </div>
+          <button
+            class="form-btn"
+            *ngIf="!isFirst"
+            type="remove"
+            (click)="removeForm(i)"
+          >
+            ลบ
+          </button>
         </div>
       </ng-container>
 

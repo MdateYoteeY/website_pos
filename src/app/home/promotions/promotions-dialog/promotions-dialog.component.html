@@ -1,82 +1,135 @@
-<div class="container" >
+<div class="container">
   <form [formGroup]="promotionForm">
-    <ng-container >
-       <mat-form-field appearance="outline">
-            <mat-label>ชื่อโปรโมชั่น</mat-label>
-            <input
-            id = "promotion_name"
-              formControlName="promotion_name"
-              matInput
-              placeholder="ชื่อโปรโมชั่น.."
-            />
-          </mat-form-field>
+    <ng-container>
+      <div style="display: flex; width: 100%">
+        <mat-form-field
+          appearance="outline"
+          style="margin-right: 15px; flex: 1"
+        >
+          <mat-label>ชื่อโปรโมชั่น</mat-label>
+          <input
+            id="promotion_name"
+            formControlName="promotion_name"
+            matInput
+            placeholder="ชื่อโปรโมชั่น..."
+          />
+          <mat-error
+            *ngIf="promotionForm.get('promotion_name').errors?.required"
+            >กรุณาระบุ <strong>ชื่อโปรโมชั่น</strong></mat-error
+          >
+        </mat-form-field>
 
-           <mat-form-field appearance="outline">
-            <mat-label>จำนวนโปรโมชั่น</mat-label>
-            <input
-              id ="promotion_discount"
-              formControlName="promotion_discount"
-              matInput
-              type="number"
-              placeholder="จำนวนสินค้า.."
-            />
-          </mat-form-field>
-           <mat-form-field appearance="outline">
-            <mat-label>เริ่ม</mat-label>
-            <input
-              id ="date_start"
-              formControlName="date_start"
-              matInput
-              type="datetime"
-              placeholder=".."
-            />
-          </mat-form-field>
-           <mat-form-field appearance="outline">
-            <mat-label>สิ้นสุด</mat-label>
-            <input
+        <mat-form-field appearance="outline" style="width: 100px">
+          <mat-label>ส่วนลด %</mat-label>
+          <input
+            id="discount"
+            formControlName="promotion_discount"
+            type="number"
+            matInput
+            placeholder="ส่วนลด %.."
+          />
+          <mat-error
+            *ngIf="promotionForm.get('promotion_discount').errors?.required"
+            >กรุณาระบุ <strong>ส่วนลด</strong></mat-error
+          >
+        </mat-form-field>
+      </div>
 
-              id ="date_end"
-              formControlName="date_end"
-              matInput
-              type="datetime"
-              placeholder=".."
-            />
-          </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>ช่วงเวลาของโปรโมชั่น</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate id="start_date" formControlName="date_start" />
+          <input matEndDate id="end_date" formControlName="date_end" />
+        </mat-date-range-input>
+        <mat-error
+          *ngIf="
+            promotionForm.get('date_start').errors?.required ||
+            promotionForm.get('date_end').errors?.required
+          "
+          >กรุณาระบุ <strong>ช่วงเวลาของโปรโมชั่น</strong></mat-error
+        >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      <div style="display: flex">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>สินค้า</mat-label>
+          <mat-select id="product_id" formControlName="product_id">
+            <mat-option *ngFor="let item of product" [value]="item">
+              {{ item.product_name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button
+          class="add-promotion-item"
+          id="add"
+          type="add"
+          (click)="addForm()"
+        >
+          เพิ่ม
+        </button>
+      </div>
 
+      <table mat-table>
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef>สินค้า</th>
+          <td mat-cell *matCellDef="let element"></td>
+        </ng-container>
 
-      <ng-container
+        <ng-container
+          formArrayName="promotion_item"
+          *ngFor="
+            let item of promotionForm.get('promotion_item')['controls'];
+            let i = index;
+            let isFirst = first
+          "
+        >
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <!-- <ng-container
         formArrayName="promotion_item"
         *ngFor="
           let item of promotionForm.get('promotion_item')['controls'];
           let i = index;
           let isFirst = first
         "
-
       >
-        <div class="custom-form" [formGroupName]="i">
-
-          <mat-form-field appearance="outline">
+        <div
+          class="custom-form"
+          [formGroupName]="i"
+          style="display: flex; align-items: self-start"
+        >
+          <mat-form-field appearance="outline" style="width: 100%">
             <mat-label>สินค้า</mat-label>
             <mat-select id="product_id" formControlName="product_id">
-              <mat-option *ngFor="let item of product" [value]="item.id">
+              <mat-option *ngFor="let item of product" [value]="item">
                 {{ item.product_name }}
               </mat-option>
             </mat-select>
-
           </mat-form-field>
-           <div class="form-btn">
-            <button *ngIf="!isFirst" type="remove" (click)="removeForm(i)">
-              ลบ
-            </button>
-          </div>
+          <button
+            style="margin: 7px 0 0 0"
+            id="add"
+            type="add"
+            (click)="addForm()"
+            *ngIf="isFirst"
+          >
+            เพิ่ม
+          </button>
+          <button
+            class="rm-btn"
+            *ngIf="!isFirst"
+            type="remove"
+            (click)="removeForm(i)"
+          >
+            ลบ
+          </button>
         </div>
-      </ng-container>
-
+      </ng-container> -->
     </ng-container>
- <div class="btn-group">
-        <button id="add" type="add" (click)="addForm()">เพิ่ม</button>
-      </div>
-
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
       <button id="cancle" (click)="close()">ยกเลิก</button>

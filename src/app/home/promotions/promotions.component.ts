@@ -34,15 +34,14 @@ export class PromotionsComponent implements OnInit {
   ngOnInit(): void {
     this.getPromotionitem();
     this.getProduct();
-     this.http
-       .get(`${environment.apiUrl}promotions`)
-       .subscribe((res: Promotionitem[]) => {
-         this.dataSource.data = res;
-         console.log(res);
-
-       });
-
+    this.http
+      .get(`${environment.apiUrl}promotions`)
+      .subscribe((res: Promotionitem[]) => {
+        this.dataSource.data = res;
+        console.log(res);
+      });
   }
+
   getPromotionitem(): void {
     this.http
       .get(`${environment.apiUrl}promotions`)
@@ -126,5 +125,3 @@ export interface Promotionitem {
   product: string;
   promotion: string;
 }
-
-

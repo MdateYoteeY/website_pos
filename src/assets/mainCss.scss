@@ -19,7 +19,6 @@ $redButton: rgb(255, 98, 98);
     .text-container {
       display: inline-block;
       position: relative;
-      overflow: hidden;
 
       span {
         position: absolute;
@@ -47,8 +46,11 @@ $redButton: rgb(255, 98, 98);
     }
   }
 
-
   button {
+    color: white;
+  }
+
+  .add-button {
     position: absolute;
     width: auto;
     background-color: $greenButton;
@@ -90,7 +92,6 @@ $redButton: rgb(255, 98, 98);
         font-size: 12pt;
         text-align: center;
         background-color: rgb(121, 121, 121);
-        cursor: default;
       }
 
       .edit {

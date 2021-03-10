@@ -20,26 +20,8 @@
         margin: 10px 0 10px 0;
       }
 
-
       .mat-select-panel {
         background: red;
-      }
-    }
-
-    .btn-changePass {
-      border: none;
-      border-radius: 5px;
-      padding: 15px;
-      cursor: pointer;
-      width: fit-content;
-      height: fit-content;
-      background: rgb(221, 221, 221);
-      transition: 0.5s;
-      font-size: 10pt;
-      position: relative;
-
-      &:hover {
-        background: rgb(161, 255, 197);
       }
     }
 
@@ -47,6 +29,10 @@
       text-align: center;
       position: relative;
       width: 100%;
+    }
+
+    .form-btn {
+      background: rgb(255, 100, 100);
     }
 
     button {
