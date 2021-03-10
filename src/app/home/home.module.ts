@@ -38,6 +38,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { StockEditDailogComponent } from './stock-product/stock-edit-dailog/stock-edit-dailog.component';
 import { TypesComponent } from './types/types.component';
 import { TypeDialogComponent } from './types/type-dialog/type-dialog.component';
+import { PromotionsComponent } from './promotions/promotions.component';
+import { PromotionsDialogComponent } from './promotions/promotions-dialog/promotions-dialog.component';
+import { PromotionEditComponent } from './promotions/promotion-edit/promotion-edit.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,9 @@ import { TypeDialogComponent } from './types/type-dialog/type-dialog.component';
     StockEditDailogComponent,
     TypesComponent,
     TypeDialogComponent,
+    PromotionsComponent,
+    PromotionsDialogComponent,
+    PromotionEditComponent,
   ],
 
   imports: [

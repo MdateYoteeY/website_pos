@@ -9,3 +9,18 @@ export interface PromotionItems {
   product: string;
   promotion: string;
 }
+interface RootObject {
+  promotion: Promotions;
+}
+
+export interface Promotions {
+  promotion_name: string;
+  promotion_discount: number;
+  date_start: string;
+  date_end: string;
+  promotion_item: Promotionitem[];
+}
+
+interface Promotionitem {
+  product_id: number;
+}

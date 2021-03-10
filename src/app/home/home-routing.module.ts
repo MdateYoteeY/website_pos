@@ -13,6 +13,7 @@ import { HomeComponent } from './home.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ProductsComponent } from './products/products.component';
 import { TypesComponent } from './types/types.component';
+import { PromotionsComponent } from './promotions/promotions.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,8 +30,8 @@ const routes: Routes = [
         component: ProductsComponent,
       },
       {
-        path: 'promotion',
-        component: PromotionComponent,
+        path: 'promotions',
+        component: PromotionsComponent,
       },
       {
         path: 'stock-product',

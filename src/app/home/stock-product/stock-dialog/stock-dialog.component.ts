@@ -53,22 +53,7 @@ export class StockDialogComponent implements OnInit, OnDestroy {
     console.log(this.data);
     this.initForm();
     this.getProduct();
-    // if (this.data.method === 'showStock') {
-    //   this.stockForm.patchValue(this.data.stock);
-    //   this.header = 'รายการสินค้า';
-
-    //   this.stockAdd = false;
-    //   this.http
-    //     .get(`${environment.apiUrl}stocks/` + this.data.stock.id)
-    //     .subscribe((res: StockList) => {
-    //       this.stocklist = res;
-    //       console.log(this.stocklist);
-    //     });
-    // } else if (this.data.method === 'editStock') {
-    //   this.header = 'แก้ไข';
-    //   this.dataarray.push(this.stockForm);
-    //   this.initForm();
-    // }
+ 
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,77 @@
+<div class="container">
+  <form [formGroup]="promotionForm">
+    <ng-container>
+       <mat-form-field appearance="outline">
+            <mat-label>ชื่อโปรโมชั่น</mat-label>
+            <input
+              formControlName="promotion_name"
+              matInput
+              placeholder="ชื่อโปรโมชั่น.."
+            />
+          </mat-form-field>
+
+           <mat-form-field appearance="outline">
+            <mat-label>จำนวนโปรโมชั่น</mat-label>
+            <input
+              formControlName="promotion_discount"
+              matInput
+              type="number"
+              placeholder="จำนวนสินค้า.."
+            />
+          </mat-form-field>
+           <mat-form-field appearance="outline">
+            <mat-label>เริ่ม</mat-label>
+            <input
+              formControlName="date_start"
+              matInput
+              type="datetime"
+              placeholder=".."
+            />
+          </mat-form-field>
+           <mat-form-field appearance="outline">
+            <mat-label>สิ้นสุด</mat-label>
+            <input
+              formControlName="date_end"
+              matInput
+              type="datetime"
+              placeholder=".."
+            />
+          </mat-form-field>
+
+
+      <ng-container
+        formArrayName="promotion_item"
+        *ngFor="
+          let item of promotionForm.get('promotion_item')['controls'];
+          let i = index;
+          let isFirst = first
+        "
+      >
+        <div class="custom-form" [formGroupName]="i">
+
+          <mat-form-field appearance="outline">
+            <mat-label>สินค้า</mat-label>
+            <mat-select id="product_id" formControlName="product_id">
+              <mat-option *ngFor="let item of product" [value]="item.id">
+                {{ item.product_name }}
+              </mat-option>
+            </mat-select>
+
+          </mat-form-field>
+           <div class="form-btn">
+            <button *ngIf="!isFirst" type="remove" (click)="removeForm(i)">
+              ลบ
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+
+
+    <div class="btn-group">
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

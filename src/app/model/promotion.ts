@@ -27,6 +27,7 @@ export interface Promotion {
   image: string;
   status: string;
   price: number;
+  promotion_item?: any[];
 }
 export interface promotionitem {
   id: number;
@@ -40,7 +41,8 @@ export interface promotionitem {
   image: string;
   status: string;
   price: number;
-  promotion_items: Promotionitem[];
+  promotion_items?: any[];
+
 }
 
 export interface Promotionitem {
