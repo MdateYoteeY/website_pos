@@ -1,7 +1,13 @@
 import { Products } from './../../../model/product';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormControl,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { Stoctlistproduct } from 'src/app/model/stock';
@@ -10,6 +16,8 @@ import { StockProductComponent } from '../page2.component';
 import { PromotionList } from 'src/app/model/promotion';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
+import { debounceTime, map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stock-add-dialog',
@@ -27,31 +35,27 @@ export class StockAddDialogComponent implements OnInit {
   stoctlist: Stoctlist[] = [];
   items: FormArray;
 
-  product: Products;
+  product: Products[];
+  search = new FormControl();
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<StockProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
   ) {}
-  getProduct() {
+
+  getProduct(params?: any) {
     this.http
-      .get(`${environment.apiUrl}products`)
-      .subscribe((res: Products) => {
+      .get(`${environment.apiUrl}products`, { params })
+      .subscribe((res: Products[]) => {
         this.product = res;
         console.log(this.product);
       });
   }
 
   ngOnInit(): void {
-    this.product = this.data.product;
     this.getProduct();
-    //  this.http
-    //    .post(`${environment.apiUrl}stocks`, { stock: payload })
-    //    .subscribe((res) => {
-    //      console.log(res);
-    //      this.dialogRef.close();
-    //    });
 
     if (this.data.method === 'addStock') {
       this.header = 'สต็อคสินค้า';
@@ -59,12 +63,15 @@ export class StockAddDialogComponent implements OnInit {
       this.dataarray.push(this.stocklistproduct);
     }
 
+    this.search.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
+      this.getProduct({ keywords: val });
+    });
+
     this.initForm();
   }
 
   initForm(): void {
     this.stocklistForm = this.fb.group({
-
       stoct_list: this.fb.array([this.createItem()]),
     });
   }
@@ -106,7 +113,6 @@ export class StockAddDialogComponent implements OnInit {
       .subscribe((res) => {
         console.log(res);
         this.dialogRef.close();
-
       });
   }
 
