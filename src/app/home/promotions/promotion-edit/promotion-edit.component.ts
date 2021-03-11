@@ -86,7 +86,7 @@ export class PromotionEditComponent implements OnInit {
 
   initFormItems(): void {
     this.promotionForm = this.fb.group({
-      stoct_list: this.fb.array([this.createItem()]),
+      stock_list: this.fb.array([this.createItem()]),
     });
   }
 

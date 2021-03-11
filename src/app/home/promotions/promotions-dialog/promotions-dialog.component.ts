@@ -6,7 +6,7 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { Products } from 'src/app/model/product';
-import { Stoctlistproduct } from 'src/app/model/stock';
+import { stocklistproduct } from 'src/app/model/stock';
 import { Stocks } from 'src/app/model/stockproduct';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';

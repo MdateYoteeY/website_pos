@@ -109,11 +109,12 @@ export class StockProductComponent implements OnInit {
 
 const ELEMENT_DATA: Stocks[] = [];
 
-export interface Stocks {
+interface Stocks {
   id: number;
   amount_all: number;
   price_all: number;
   stock_date: string;
   created_at: string;
   updated_at: string;
+  items: any;
 }
