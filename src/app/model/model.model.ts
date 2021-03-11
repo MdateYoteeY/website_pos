@@ -1,3 +1,5 @@
+import { Orders } from 'src/app/model/order';
+import { ProductItem, PromotionItem } from './order';
 import { Types } from './type';
 import { PromotionItems } from './promotionitem';
 import { Promotion, PromotionList } from './promotion';
@@ -28,6 +30,9 @@ export interface method {
   type?: Types;
   stocklistproduct?: stocklistproduct;
   addstock?: Stock;
+  productitem?: ProductItem;
+  promotionitem?: PromotionItem;
+  order?: Orders;
 
 }
 

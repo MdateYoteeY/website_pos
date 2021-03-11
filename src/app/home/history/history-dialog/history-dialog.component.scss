@@ -1,0 +1,79 @@
+@import "../../../../assets/mainCss.scss";
+
+
+.container {
+  width: auto;
+  height: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    position: relative;
+
+    .acc-box-1 {
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        font-size: 15pt;
+        // font-weight: 300;
+        // margin: 10px 0 10px 0;
+        text-align: center;
+      }
+
+      .mat-select-panel {
+        background: red;
+      }
+    }
+
+    .btn-changePass {
+      border: none;
+      border-radius: 5px;
+      padding: 15px;
+      cursor: pointer;
+      width: fit-content;
+      height: fit-content;
+      background: rgb(221, 221, 221);
+      transition: .5s;
+      font-size: 10pt;
+      position: relative;
+
+      &:hover {
+        background: rgb(161, 255, 197);
+      }
+    }
+
+    .btn-group {
+      text-align: center;
+      position: relative;
+      width: 100%;
+    }
+
+    button {
+      padding: 10px 20px 10px 20px;
+      font-size: 12pt;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: .5s;
+      position: relative;
+
+      &:hover {
+        background: inherit;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+#confirm {
+  background: $greenButton;
+}
+
+#cancle {
+  background: $redButton;
+}

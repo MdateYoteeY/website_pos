@@ -14,6 +14,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { ProductsComponent } from './products/products.component';
 import { TypesComponent } from './types/types.component';
 import { PromotionsComponent } from './promotions/promotions.component';
+import { HistoryComponent } from './history/history.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'zone',
         component: ZoneComponent,
+      },
+      {
+        path: 'history',
+        component: HistoryComponent,
       },
       {
         path: 'users',
