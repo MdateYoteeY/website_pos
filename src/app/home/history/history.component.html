@@ -1,5 +1,5 @@
 <div class="container">
-  <p>สินค้า</p>
+  <p>ออเดอร์</p>
   <div class="header">
     <div class="text-container">
       ค้นหารายการ<input
@@ -8,60 +8,36 @@
         [formControl]="search"
       /><span class="material-icons"> search </span>
     </div>
-    <div>
-      <button
-        class="add-button"
-        mat-raised-button
-        (click)="openDialog('addProduct')"
-      >
-        เพิ่มสินค้า
-      </button>
-    </div>
+
   </div>
 
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>รหัสสินค้า</th>
+      <th mat-header-cell *matHeaderCellDef>รหัสออเดอร์</th>
       <td mat-cell *matCellDef="let element" >
         {{ element.id }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>ชื่อสินค้า</th>
+      <th mat-header-cell *matHeaderCellDef>โต๊ะ</th>
       <td mat-cell *matCellDef="let element" >
-        {{ element.product_name }}
+        {{ element.table }}
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef>ประเภทสินค้า</th>
-      <td mat-cell *matCellDef="let element" >
-        {{ element.type }}
-      </td>
-    </ng-container>
 
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef>ราคาสินค้า</th>
-      <td mat-cell *matCellDef="let element" >
-        {{ element.product_price }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef>จำนวนสินค้า</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.product_amount }}
-      </td>
-    </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>สถานะสินค้า</th>
-      <td
-        mat-cell
-        *matCellDef="let element"
-      >
+      <th mat-header-cell *matHeaderCellDef>สถานะออเดอร์</th>
+      <td mat-cell *matCellDef="let element">
         {{ element.status }}
+      </td>
+    </ng-container>
+     <ng-container matColumnDef="list">
+      <th mat-header-cell *matHeaderCellDef>จำนวนรายการ</th>
+      <td  mat-cell *matCellDef="let element" >
+        {{ element.order_list }}
       </td>
     </ng-container>
 

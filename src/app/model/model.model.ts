@@ -1,6 +1,8 @@
+import { Orders } from 'src/app/model/order';
+import { ProductItem, PromotionItem } from './order';
 import { Types } from './type';
 import { PromotionItems } from './promotionitem';
-import { Promotion, PromotionList } from './promotion';
+import { Promotion, PromotionList, promotionitem } from './promotion';
 import { StockList, Stoctlistproduct } from './stock';
 import { Categorys } from './category';
 import { StatusTables } from './table.model';
@@ -28,6 +30,9 @@ export interface method {
   type?: Types;
   stocklistproduct?: Stoctlistproduct;
   addstock?: Stock;
+  productitem?: ProductItem;
+  promotionitem?: PromotionItem;
+  order?: Orders;
 
 }
 

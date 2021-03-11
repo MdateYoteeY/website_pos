@@ -41,6 +41,8 @@ import { TypeDialogComponent } from './types/type-dialog/type-dialog.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { PromotionsDialogComponent } from './promotions/promotions-dialog/promotions-dialog.component';
 import { PromotionEditComponent } from './promotions/promotion-edit/promotion-edit.component';
+import { HistoryComponent } from './history/history.component';
+import { HistoryDialogComponent } from './history/history-dialog/history-dialog.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { PromotionEditComponent } from './promotions/promotion-edit/promotion-ed
     PromotionsComponent,
     PromotionsDialogComponent,
     PromotionEditComponent,
+    HistoryComponent,
+    HistoryDialogComponent,
   ],
 
   imports: [

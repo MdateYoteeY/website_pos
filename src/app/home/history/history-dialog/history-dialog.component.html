@@ -1,0 +1,32 @@
+<div class="container">
+  <form [formGroup]="orderForm">
+   <div class="acc-box-1">
+      <p class="header">{{ header }}</p>
+<!--
+      <table>
+        <tr>
+          <th>ชื่อ</th>
+          <th>จำนวน</th>
+          <th>ราคา</th>
+        </tr>
+
+        <tr
+          *ngFor="let item of orderForm.get('product_item')"
+
+        >
+          <td style="text-align: left" ><input  [value]="item.name"></td>
+          <td><input  [value]="item.order_amount"></td>
+          <td><input  [value]="item.promotion_item"></td>
+
+        </tr>
+
+      </table> -->
+
+
+    </div>
+   <div class="btn-group">
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

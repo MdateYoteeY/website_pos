@@ -55,7 +55,7 @@
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-label>สินค้า</mat-label>
           <mat-select id="product_id" formControlName="product_id">
-            <mat-option *ngFor="let item of product" [value]="item">
+            <mat-option *ngFor="let item of product" [value]="item.id">
               {{ item.product_name }}
             </mat-option>
           </mat-select>
@@ -69,7 +69,6 @@
           เพิ่ม
         </button>
       </div>
-
       <table mat-table>
         <ng-container matColumnDef="product">
           <th mat-header-cell *matHeaderCellDef>สินค้า</th>
