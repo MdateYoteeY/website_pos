@@ -1,3 +1,4 @@
+import { ListPromotionDialogComponent } from './../promotion/list-promotion-dialog/list-promotion-dialog.component';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -57,7 +58,13 @@ export class PromotionsComponent implements OnInit {
         console.log(this.product);
       });
   }
-
+  openList(list): void {
+    const ELEMENT_DATA: Promotionitem[] = list;
+    const dialogRef = this.dialog.open(ListPromotionDialogComponent, {
+      data: ELEMENT_DATA,
+      
+    });
+  }
   openDialog(method: string, element?: Promotionitem): void {
     if (method === 'editPromotion') {
       const dialogRef = this.dialog.open(PromotionsDialogComponent, {

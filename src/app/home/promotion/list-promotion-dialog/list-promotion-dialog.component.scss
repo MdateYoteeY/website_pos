@@ -1,3 +1,4 @@
+@import "../../../../assets/mainCss.scss";
 .example-container {
   min-height: 10px;
   max-height: 400px;
@@ -6,4 +7,90 @@
 
 table {
   width: 100%;
+}
+
+.container {
+  width: auto;
+  height: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    .acc-box-1 {
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        font-size: 20pt;
+        font-weight: 500;
+        margin: 10px 0 10px 0;
+      }
+
+
+      .mat-select-panel {
+        background: red;
+      }
+    }
+
+    .btn-group {
+      text-align: center;
+      position: relative;
+      width: 100%;
+    }
+
+    table {
+      margin: 0 0 10px 0;
+    }
+
+    .add-promotion-item {
+      margin: 10px 0 10px 10px;
+      width: fit-content;
+      height: fit-content;
+    }
+
+    .rm-btn {
+      background: $redButton;
+      transition: .2s;
+
+      &:hover {
+        background: $redButton;
+        opacity: 0.6;
+      }
+    }
+
+    button {
+      padding: 10px 20px 10px 20px;
+      font-size: 12pt;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.5s;
+      position: relative;
+
+      &:hover {
+        background: inherit;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+#confirm {
+  background: $greenButton;
+}
+
+#cancle {
+  background: $redButton;
+}
+
+#add {
+  background: $greenButton;
+}
+
+#remove {
+  background: $redButton;
 }
