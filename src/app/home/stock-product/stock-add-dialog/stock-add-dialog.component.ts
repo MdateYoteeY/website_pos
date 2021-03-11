@@ -47,7 +47,7 @@ export class StockAddDialogComponent implements OnInit {
 
   getProduct(params?: any) {
     this.http
-      .get(`${environment.apiUrl}products`, { params })
+      .get(`${environment.apiUrl}products_app`, { params })
       .subscribe((res: Products[]) => {
         this.product = res;
         console.log(this.product);
