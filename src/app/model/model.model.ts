@@ -1,7 +1,6 @@
 import { Orders } from 'src/app/model/order';
 import { ProductItem, PromotionItem } from './order';
 import { Types } from './type';
-import { PromotionItems } from './promotionitem';
 import { Promotion, PromotionList } from './promotion';
 import { StockList, stocklistproduct } from './stock';
 import { Categorys } from './category';
