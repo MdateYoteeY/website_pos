@@ -50,7 +50,6 @@ export class StockDialogComponent implements OnInit, OnDestroy {
       });
   }
   ngOnInit(): void {
-    console.log(this.data);
     this.initForm();
     this.getProduct();
 

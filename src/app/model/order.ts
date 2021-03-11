@@ -7,42 +7,50 @@ export interface Orders {
   store_id: number;
   user_id: number;
   order_number: string;
-  order_list: number
-  order_amount: number
-  created_at: Date;
-  updated_at: Date;
+  order_list?: any;
+  order_amount?: any;
+  created_at: string;
+  updated_at: string;
   table: string;
   status: string;
   staff: string;
   zone: string;
-  store: string;
-  product_item: ProductItem[];
-  promotion_item: PromotionItem[];
-  receipt: string;
+  store: Store;
+  product_item: Productitem[];
+  promotion_item: any[];
+  receipt: Receipt;
 }
 
- export interface ProductItem {
+export interface Receipt {
+  id: number;
+  receipt_number: string;
+  phone_number: string;
+  vat: number;
+  discount?: any;
+  price_all?: any;
+  cash?: any;
+  change?: any;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Productitem {
   id: number;
   order_id: number;
   product_id: number;
   order_amount: number;
   total_price: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   name: string;
   price: number;
 }
 
-export interface PromotionItem {
+export interface Store {
   id: number;
-  promotion_id: number;
-  order_id: number;
-  promotion_amount: number;
-  Total_price: number;
-  created_at: Date;
-  updated_at: Date;
   name: string;
+  branch: string;
+  address: string;
+  created_at: string;
+  updated_at: string;
 }
-
-
-

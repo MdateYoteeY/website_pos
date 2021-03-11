@@ -1,10 +1,9 @@
-
-import { method } from './../../../model/model.model';
+import { method } from 'src/app/model/model.model';
 import { Products } from './../../../model/product';
 import { Component, Inject, OnInit } from '@angular/core';
 import { HistoryComponent } from '../history.component';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
@@ -34,15 +33,15 @@ export class HistoryDialogComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<HistoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: order
+    @Inject(MAT_DIALOG_DATA) public data: method
   ) {}
-  // getOrder() {
-  //   this.http
-  //     .get(`${environment.apiUrl}orders/` + this.data.order.id)
-  //     .subscribe((res: Orders[]) => {
-  //       this.order = res;
-  //     });
-  // }
+  getOrder() {
+    this.http
+      .get(`${environment.apiUrl}orders/` + this.data.order)
+      .subscribe((res: Orders[]) => {
+        this.order = res;
+      });
+  }
   getProduct() {
     this.http
       .get(`${environment.apiUrl}products`)
@@ -65,10 +64,31 @@ export class HistoryDialogComponent implements OnInit {
       staff: ['', Validators.required],
       zone: ['', Validators.required],
       store: ['', Validators.required],
-      product_item: this.fb.array([this.productItem()]),
-      promotion_item: this.fb.array([this.promotionItem()]),
+      product_item: this.fb.array([]),
+      promotion_item: this.fb.array([]),
       receipt: ['', Validators.required],
     });
+    if (this.data && this.data.order) {
+      this.orderForm.patchValue(this.data.order);
+
+      const items = <FormArray>this.orderForm.controls.product_item;
+
+      for (const item of this.data.order.product_item) {
+        items.push(this.createItem(item));
+      }
+    }
+  }
+  createItem(data?): FormGroup {
+    const output = this.fb.group({
+      name: ['', Validators.required],
+      price: ['', Validators.required],
+    });
+
+    if (data) {
+      output.patchValue(data);
+    }
+
+    return output;
   }
 
   productItem(): FormGroup {
@@ -101,7 +121,7 @@ export class HistoryDialogComponent implements OnInit {
     const payload = this.orderForm.value;
 
     console.log(payload);
-    console.log(this.data.order);
+    console.log(this.data.order.product_item);
   }
 
   onSubmit(): void {}
