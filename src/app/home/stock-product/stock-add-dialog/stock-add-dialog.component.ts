@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
-import { Stoctlistproduct } from 'src/app/model/stock';
+import { stocklistproduct } from 'src/app/model/stock';
 import { Stocks } from 'src/app/model/stockproduct';
 import { StockProductComponent } from '../page2.component';
 import { PromotionList } from 'src/app/model/promotion';
@@ -30,9 +30,9 @@ export class StockAddDialogComponent implements OnInit {
   stock: Stocks;
   header: string;
   stockAdd = true;
-  stocklistproduct: Stoctlistproduct[] = [];
+  stocklistproduct: stocklistproduct[] = [];
   addstock: Stock;
-  stoctlist: Stoctlist[] = [];
+  stocklist: stocklist[] = [];
   items: FormArray;
 
   product: Products[];
@@ -62,7 +62,7 @@ export class StockAddDialogComponent implements OnInit {
       console.log(this.stock);
       this.dataarray.push(this.stocklistproduct);
     }
-    this.searchFunction();
+    // this.searchFunction();
     this.initForm();
   }
 
@@ -131,10 +131,10 @@ interface RootObject {
 }
 
 interface Stock {
-  stock_list: Stoctlist[];
+  stock_list: stocklist[];
 }
 
-interface Stoctlist {
+interface stocklist {
   product_id: number;
   list_amount: number;
   price: number;

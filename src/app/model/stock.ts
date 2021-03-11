@@ -24,9 +24,9 @@ interface RootObject {
 }
 
  interface StockProduct {
-  stoct_list: Stoctlistproduct[];
+  stock_list: stocklistproduct[];
 }
-export interface Stoctlistproduct {
+export interface stocklistproduct {
   product_id: number;
   list_amount: number;
   price: number;
