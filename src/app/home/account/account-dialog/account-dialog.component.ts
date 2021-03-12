@@ -116,24 +116,6 @@ export class AccountDialogComponent implements OnInit {
       );
       formData.append('user[img]', body.img);
 
-      // let body = {
-      //   firstname: this.accountAddForm.controls['firstname'].value,
-      //   lastname: this.accountAddForm.getRawValue().lastname,
-      //   phone_number: this.accountAddForm.getRawValue().phone_number,
-      //   staff_id: this.accountAddForm.getRawValue().staff_id,
-      //   username: this.accountAddForm.getRawValue().username,
-      //   password: this.accountAddForm.getRawValue().password,
-      //   password_confirmation: this.accountAddForm.getRawValue()
-      //     .password_confirmation,
-      //   img: formData.get('img'),
-      // };
-
-      // let body = {};
-      // formData.forEach(function (value, key) {
-      //   body[key] = value;
-      // });
-      // let bodys = JSON.stringify(body);
-
       this.http.post(`${environment.apiUrl}users`, formData).subscribe(
         (res) => {
           Swal.fire({

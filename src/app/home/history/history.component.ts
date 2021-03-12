@@ -37,18 +37,11 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrder();
-
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-
-  // getType(): void {
-  //   this.http.get(`${environment.apiUrl}types`).subscribe((res: Types) => {
-  //     this.type = res;
-  //   });
-  // }
 
   getOrder(params?: any): void {
     this.http
@@ -67,11 +60,11 @@ export class HistoryComponent implements OnInit {
           order: element,
         },
       });
-    }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
-      this.getOrder();
-    });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getOrder();
+      });
+    }
   }
 
   editData(element: Orders): void {

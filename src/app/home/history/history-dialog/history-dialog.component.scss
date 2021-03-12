@@ -1,6 +1,3 @@
-@import "../../../../assets/mainCss.scss";
-
-
 .container {
   width: auto;
   height: auto;
@@ -12,68 +9,65 @@
 
   form {
     position: relative;
+    font-size: 15pt;
 
-    .acc-box-1 {
+    .box1 {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        font-size: 15pt;
+        font-weight: normal;
+        margin: 0 0 2px 0;
+      }
 
       .header {
         font-size: 15pt;
-        // font-weight: 300;
-        // margin: 10px 0 10px 0;
+        margin: 0;
         text-align: center;
       }
 
-      .mat-select-panel {
-        background: red;
+      tr {
+        th {
+          font-size: 15pt;
+          font-weight: normal;
+        }
       }
     }
+  }
 
-    .btn-changePass {
-      border: none;
-      border-radius: 5px;
-      padding: 15px;
-      cursor: pointer;
-      width: fit-content;
-      height: fit-content;
-      background: rgb(221, 221, 221);
-      transition: .5s;
-      font-size: 10pt;
-      position: relative;
+  .btn-group {
+    text-align: center;
+    position: relative;
+    width: 100%;
+  }
 
-      &:hover {
-        background: rgb(161, 255, 197);
-      }
-    }
+  button {
+    padding: 10px 20px 10px 20px;
+    font-size: 12pt;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .5s;
+    position: relative;
 
-    .btn-group {
-      text-align: center;
-      position: relative;
-      width: 100%;
-    }
-
-    button {
-      padding: 10px 20px 10px 20px;
-      font-size: 12pt;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: .5s;
-      position: relative;
-
-      &:hover {
-        background: inherit;
-        opacity: 0.8;
-      }
+    &:hover {
+      background: inherit;
+      opacity: 0.8;
     }
   }
 }
 
-#confirm {
-  background: $greenButton;
+mat-divider {
+  border-top-style: dashed;
+  border-top-color: #000;
+  border-width: 2px;
+  margin: 5px 0 5px 0;
 }
 
-#cancle {
-  background: $redButton;
-}
+#confirm {}
+
+#cancle {}

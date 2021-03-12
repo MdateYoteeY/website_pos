@@ -42,24 +42,25 @@ export class PromotionsComponent implements OnInit {
     });
   }
   openDialog(method: string, element?: Promotion): void {
+    let dialogRef;
     if (method === 'editPromotion') {
-      const dialogRef = this.dialog.open(PromotionsDialogComponent, {
+      dialogRef = this.dialog.open(PromotionsDialogComponent, {
         data: {
           method: method,
           promotion: element,
         },
       });
     } else if (method === 'addPromotion') {
-      const dialogRef = this.dialog.open(PromotionsDialogComponent, {
+      dialogRef = this.dialog.open(PromotionsDialogComponent, {
         data: {
           method: method,
         },
       });
     }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
-      // this.getPromotion();
-      this.ngOnInit();
+    dialogRef.afterAllClosed.subscribe((res) => {
+      this.getPromotion();
+      // this.ngOnInit();
     });
   }
 

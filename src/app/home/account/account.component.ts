@@ -50,6 +50,7 @@ export class AccountComponent implements OnInit {
       .get(`${environment.apiUrl}users`, { params })
       .subscribe((res: Users[]) => {
         this.dataSource.data = res;
+        console.log(res);
       });
   }
 
@@ -63,17 +64,19 @@ export class AccountComponent implements OnInit {
         });
     }
 
+    let dialogRef;
+
     if (method === 'editAccount') {
-      const dialogRef = this.dialog.open(AccountDialogComponent, {
+      dialogRef = this.dialog.open(AccountDialogComponent, {
         data: { method: method, user: userEdit, staff: this.staff },
       });
     } else {
-      const dialogRef = this.dialog.open(AccountDialogComponent, {
+      dialogRef = this.dialog.open(AccountDialogComponent, {
         data: { staff: this.staff },
       });
     }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
+    dialogRef.afterClosed().subscribe((res) => {
       this.getUser();
     });
   }

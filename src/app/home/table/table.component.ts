@@ -71,8 +71,9 @@ export class TableComponent implements OnInit {
   }
 
   openDialog(method: string, element?: Tables): void {
+    let dialogRef;
     if (method === 'editTable') {
-      const dialogRef = this.dialog.open(TableDialogComponent, {
+      dialogRef = this.dialog.open(TableDialogComponent, {
         data: {
           method: method,
           table: element,
@@ -81,7 +82,7 @@ export class TableComponent implements OnInit {
         },
       });
     } else if (method === 'addTable') {
-      const dialogRef = this.dialog.open(TableDialogComponent, {
+      dialogRef = this.dialog.open(TableDialogComponent, {
         data: {
           method: method,
           zone: this.zone,
@@ -90,7 +91,7 @@ export class TableComponent implements OnInit {
       });
     }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
+    dialogRef.afterAllClosed.subscribe((res) => {
       this.getTable();
     });
   }
