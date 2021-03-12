@@ -1,155 +1,163 @@
 <div class="container">
   <form [formGroup]="accountAddForm">
-    <div class="acc-box-1">
-      <p class="header">{{ header }}</p>
-      <!-- <a (change)="onFileSelect($event)" type="file" name="image">เลือกไฟล์</a> -->
-      <!-- <input
+    <p class="header">{{ header }}</p>
+    <div class="mainBox">
+      <div class="box1">
+        <!-- <a (change)="onFileSelect($event)" type="file" name="image">เลือกไฟล์</a> -->
+        <!-- <input
         type="file"
         class="chooseFile"
         (change)="onFileSelect($event)"
         name="img"
         placeholder="เลือกไฟล์.."
       /> -->
-      <img style="width: 200px; height: auto" src="" />
+        <div>
+          <mat-form-field appearance="outline" style="margin-right: 15px">
+            <mat-label>ชื่อจริง</mat-label>
+            <input
+              id="firstname"
+              formControlName="firstname"
+              matInput
+              placeholder="ชื่อจริง.."
+            />
+            <mat-error
+              *ngIf="
+                accountAddForm.get('firstname').errors?.required &&
+                accountAddForm.get('firstname').touched
+              "
+              >กรุณาระบุ <strong>ชื่อจริง</strong></mat-error
+            >
+          </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>เลือกรูปโปรไฟล์</mat-label>
-        <ngx-mat-file-input
-          type="file"
-          class="chooseFile"
-          (change)="onFileSelect($event)"
-          name="img"
-          placeholder="เลือกไฟล์.."
-        ></ngx-mat-file-input>
-        <mat-icon matSuffix></mat-icon>
-      </mat-form-field>
-     
+          <mat-form-field appearance="outline">
+            <mat-label>นามสกุล</mat-label>
+            <input
+              id="lastname"
+              formControlName="lastname"
+              matInput
+              placeholder="นามสกุล.."
+            />
+            <mat-error *ngIf="accountAddForm.get('lastname').errors?.required"
+              >กรุณาระบุ <strong>นามสกุล</strong></mat-error
+            >
+          </mat-form-field>
+        </div>
 
-      <div>
-        <mat-form-field appearance="outline" style="margin-right: 15px">
-          <mat-label>ชื่อจริง</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-label>เบอร์โทรศัพท์</mat-label>
           <input
-            id="firstname"
-            formControlName="firstname"
             matInput
-            placeholder="ชื่อจริง.."
+            type="tel"
+            id="phoneNumber"
+            formControlName="phone_number"
+            placeholder="เบอร์โทรศัพท์.."
+            maxlength="10"
+            minlength="10"
+            #tel
           />
-          <mat-error *ngIf="accountAddForm.get('firstname').errors?.required"
-            >กรุณาระบุ <strong>ชื่อจริง</strong></mat-error
+
+          <mat-hint align="end">{{ tel.value?.length || 0 }}/10</mat-hint>
+          <mat-error *ngIf="accountAddForm.get('phone_number').errors?.required"
+            >กรุณาระบุ <strong>เบอร์โทรศัพท์</strong></mat-error
+          >
+          <mat-error *ngIf="accountAddForm.get('phone_number').errors?.pattern"
+            >กรุณาระบุ
+            <strong>รูปแบบเบอร์โทรศัพท์</strong> ให้ถูกต้อง</mat-error
           >
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>นามสกุล</mat-label>
-          <input
-            id="lastname"
-            formControlName="lastname"
-            matInput
-            placeholder="นามสกุล.."
-          />
-          <mat-error *ngIf="accountAddForm.get('lastname').errors?.required"
-            >กรุณาระบุ <strong>นามสกุล</strong></mat-error
+          <mat-label>สถานะ</mat-label>
+          <mat-select id="staff_id" formControlName="staff_id">
+            <mat-option *ngFor="let item of data.staff" [value]="item.id">{{
+              item.status
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="accountAddForm.get('staff_id').errors?.required"
+            >กรุณาระบุ <strong>สถานะ</strong></mat-error
           >
         </mat-form-field>
-      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>เบอร์โทรศัพท์</mat-label>
-        <input
-          matInput
-          type="tel"
-          id="phoneNumber"
-          formControlName="phone_number"
-          placeholder="เบอร์โทรศัพท์.."
-          maxlength="10"
-          minlength="10"
-          #tel
-        />
-
-        <mat-hint align="end">{{ tel.value?.length || 0 }}/10</mat-hint>
-        <mat-error *ngIf="accountAddForm.get('phone_number').errors?.required"
-          >กรุณาระบุ <strong>เบอร์โทรศัพท์</strong></mat-error
-        >
-        <mat-error *ngIf="accountAddForm.get('phone_number').errors?.pattern"
-          >กรุณาระบุ <strong>รูปแบบเบอร์โทรศัพท์</strong> ให้ถูกต้อง</mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>สถานะ</mat-label>
-        <mat-select id="staff_id" formControlName="staff_id">
-          <mat-option *ngFor="let item of data.staff" [value]="item.id">{{
-            item.status
-          }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="accountAddForm.get('staff_id').errors?.required"
-          >กรุณาระบุ <strong>สถานะ</strong></mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input
-          matInput
-          id="username"
-          formControlName="username"
-          placeholder="Username.."
-          required
-        />
-        <mat-error *ngIf="accountAddForm.get('username').errors?.required"
-          >กรุณาระบุ <strong>ชื่อบัญชีผู้ใช้งาน</strong></mat-error
-        >
-        <!-- <div *ngIf="errors?.username"> -->
-        <mat-error *ngIf="accountAddForm.get('username').errors?.userAlready">
-          ชื่อบัญชีผู้ใช้งาน <strong>มีอยู่แล้ว</strong>
-        </mat-error>
-      </mat-form-field>
-      <div>
-        <div *ngIf="!check">
-          <p type="cheked" class="btn-changePass" (click)="editPass()">
-            Chang password
-          </p>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            id="username"
+            formControlName="username"
+            placeholder="Username.."
+            required
+          />
+          <mat-error *ngIf="accountAddForm.get('username').errors?.required"
+            >กรุณาระบุ <strong>ชื่อบัญชีผู้ใช้งาน</strong></mat-error
+          >
+          <!-- <div *ngIf="errors?.username"> -->
+          <mat-error *ngIf="accountAddForm.get('username').errors?.userAlready">
+            ชื่อบัญชีผู้ใช้งาน <strong>มีอยู่แล้ว</strong>
+          </mat-error>
+        </mat-form-field>
+        <div>
+          <div *ngIf="!check">
+            <p type="cheked" class="btn-changePass" (click)="editPass()">
+              Chang password
+            </p>
+          </div>
         </div>
+
+        <mat-form-field appearance="outline" *ngIf="passwordView">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Password.."
+            required
+          />
+          <mat-error *ngIf="accountAddForm.get('password').errors?.required"
+            >กรุณาระบุ <strong>รหัสผ่าน</strong></mat-error
+          >
+          <mat-error *ngIf="accountAddForm.get('password').errors?.minlength"
+            >กรุณาระบุรหัสผ่าน <strong>อย่างน้อย 8 ตัว </strong></mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="passwordView">
+          <mat-label>Password Confirm</mat-label>
+          <input
+            matInput
+            id="passwordConfirmation"
+            type="password"
+            formControlName="password_confirmation"
+            required
+            placeholder="Password Confirmation.."
+          />
+          <mat-error
+            *ngIf="accountAddForm.get('password_confirmation').errors?.required"
+            >กรุณา <strong>ยืนยันรหัสผ่าน</strong></mat-error
+          >
+          <mat-error
+            *ngIf="
+              accountAddForm.get('password_confirmation').errors?.mustMatch
+            "
+          >
+            รหัสผ่าน <strong>ไม่ตรงกัน</strong>
+          </mat-error>
+        </mat-form-field>
       </div>
-
-      <mat-form-field appearance="outline" *ngIf="passwordView">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="Password.."
-          required
-        />
-        <mat-error *ngIf="accountAddForm.get('password').errors?.required"
-          >กรุณาระบุ <strong>รหัสผ่าน</strong></mat-error
-        >
-        <mat-error *ngIf="accountAddForm.get('password').errors?.minlength"
-          >กรุณาระบุรหัสผ่าน <strong>อย่างน้อย 8 ตัว </strong></mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" *ngIf="passwordView">
-        <mat-label>Password Confirm</mat-label>
-        <input
-          matInput
-          id="passwordConfirmation"
-          type="password"
-          formControlName="password_confirmation"
-          required
-          placeholder="Password Confirmation.."
-        />
-        <mat-error
-          *ngIf="accountAddForm.get('password_confirmation').errors?.required"
-          >กรุณา <strong>ยืนยันรหัสผ่าน</strong></mat-error
-        >
-        <mat-error
-          *ngIf="accountAddForm.get('password_confirmation').errors?.mustMatch"
-        >
-          รหัสผ่าน <strong>ไม่ตรงกัน</strong>
-        </mat-error>
-      </mat-form-field>
+      <div class="box2">
+        <img [src]="urlImage" />
+        <mat-form-field appearance="outline">
+          <mat-label>เลือกรูปโปรไฟล์</mat-label>
+          <ngx-mat-file-input
+            type="file"
+            class="chooseFile"
+            (change)="onSelectFile($event)"
+            name="img"
+            placeholder="เลือกไฟล์.."
+          ></ngx-mat-file-input>
+          <mat-icon matSuffix></mat-icon>
+        </mat-form-field>
+      </div>
     </div>
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>

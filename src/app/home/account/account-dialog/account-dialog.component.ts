@@ -32,6 +32,7 @@ export class AccountDialogComponent implements OnInit {
 
   fileToUpload: File = null;
   img: any;
+  urlImage: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -88,6 +89,22 @@ export class AccountDialogComponent implements OnInit {
       img: file,
     });
     console.log(this.profile);
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      const file = (event.target as HTMLInputElement).files[0];
+      this.accountAddForm.patchValue({
+        img: file,
+      });
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (event) => {
+        this.urlImage = event.target.result;
+      };
+    }
   }
 
   editPass(): void {
