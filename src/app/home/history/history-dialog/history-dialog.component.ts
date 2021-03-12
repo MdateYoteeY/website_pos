@@ -15,6 +15,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class HistoryDialogComponent implements OnInit {
   orderForm: FormGroup;
+  product_list: FormGroup;
+  items: FormArray;
   displayedColumns: string[] = [
     'id',
     'name',
@@ -68,43 +70,21 @@ export class HistoryDialogComponent implements OnInit {
       promotion_item: this.fb.array([]),
       receipt: ['', Validators.required],
     });
-    if (this.data && this.data.order) {
-      this.orderForm.patchValue(this.data.order);
-
-      const items = <FormArray>this.orderForm.controls.product_item;
-      const promotion = <FormArray>this.orderForm.controls.promotion_item;
-
-      for (const item of this.data.order.product_item) {
-        items.push(this.productItem(item));
-      }
-      for (const item of this.data.order.promotion_item) {
-        promotion.push(this.promotionItem(promotion));
-      }
-    }
   }
-  productItem(data?): FormGroup {
-    const output = this.fb.group({
+  productItem(data): FormGroup {
+    return this.fb.group({
+      order_id: ['', Validators.required],
+      product_id: ['', Validators.required],
+      order_amount: ['', Validators.required],
+      total_price: ['', Validators.required],
       name: ['', Validators.required],
       price: ['', Validators.required],
     });
+    // if (data) {
+    //   output.patchValue(data);
+    // }
 
-    if (data) {
-      output.patchValue(data);
-    }
-
-    return output;
-  }
-
-  promotionItem(data?): FormGroup {
-    const output = this.fb.group({
-      price: ['', Validators.required],
-      name: ['', Validators.required],
-    });
-    if (data) {
-      output.patchValue(data);
-    }
-
-    return output;
+    // return output;
   }
 
   ngOnInit(): void {
@@ -127,14 +107,12 @@ export class HistoryDialogComponent implements OnInit {
   }
 }
 
-
-
 const ELEMENT_DATA: Orders[] = [];
- interface order {
-   method?: String;
-   order: Orders[];
- }
- interface Orders {
+interface order {
+  method?: String;
+  order: Orders[];
+}
+interface Orders {
   id: number;
   table_id: number;
   receipt_id: number;
@@ -156,7 +134,7 @@ const ELEMENT_DATA: Orders[] = [];
   receipt: string;
 }
 
- interface ProductItem {
+interface ProductItem {
   id: number;
   order_id: number;
   product_id: number;
@@ -168,7 +146,7 @@ const ELEMENT_DATA: Orders[] = [];
   price: number;
 }
 
- interface PromotionItem {
+interface PromotionItem {
   id: number;
   promotion_id: number;
   order_id: number;
@@ -178,6 +156,3 @@ const ELEMENT_DATA: Orders[] = [];
   updated_at: Date;
   name: string;
 }
-
-
-

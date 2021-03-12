@@ -1,56 +1,19 @@
 <div class="container">
   <form [formGroup]="orderForm">
-   <div class="acc-box-1">
+    <div class="acc-box-1">
       <p class="header">{{ header }}</p>
-
-      <ng-container
-      formArrayName="product_item"
-      *ngFor="
-        let item of orderForm.get('product_item')['controls'];
-        let i = index;
-        let isFirst = first
-      "
-    >
-      <div class="custom-form" [formGroupName]="i">
-          <input
-            formControlName="name"
-            matInput
-          />
-          <input
-          style="text-align: end;"
-            formControlName="price"
-            matInput
-          />
-
-      </div>
-    </ng-container>
-
-     <ng-container
-      formArrayName="promotion_item"
-      *ngFor="
-        let item of orderForm.get('promotion_item')['controls'];
-        let i = index;
-        let isFirst = first
-      "
-    >
-      <div class="custom-form" [formGroupName]="i">
-          <input
-            formControlName="name"
-            matInput
-          />
-          <input
-          style="text-align: end;"
-            formControlName="price"
-            matInput
-          />
-
-      </div>
-    </ng-container>
-
-
-
+      <p >เลขที่ใบเสร็จ:{{data.order.receipt.receipt_number}}</p>
+      <p >โทร:{{data.order.receipt.phone_number}}</p>
+      <p >วันที่ขาย:{{data.order.receipt.created_at}}</p>
+      <p >ใบเสร็จ</p>
+      <mat-divider ></mat-divider>
+      <p>จำนวน--------------รายการ--------------ราคา</p>
+      <mat-divider></mat-divider>
+      <ng-container *ngFor="let item of data.order.product_item;">
+        <i>{{item.order_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
+      </ng-container>
     </div>
-   <div class="btn-group">
+    <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
       <button id="cancle" (click)="close()">ยกเลิก</button>
     </div>

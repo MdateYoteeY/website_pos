@@ -1,3 +1,5 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CategoryComponent } from './category/category.component';
@@ -81,6 +83,8 @@ import { HistoryDialogComponent } from './history/history-dialog/history-dialog.
     FormsModule,
     CommonModule,
     HomeRoutingModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatListModule,
     MatSelectModule,
@@ -92,6 +96,7 @@ import { HistoryDialogComponent } from './history/history-dialog/history-dialog.
     MatSortModule,
     MatAutocompleteModule,
     MaterialFileInputModule,
+    
   ],
 })
 export class HomeModule {}
