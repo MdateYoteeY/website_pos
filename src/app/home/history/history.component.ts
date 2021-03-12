@@ -23,12 +23,12 @@ export class HistoryComponent implements OnInit {
     'id',
     'name',
     'list',
+    'number',
     'status',
     'action',
   ];
   dataSource = new MatTableDataSource<Orders>(ELEMENT_DATA);
   order: Orders;
-
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   search = new FormControl();
@@ -38,11 +38,6 @@ export class HistoryComponent implements OnInit {
   ngOnInit(): void {
     this.getOrder();
 
-    // this.getType();
-    // this.getstatus_product();
-    // this.search.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
-    //   this.getProduct({ keywords: val });
-    // });
   }
 
   ngAfterViewInit() {
@@ -55,14 +50,12 @@ export class HistoryComponent implements OnInit {
   //   });
   // }
 
-
   getOrder(params?: any): void {
     this.http
       .get(`${environment.apiUrl}orders`, { params })
       .subscribe((res: Orders[]) => {
         this.dataSource.data = res;
         console.log(res);
-
       });
   }
 
@@ -75,7 +68,6 @@ export class HistoryComponent implements OnInit {
         },
       });
     }
-
 
     this.dialog.afterAllClosed.subscribe((res) => {
       this.getOrder();

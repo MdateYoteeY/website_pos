@@ -72,13 +72,17 @@ export class HistoryDialogComponent implements OnInit {
       this.orderForm.patchValue(this.data.order);
 
       const items = <FormArray>this.orderForm.controls.product_item;
+      const promotion = <FormArray>this.orderForm.controls.promotion_item;
 
       for (const item of this.data.order.product_item) {
-        items.push(this.createItem(item));
+        items.push(this.productItem(item));
+      }
+      for (const item of this.data.order.promotion_item) {
+        promotion.push(this.promotionItem(promotion));
       }
     }
   }
-  createItem(data?): FormGroup {
+  productItem(data?): FormGroup {
     const output = this.fb.group({
       name: ['', Validators.required],
       price: ['', Validators.required],
@@ -91,24 +95,16 @@ export class HistoryDialogComponent implements OnInit {
     return output;
   }
 
-  productItem(): FormGroup {
-    return this.fb.group({
-      order_id: ['', Validators.required],
-      product_id: ['', Validators.required],
-      order_amount: ['', Validators.required],
-      total_price: ['', Validators.required],
-      name: ['', Validators.required],
+  promotionItem(data?): FormGroup {
+    const output = this.fb.group({
       price: ['', Validators.required],
-    });
-  }
-  promotionItem(): FormGroup {
-    return this.fb.group({
-      promotion_id: ['', Validators.required],
-      order_id: ['', Validators.required],
-      promotion_amount: ['', Validators.required],
-      Total_price: ['', Validators.required],
       name: ['', Validators.required],
     });
+    if (data) {
+      output.patchValue(data);
+    }
+
+    return output;
   }
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ import { Zones } from './zone.model';
 import { StatusProducts } from './status';
 import { Stock, Stocks } from './stockproduct';
 import { Products } from './product';
+import { PromotionItems } from './promotionitem';
 
 export interface method {
   stock?: Stocks;

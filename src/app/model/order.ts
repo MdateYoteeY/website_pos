@@ -17,7 +17,7 @@ export interface Orders {
   zone: string;
   store: Store;
   product_item: Productitem[];
-  promotion_item: any[];
+  promotion_item: Prootionitem[];
   receipt: Receipt;
 }
 
@@ -45,7 +45,17 @@ export interface Productitem {
   name: string;
   price: number;
 }
-
+export interface Prootionitem {
+  id: number;
+  order_id: number;
+  promotion_id: number;
+  order_amount: number;
+  total_price: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  price: number;
+}
 export interface Store {
   id: number;
   name: string;
