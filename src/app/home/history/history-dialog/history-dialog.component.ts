@@ -98,6 +98,8 @@ export class HistoryDialogComponent implements OnInit {
 
     console.log(payload);
     console.log(this.data.order.product_item);
+
+    console.log(this.data.order.promotion_item);
   }
 
   onSubmit(): void {}
