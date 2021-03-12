@@ -58,7 +58,7 @@ export class PromotionsComponent implements OnInit {
       });
     }
 
-    dialogRef.afterAllClosed.subscribe((res) => {
+    dialogRef.afterClose().subscribe((res) => {
       this.getPromotion();
       // this.ngOnInit();
     });

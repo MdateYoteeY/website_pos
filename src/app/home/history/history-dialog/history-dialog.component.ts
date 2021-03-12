@@ -29,9 +29,10 @@ export class HistoryDialogComponent implements OnInit {
   ];
 
   header: string;
-  order: Orders[];
+  order: Orders;
   product: Products[];
   dataSource = new MatTableDataSource<Orders>(ELEMENT_DATA);
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -45,11 +46,10 @@ export class HistoryDialogComponent implements OnInit {
 
     if (this.data.method === 'showOrder') {
       this.header = 'ฤกษ์เหล้า';
+      const payload = this.orderForm.value;
+      this.order = this.data.order;
+      console.log(this.order);
     }
-    const payload = this.orderForm.value;
-
-    console.log(payload);
-    console.log(this.data.order.product_item);
   }
 
   getProduct() {
@@ -98,7 +98,3 @@ export class HistoryDialogComponent implements OnInit {
 }
 
 const ELEMENT_DATA: Orders[] = [];
-interface order {
-  method?: String;
-  order: Orders[];
-}

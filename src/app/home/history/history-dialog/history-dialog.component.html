@@ -2,9 +2,9 @@
   <form [formGroup]="orderForm">
     <div class="box1">
       <p class="header">{{ header }}</p>
-      <p>เลขที่ใบเสร็จ:{{ data.order.receipt.receipt_number }}</p>
-      <p>โทร:{{ data.order.receipt.phone_number }}</p>
-      <p>วันที่ขาย:{{ data.order.receipt.created_at }}</p>
+      <p>เลขที่ใบเสร็จ:{{ order.receipt.receipt_number }}</p>
+      <p>โทร:{{ order.receipt.phone_number }}</p>
+      <p>วันที่ขาย:{{ order.receipt.created_at }}</p>
       <p>ใบเสร็จ</p>
     </div>
     <mat-divider></mat-divider>
