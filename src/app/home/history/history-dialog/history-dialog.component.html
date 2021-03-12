@@ -14,9 +14,8 @@
       <ng-container *ngFor="let item of data.order.product_item;">
         <i>{{item.order_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
       </ng-container>
-
       <ng-container *ngFor="let item of data.order.promotion_item;">
-        <i>{{item.order_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
+        <i>{{item.promotion_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
       </ng-container>
     </div>
     <div class="btn-group">

@@ -48,8 +48,8 @@ export interface Productitem {
 export interface Promotionitem {
   id: number;
   order_id: number;
+  promotion_amount: number;
   promotion_id: number;
-  order_amount: number;
   total_price: number;
   created_at: string;
   updated_at: string;

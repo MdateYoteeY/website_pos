@@ -13,7 +13,7 @@ import { CategoriesComponent } from '../categories.component';
 })
 export class CategoriesDialogComponent implements OnInit {
   categoryAddForm: FormGroup;
-  header = 'เพิ่มโซนที่นั่ง';
+  header = 'เพิ่มหมวดหมู่';
 
   constructor(
     public dialogRef: MatDialogRef<CategoriesComponent>,
