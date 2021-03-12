@@ -7,7 +7,9 @@
       <p >วันที่ขาย:{{data.order.receipt.created_at}}</p>
       <p >ใบเสร็จ</p>
       <mat-divider ></mat-divider>
-      <p>จำนวน--------------รายการ--------------ราคา</p>
+      <p>------------------------------------------</p>
+      <p >จำนวน           รายการ                 ราคา</p>
+       <p>------------------------------------------</p>
       <mat-divider></mat-divider>
       <ng-container *ngFor="let item of data.order.product_item;">
         <i>{{item.order_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
