@@ -15,9 +15,9 @@
       </div>
 
       <ng-container
-        formArrayName="stoct_list"
+        formArrayName="stock_list"
         *ngFor="
-          let item of stocklistForm.get('stoct_list')['controls'];
+          let item of stocklistForm.get('stock_list')['controls'];
           let i = index;
           let isFirst = first
         "
@@ -37,7 +37,7 @@
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
                 *ngFor="let option of product"
-                [value]="option.product_name"
+                [value]="option.id"
               >
                 {{ option.product_name }}
               </mat-option>

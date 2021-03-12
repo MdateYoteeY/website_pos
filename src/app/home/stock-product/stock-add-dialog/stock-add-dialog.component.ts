@@ -62,7 +62,7 @@ export class StockAddDialogComponent implements OnInit {
       console.log(this.stock);
       this.dataarray.push(this.stocklistproduct);
     }
-    this.searchFunction();
+    // this.searchFunction();
     this.initForm();
   }
 
