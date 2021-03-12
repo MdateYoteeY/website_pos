@@ -50,10 +50,9 @@ export class StockDialogComponent implements OnInit, OnDestroy {
       });
   }
   ngOnInit(): void {
-    console.log(this.data);
     this.initForm();
     this.getProduct();
- 
+
   }
 
   ngOnDestroy(): void {
@@ -74,7 +73,7 @@ export class StockDialogComponent implements OnInit, OnDestroy {
 
       const items = <FormArray>this.stockForm.controls.Item;
 
-      for (const item of this.data.stock.Item) {
+      for (const item of this.data.stock.items) {
         items.push(this.createItem(item));
       }
     }

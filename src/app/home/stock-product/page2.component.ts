@@ -60,12 +60,14 @@ export class StockProductComponent implements OnInit {
         data: {
           method: method,
           stock: element,
+          product: this.product,
         },
       });
     } else if (method === 'addStock') {
       const dialogRef = this.dialog.open(StockAddDialogComponent, {
         data: {
           method: method,
+          stock: element,
           product: this.product,
         },
       });
@@ -78,6 +80,9 @@ export class StockProductComponent implements OnInit {
 
   showstock(element: Stocks): void {
     this.openDialog('showStock', element);
+  }
+  addstock(element: Stocks): void {
+    this.openDialog('addStock', element);
   }
 
   deleteData(element: Stocks): void {
@@ -109,11 +114,12 @@ export class StockProductComponent implements OnInit {
 
 const ELEMENT_DATA: Stocks[] = [];
 
-export interface Stocks {
+interface Stocks {
   id: number;
   amount_all: number;
   price_all: number;
   stock_date: string;
   created_at: string;
   updated_at: string;
+  items: any;
 }

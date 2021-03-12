@@ -19,6 +19,6 @@ export interface Stocks {
   stock_date: string;
   created_at: string;
   updated_at: string;
-  Item?: any;
+  items?: any;
 }
 

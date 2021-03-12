@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { Products } from 'src/app/model/product';
-import { StockList, Stoctlistproduct } from 'src/app/model/stock';
+import { StockList, stocklistproduct } from 'src/app/model/stock';
 import { Stock, Stocks } from 'src/app/model/stockproduct';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -21,7 +21,7 @@ export class StockEditDailogComponent implements OnInit {
   // stock: Stocks;
   header: string;
   stockAdd = true;
-  stocklistproduct: Stoctlistproduct[] = [];
+  stocklistproduct: stocklistproduct[] = [];
 
   items: FormArray;
 

@@ -1,5 +1,8 @@
+import { Orders} from 'src/app/model/order';
+import { Productitem, } from './order';
 import { Types } from './type';
-import { StockList, Stoctlistproduct } from './stock';
+import { Promotion, PromotionList } from './promotion';
+import { StockList, stocklistproduct } from './stock';
 import { Categorys } from './category';
 import { StatusTables } from './table.model';
 import { Tables } from 'src/app/model/table.model';
@@ -7,7 +10,7 @@ import { Zones } from './zone.model';
 import { StatusProducts } from './status';
 import { Stock, Stocks } from './stockproduct';
 import { Products } from './product';
-import { Promotion } from './promotion';
+import { PromotionItems } from './promotionitem';
 
 export interface method {
   stock?: Stocks;
@@ -24,8 +27,12 @@ export interface method {
   stocklist?: StockList;
   promotion?: Promotion;
   type?: Types;
-  stocklistproduct?: Stoctlistproduct;
+  stocklistproduct?: stocklistproduct;
   addstock?: Stock;
+  productitem?: Productitem;
+  promotionitem?: PromotionItems;
+  order?: Orders;
+
 }
 
 export interface Users {

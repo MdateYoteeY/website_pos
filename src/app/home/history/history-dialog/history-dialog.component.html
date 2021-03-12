@@ -1,0 +1,23 @@
+<div class="container">
+  <form [formGroup]="orderForm">
+    <div class="acc-box-1">
+      <p class="header">{{ header }}</p>
+      <p >เลขที่ใบเสร็จ:{{data.order.receipt.receipt_number}}</p>
+      <p >โทร:{{data.order.receipt.phone_number}}</p>
+      <p >วันที่ขาย:{{data.order.receipt.created_at}}</p>
+      <p >ใบเสร็จ</p>
+      <mat-divider ></mat-divider>
+      <p>------------------------------------------</p>
+      <p >จำนวน           รายการ                 ราคา</p>
+       <p>------------------------------------------</p>
+      <mat-divider></mat-divider>
+      <ng-container *ngFor="let item of data.order.product_item;">
+        <i>{{item.order_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
+      </ng-container>
+    </div>
+    <div class="btn-group">
+      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
+      <button id="cancle" (click)="close()">ยกเลิก</button>
+    </div>
+  </form>
+</div>

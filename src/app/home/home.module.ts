@@ -1,3 +1,5 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CategoryComponent } from './category/category.component';
@@ -41,6 +43,8 @@ import { TypeDialogComponent } from './types/type-dialog/type-dialog.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { PromotionsDialogComponent } from './promotions/promotions-dialog/promotions-dialog.component';
 import { PromotionEditComponent } from './promotions/promotion-edit/promotion-edit.component';
+import { HistoryComponent } from './history/history.component';
+import { HistoryDialogComponent } from './history/history-dialog/history-dialog.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +74,8 @@ import { PromotionEditComponent } from './promotions/promotion-edit/promotion-ed
     PromotionsComponent,
     PromotionsDialogComponent,
     PromotionEditComponent,
+    HistoryComponent,
+    HistoryDialogComponent,
   ],
 
   imports: [
@@ -77,6 +83,8 @@ import { PromotionEditComponent } from './promotions/promotion-edit/promotion-ed
     FormsModule,
     CommonModule,
     HomeRoutingModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatListModule,
     MatSelectModule,
@@ -88,6 +96,7 @@ import { PromotionEditComponent } from './promotions/promotion-edit/promotion-ed
     MatSortModule,
     MatAutocompleteModule,
     MaterialFileInputModule,
+    
   ],
 })
 export class HomeModule {}

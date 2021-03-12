@@ -1,13 +1,5 @@
 @import "../../../../assets/mainCss.scss";
-.example-container {
-  min-height: 10px;
-  max-height: 400px;
-  overflow: auto;
-}
 
-table {
-  width: 100%;
-}
 
 .container {
   width: auto;
@@ -19,19 +11,38 @@ table {
   align-items: center;
 
   form {
+    position: relative;
+
     .acc-box-1 {
       display: flex;
       flex-direction: column;
 
       .header {
-        font-size: 20pt;
-        font-weight: 500;
-        margin: 10px 0 10px 0;
+        font-size: 15pt;
+        // font-weight: 300;
+        // margin: 10px 0 10px 0;
+        text-align: center;
       }
-
 
       .mat-select-panel {
         background: red;
+      }
+    }
+
+    .btn-changePass {
+      border: none;
+      border-radius: 5px;
+      padding: 15px;
+      cursor: pointer;
+      width: fit-content;
+      height: fit-content;
+      background: rgb(221, 221, 221);
+      transition: .5s;
+      font-size: 10pt;
+      position: relative;
+
+      &:hover {
+        background: rgb(161, 255, 197);
       }
     }
 
@@ -41,26 +52,6 @@ table {
       width: 100%;
     }
 
-    table {
-      margin: 0 0 10px 0;
-    }
-
-    .add-promotion-item {
-      margin: 10px 0 10px 10px;
-      width: fit-content;
-      height: fit-content;
-    }
-
-    .rm-btn {
-      background: $redButton;
-      transition: .2s;
-
-      &:hover {
-        background: $redButton;
-        opacity: 0.6;
-      }
-    }
-
     button {
       padding: 10px 20px 10px 20px;
       font-size: 12pt;
@@ -68,7 +59,7 @@ table {
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: 0.5s;
+      transition: .5s;
       position: relative;
 
       &:hover {
@@ -84,13 +75,5 @@ table {
 }
 
 #cancle {
-  background: $redButton;
-}
-
-#add {
-  background: $greenButton;
-}
-
-#remove {
   background: $redButton;
 }
