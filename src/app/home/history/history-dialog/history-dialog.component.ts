@@ -1,3 +1,4 @@
+
 import { method } from 'src/app/model/model.model';
 import { Products } from './../../../model/product';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -15,6 +16,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class HistoryDialogComponent implements OnInit {
   orderForm: FormGroup;
+  product_list: FormGroup;
+  items: FormArray;
   displayedColumns: string[] = [
     'id',
     'name',
@@ -34,7 +37,8 @@ export class HistoryDialogComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<HistoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
-  ) {}
+  ) {
+  }
   getOrder() {
     this.http
       .get(`${environment.apiUrl}orders/` + this.data.order)
@@ -68,29 +72,7 @@ export class HistoryDialogComponent implements OnInit {
       promotion_item: this.fb.array([]),
       receipt: ['', Validators.required],
     });
-    if (this.data && this.data.order) {
-      this.orderForm.patchValue(this.data.order);
-
-      const items = <FormArray>this.orderForm.controls.product_item;
-
-      for (const item of this.data.order.product_item) {
-        items.push(this.createItem(item));
-      }
-    }
   }
-  createItem(data?): FormGroup {
-    const output = this.fb.group({
-      name: ['', Validators.required],
-      price: ['', Validators.required],
-    });
-
-    if (data) {
-      output.patchValue(data);
-    }
-
-    return output;
-  }
-
   productItem(): FormGroup {
     return this.fb.group({
       order_id: ['', Validators.required],
@@ -112,6 +94,7 @@ export class HistoryDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.initForm();
     // this.getOrder();
     this.getProduct();
