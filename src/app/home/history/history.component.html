@@ -8,7 +8,6 @@
         [formControl]="search"
       /><span class="material-icons"> search </span>
     </div>
-
   </div>
  <h5>ออเดอร์ทั้งหมด : {{dataSource.data.length}} ออเดอร์</h5>
  <h5>สำเร็จ : {{j}} ออเดอร์</h5>
@@ -17,46 +16,40 @@
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>รหัสออเดอร์</th>
-      <td mat-cell *matCellDef="let element" >
+      <td mat-cell *matCellDef="let element" (click)="editData(element)">
         {{ element.id }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>โต๊ะ</th>
-      <td mat-cell *matCellDef="let element" >
+      <td mat-cell *matCellDef="let element" (click)="editData(element)">
         {{ element.table }}
       </td>
     </ng-container>
 
-
-
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>สถานะออเดอร์</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" (click)="editData(element)">
         {{ element.status }}
       </td>
     </ng-container>
-     <ng-container matColumnDef="list">
+    <ng-container matColumnDef="list">
       <th mat-header-cell *matHeaderCellDef>เลขที่ออเดอร์</th>
-      <td  mat-cell *matCellDef="let element" >
+      <td mat-cell *matCellDef="let element" (click)="editData(element)">
         {{ element.order_number }}
       </td>
     </ng-container>
-     <ng-container matColumnDef="number">
+    <ng-container matColumnDef="number">
       <th mat-header-cell *matHeaderCellDef>จำนวนรายการ</th>
-      <td  mat-cell *matCellDef="let element" >
+      <td mat-cell *matCellDef="let element" (click)="editData(element)">
         {{ element.order_amount }}
       </td>
     </ng-container>
 
-
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <span class="material-icons edit" (click)="editData(element)">
-          mode_edit_outline
-        </span>
         <span class="material-icons delete" (click)="deleteData(element)">
           delete_forever
         </span>

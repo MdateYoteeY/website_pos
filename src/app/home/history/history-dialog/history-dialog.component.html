@@ -1,23 +1,36 @@
 <div class="container">
   <form [formGroup]="orderForm">
-    <div class="acc-box-1">
+    <div class="box1">
       <p class="header">{{ header }}</p>
-      <p >เลขที่ใบเสร็จ:{{data.order.receipt.receipt_number}}</p>
-      <p >โทร:{{data.order.receipt.phone_number}}</p>
-      <p >วันที่ขาย:{{data.order.receipt.created_at}}</p>
-      <p >ใบเสร็จ</p>
-      <mat-divider ></mat-divider>
-      <p>------------------------------------------</p>
-      <p >จำนวน           รายการ                 ราคา</p>
-       <p>------------------------------------------</p>
-      <mat-divider></mat-divider>
-      <ng-container *ngFor="let item of data.order.product_item;">
-        <i>{{item.order_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
-      </ng-container>
-      <ng-container *ngFor="let item of data.order.promotion_item;">
-        <i>{{item.promotion_amount}}:{{ item.name }}@{{ item.price }}:{{item.total_price}}</i>
-      </ng-container>
+      <p>เลขที่ใบเสร็จ:{{ order.receipt.receipt_number }}</p>
+      <p>โทร:{{ order.receipt.phone_number }}</p>
+      <p>วันที่ขาย:{{ order.receipt.created_at }}</p>
+      <p>ใบเสร็จ</p>
     </div>
+    <mat-divider></mat-divider>
+    <!-- <p>---------------------------------------------</p> -->
+    <table>
+      <tr>
+        <th style="text-align: start">จำนวน</th>
+        <th style="text-align: center">รายการ</th>
+        <th style="text-align: end">ราคา</th>
+      </tr>
+      <mat-divider></mat-divider>
+      <tr>
+        <td style="text-align: start"></td>
+        <td style="text-align: center"></td>
+        <td style="text-align: end"></td>
+      </tr>
+    </table>
+    <!-- <p>---------------------------------------------</p> -->
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let item of data.order.product_item">
+      <i
+        >{{ item.order_amount }}:{{ item.name }}@{{ item.price }}:{{
+          item.total_price
+        }}</i
+      >
+    </ng-container>
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
       <button id="cancle" (click)="close()">ยกเลิก</button>

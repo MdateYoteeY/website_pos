@@ -1,4 +1,3 @@
-
 import { Products, StatusProducts } from 'src/app/model/product';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -15,10 +14,18 @@ import { Types } from 'src/app/model/type';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  displayedColumns: string[] = ['id','name', 'type', 'price','amount', 'status', 'action'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'type',
+    'price',
+    'amount',
+    'status',
+    'action',
+  ];
   dataSource = new MatTableDataSource<Products>(ELEMENT_DATA);
   product: Products;
   type: Types;
@@ -57,16 +64,17 @@ export class ProductsComponent implements OnInit {
   }
 
   getProduct(params?: any): void {
-    this.http.get(`${environment.apiUrl}products` , { params }).subscribe((res: Products[]) => {
-      this.dataSource.data = res;
-    });
+    this.http
+      .get(`${environment.apiUrl}products`, { params })
+      .subscribe((res: Products[]) => {
+        this.dataSource.data = res;
+      });
   }
 
-
-
   openDialog(method: string, element?: Products): void {
+    let dialogRef;
     if (method === 'editProduct') {
-      const dialogRef = this.dialog.open(ProductsDialogComponent, {
+      dialogRef = this.dialog.open(ProductsDialogComponent, {
         data: {
           method: method,
           product: element,
@@ -75,7 +83,7 @@ export class ProductsComponent implements OnInit {
         },
       });
     } else if (method === 'addProduct') {
-      const dialogRef = this.dialog.open(ProductsDialogComponent, {
+      dialogRef = this.dialog.open(ProductsDialogComponent, {
         data: {
           method: method,
           type: this.type,
@@ -84,7 +92,7 @@ export class ProductsComponent implements OnInit {
       });
     }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
+    dialogRef.afterClose().subscribe((res) => {
       this.getProduct();
     });
   }

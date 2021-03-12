@@ -4,13 +4,8 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { debounceTime } from 'rxjs/operators';
 import { Orders } from 'src/app/model/order';
-import { Products } from 'src/app/model/product';
-import { StatusProducts } from 'src/app/model/status';
-import { Types } from 'src/app/model/type';
 import { environment } from 'src/environments/environment';
-import { ProductsDialogComponent } from '../products/products-dialog/products-dialog.component';
 import { HistoryDialogComponent } from './history-dialog/history-dialog.component';
 
 @Component({
@@ -83,11 +78,11 @@ j: number;
           order: element,
         },
       });
-    }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
-      this.getOrder();
-    });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getOrder();
+      });
+    }
   }
 
   editData(element: Orders): void {

@@ -19,12 +19,7 @@ import { TypeDialogComponent } from './type-dialog/type-dialog.component';
   styleUrls: ['./types.component.scss'],
 })
 export class TypesComponent implements OnInit {
-  displayedColumns: string[] = [
-    'id',
-    'type',
-    'category',
-    'action',
-  ];
+  displayedColumns: string[] = ['id', 'type', 'category', 'action'];
   dataSource = new MatTableDataSource<Types>(ELEMENT_DATA);
   type: Types;
   category: Categorys[];
@@ -36,13 +31,10 @@ export class TypesComponent implements OnInit {
   ngOnInit(): void {
     this.getType();
     this.getCategory();
-    this.http
-      .get(`${environment.apiUrl}types` )
-      .subscribe((res: Types[]) => {
-        this.dataSource.data = res;
-        console.log(res);
-
-      });
+    this.http.get(`${environment.apiUrl}types`).subscribe((res: Types[]) => {
+      this.dataSource.data = res;
+      console.log(res);
+    });
     // this.search.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
     //   this.getType({ zone_id: val });
     // });
@@ -53,10 +45,12 @@ export class TypesComponent implements OnInit {
   }
 
   getCategory(): void {
-    this.http.get(`${environment.apiUrl}categories`).subscribe((res: Categorys[]) => {
-      this.category = res;
-      console.log(res);
-    });
+    this.http
+      .get(`${environment.apiUrl}categories`)
+      .subscribe((res: Categorys[]) => {
+        this.category = res;
+        console.log(res);
+      });
   }
 
   getType(params?: any): void {
@@ -68,8 +62,9 @@ export class TypesComponent implements OnInit {
   }
 
   openDialog(method: string, element?: Types): void {
+    let dialogRef;
     if (method === 'editType') {
-      const dialogRef = this.dialog.open(TypeDialogComponent, {
+      dialogRef = this.dialog.open(TypeDialogComponent, {
         data: {
           method: method,
           type: element,
@@ -77,7 +72,7 @@ export class TypesComponent implements OnInit {
         },
       });
     } else if (method === 'addType') {
-      const dialogRef = this.dialog.open(TypeDialogComponent, {
+      dialogRef = this.dialog.open(TypeDialogComponent, {
         data: {
           method: method,
           type: element,
@@ -86,7 +81,7 @@ export class TypesComponent implements OnInit {
       });
     }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
+    dialogRef.afterAllClosed.subscribe((res) => {
       this.getType();
     });
   }

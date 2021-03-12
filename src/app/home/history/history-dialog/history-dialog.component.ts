@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
+import { Orders } from 'src/app/model/order';
 
 @Component({
   selector: 'app-history-dialog',
@@ -28,22 +29,29 @@ export class HistoryDialogComponent implements OnInit {
   ];
 
   header: string;
-  order: Orders[];
+  order: Orders;
   product: Products[];
   dataSource = new MatTableDataSource<Orders>(ELEMENT_DATA);
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<HistoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: method
   ) {}
-  getOrder() {
-    this.http
-      .get(`${environment.apiUrl}orders/` + this.data.order)
-      .subscribe((res: Orders[]) => {
-        this.order = res;
-      });
+
+  ngOnInit(): void {
+    this.initForm();
+    this.getProduct();
+
+    if (this.data.method === 'showOrder') {
+      this.header = 'ฤกษ์เหล้า';
+      const payload = this.orderForm.value;
+      this.order = this.data.order;
+      console.log(this.order);
+    }
   }
+
   getProduct() {
     this.http
       .get(`${environment.apiUrl}products`)
@@ -71,7 +79,7 @@ export class HistoryDialogComponent implements OnInit {
       receipt: ['', Validators.required],
     });
   }
-  productItem(data): FormGroup {
+  productItem(data?): FormGroup {
     return this.fb.group({
       order_id: ['', Validators.required],
       product_id: ['', Validators.required],
@@ -80,26 +88,6 @@ export class HistoryDialogComponent implements OnInit {
       name: ['', Validators.required],
       price: ['', Validators.required],
     });
-    // if (data) {
-    //   output.patchValue(data);
-    // }
-
-    // return output;
-  }
-
-  ngOnInit(): void {
-    this.initForm();
-    // this.getOrder();
-    this.getProduct();
-    if (this.data.method === 'showOrder') {
-      this.header = 'ฤกษ์เหล้า';
-    }
-    const payload = this.orderForm.value;
-
-    console.log(payload);
-    console.log(this.data.order.product_item);
-
-    console.log(this.data.order.promotion_item);
   }
 
   onSubmit(): void {}
@@ -110,51 +98,3 @@ export class HistoryDialogComponent implements OnInit {
 }
 
 const ELEMENT_DATA: Orders[] = [];
-interface order {
-  method?: String;
-  order: Orders[];
-}
-interface Orders {
-  id: number;
-  table_id: number;
-  receipt_id: number;
-  status_order_id: number;
-  store_id: number;
-  user_id: number;
-  order_number: string;
-  order_list: number;
-  order_amount: number;
-  created_at: Date;
-  updated_at: Date;
-  table: string;
-  status: string;
-  staff: string;
-  zone: string;
-  store: string;
-  product_item: ProductItem[];
-  promotion_item: PromotionItem[];
-  receipt: string;
-}
-
-interface ProductItem {
-  id: number;
-  order_id: number;
-  product_id: number;
-  order_amount: number;
-  total_price: number;
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-  price: number;
-}
-
-interface PromotionItem {
-  id: number;
-  promotion_id: number;
-  order_id: number;
-  promotion_amount: number;
-  Total_price: number;
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-}

@@ -12,7 +12,7 @@ import { CategoriesDialogComponent } from './categories-dialog/categories-dialog
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements AfterViewInit, OnInit {
   form: FormGroup;
@@ -30,23 +30,26 @@ export class CategoriesComponent implements AfterViewInit, OnInit {
   }
 
   getCategory() {
-    this.http.get<Categorys[]>(`${environment.apiUrl}categories`).subscribe((res) => {
-      this.dataSource.data = res;
-    });
+    this.http
+      .get<Categorys[]>(`${environment.apiUrl}categories`)
+      .subscribe((res) => {
+        this.dataSource.data = res;
+      });
   }
 
   openDialog(method: string, data?: Categorys): void {
+    let dialogRef;
     if (method === 'addCategory') {
-      const dialogRef = this.dialog.open(CategoriesDialogComponent, {
+      dialogRef = this.dialog.open(CategoriesDialogComponent, {
         data: { method: 'addCategory' },
       });
     } else if (method === 'editCategory') {
-      const dialogRef = this.dialog.open(CategoriesDialogComponent, {
+      dialogRef = this.dialog.open(CategoriesDialogComponent, {
         data: { method: 'editCategory', category: data },
       });
     }
 
-    this.dialog.afterAllClosed.subscribe((res) => {
+    dialogRef.afterClosed().subscribe((res) => {
       this.getCategory();
     });
   }

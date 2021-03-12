@@ -32,6 +32,7 @@ export class AccountDialogComponent implements OnInit {
 
   fileToUpload: File = null;
   img: any;
+  urlImage: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -90,6 +91,22 @@ export class AccountDialogComponent implements OnInit {
     console.log(this.profile);
   }
 
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      const file = (event.target as HTMLInputElement).files[0];
+      this.accountAddForm.patchValue({
+        img: file,
+      });
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (event) => {
+        this.urlImage = event.target.result;
+      };
+    }
+  }
+
   editPass(): void {
     this.passwordView = !this.passwordView;
   }
@@ -115,24 +132,6 @@ export class AccountDialogComponent implements OnInit {
         body.password_confirmation
       );
       formData.append('user[img]', body.img);
-
-      // let body = {
-      //   firstname: this.accountAddForm.controls['firstname'].value,
-      //   lastname: this.accountAddForm.getRawValue().lastname,
-      //   phone_number: this.accountAddForm.getRawValue().phone_number,
-      //   staff_id: this.accountAddForm.getRawValue().staff_id,
-      //   username: this.accountAddForm.getRawValue().username,
-      //   password: this.accountAddForm.getRawValue().password,
-      //   password_confirmation: this.accountAddForm.getRawValue()
-      //     .password_confirmation,
-      //   img: formData.get('img'),
-      // };
-
-      // let body = {};
-      // formData.forEach(function (value, key) {
-      //   body[key] = value;
-      // });
-      // let bodys = JSON.stringify(body);
 
       this.http.post(`${environment.apiUrl}users`, formData).subscribe(
         (res) => {
