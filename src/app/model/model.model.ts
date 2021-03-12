@@ -26,7 +26,6 @@ export interface method {
   statusproduct?: StatusProducts;
   stocklist?: StockList;
   promotion?: Promotion;
-  promotionlist?: PromotionList;
   type?: Types;
   stocklistproduct?: stocklistproduct;
   addstock?: Stock;

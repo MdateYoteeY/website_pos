@@ -1,5 +1,5 @@
 import { Types } from './../../../model/type';
-import { promotionitem } from './../../../model/promotion';
+import { Promotionitem } from './../../../model/promotion';
 import { Categorys } from './../../../model/category';
 import { Products } from './../../../model/product';
 import { method } from './../../../model/model.model';

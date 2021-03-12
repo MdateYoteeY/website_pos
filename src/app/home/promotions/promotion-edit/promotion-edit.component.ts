@@ -66,7 +66,7 @@ export class PromotionEditComponent implements OnInit {
 
       const items = <FormArray>this.promotionForm.controls.promotion_item;
 
-      for (const item of this.data.promotion.promotion_item) {
+      for (const item of this.data.promotion.promotion_items) {
         items.push(this.createItem(item));
       }
     }

@@ -9,21 +9,15 @@
   justify-content: center;
   align-items: center;
 
-  form {
-    .acc-box-1 {
-      display: flex;
-      flex-direction: column;
+  .form-promotion {
+    .header {
+      font-size: 20pt;
+      font-weight: 500;
+      margin: 10px 0 10px 0;
+    }
 
-      .header {
-        font-size: 20pt;
-        font-weight: 500;
-        margin: 10px 0 10px 0;
-      }
-
-
-      .mat-select-panel {
-        background: red;
-      }
+    .mat-select-panel {
+      background: red;
     }
 
     .btn-group {
@@ -32,40 +26,61 @@
       width: 100%;
     }
 
-    table {
+    fieldset {
+      border-radius: 5px;
+      border: 1px solid rgb(231, 231, 231);
+      height: auto;
       margin: 0 0 10px 0;
-    }
+      padding-bottom: 5px;
+      display: flex;
+      flex-direction: column;
 
-    .add-promotion-item {
-      margin: 10px 0 10px 10px;
-      width: fit-content;
-      height: fit-content;
+      .box1 {
+        display: flex;
+      }
+
+      .box2 {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .add-btn {
+        width: fit-content;
+        height: fit-content;
+      }
+
+      legend {
+        font-size: 12pt;
+      }
     }
 
     .rm-btn {
       background: $redButton;
       transition: .2s;
+      width: fit-content;
+      height: fit-content;
+
 
       &:hover {
         background: $redButton;
         opacity: 0.6;
       }
     }
+  }
 
-    button {
-      padding: 10px 20px 10px 20px;
-      font-size: 12pt;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.5s;
-      position: relative;
+  button {
+    padding: 10px 20px 10px 20px;
+    font-size: 12pt;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+    position: relative;
 
-      &:hover {
-        background: inherit;
-        opacity: 0.8;
-      }
+    &:hover {
+      background: inherit;
+      opacity: 0.8;
     }
   }
 }

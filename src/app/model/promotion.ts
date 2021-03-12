@@ -15,6 +15,47 @@ interface Item {
   promotion: string;
 }
 
+// export interface Promotion {
+//   id: number;
+//   status_promotion_id: number;
+//   promotion_name: string;
+//   promotion_discount: number;
+//   date_start: string;
+//   date_end: string;
+//   created_at: string;
+//   updated_at: string;
+//   image: string;
+//   status: string;
+//   price: number;
+//   promotion_item?: any[];
+// }
+// export interface promotionitem {
+//   id: number;
+//   status_promotion_id: number;
+//   promotion_name: string;
+//   promotion_discount: number;
+//   date_start: string;
+//   date_end: string;
+//   created_at: string;
+//   updated_at: string;
+//   image: string;
+//   status: string;
+//   price: number;
+//   promotion_items?: any[];
+// }
+
+// export interface Promotionitem {
+//   id: number;
+//   promotion_id: number;
+//   product_id: number;
+//   promotion_item_amount: number;
+//   promotion_item_price: number;
+//   created_at: string;
+//   updated_at: string;
+//   product: string;
+//   promotion: string;
+// }
+
 export interface Promotion {
   id: number;
   status_promotion_id: number;
@@ -24,25 +65,10 @@ export interface Promotion {
   date_end: string;
   created_at: string;
   updated_at: string;
-  image: string;
+  image?: any;
   status: string;
   price: number;
-  promotion_item?: any[];
-}
-export interface promotionitem {
-  id: number;
-  status_promotion_id: number;
-  promotion_name: string;
-  promotion_discount: number;
-  date_start: string;
-  date_end: string;
-  created_at: string;
-  updated_at: string;
-  image: string;
-  status: string;
-  price: number;
-  promotion_items?: any[];
-
+  promotion_items: Promotionitem[];
 }
 
 export interface Promotionitem {

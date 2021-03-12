@@ -1,4 +1,3 @@
-import { Promotionitem } from './../../model/promotion';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +8,7 @@ import { ListPromotionDialogComponent } from './list-promotion-dialog/list-promo
 import { PromotionDialogComponent } from './promotion-dialog/promotion-dialog.component';
 import { MatSort } from '@angular/material/sort';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Promotionitem } from 'src/app/model/promotion';
 
 @Component({
   selector: 'app-promotion',
