@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Orders } from 'src/app/model/order';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 import { HistoryDialogComponent } from './history-dialog/history-dialog.component';
 
 @Component({
@@ -65,18 +66,37 @@ export class HistoryComponent implements OnInit {
   editData(element: Orders): void {
     this.openDialog('showOrder', element);
   }
+
   deleteData(element: Orders): void {
-    console.log(element.id);
-    console.log(environment.apiUrl);
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบออเดอร์ "' + element.id + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete(`${environment.apiUrl}orders/` + element.id).subscribe(
+          (res) => {
+            console.log('order ' + element.id + ' has delete!');
+            console.log(res);
 
-    this.http
-      .delete(`${environment.apiUrl}orders/` + element.id)
-      .subscribe((res) => {
-        console.log('order ' + element.id + ' has delete!');
-        console.log(res);
-
-        this.getOrder();
-      });
+            this.getOrder();
+          },
+          (error) => {
+            Swal.fire({
+              icon: 'error',
+              text: 'เกิดข้อผิดพลาดบางอย่างในการลบบัญชี',
+              title: 'เกิดข้อผิดพลาด!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        );
+      }
+    });
   }
 }
 

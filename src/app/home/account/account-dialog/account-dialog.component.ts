@@ -117,8 +117,6 @@ export class AccountDialogComponent implements OnInit {
         return;
       }
 
-      // console.log(this.accountAddForm.getRawValue());
-
       let body = this.accountAddForm.getRawValue();
       var formData: any = new FormData();
       formData.append('user[firstname]', body.firstname);
@@ -135,6 +133,7 @@ export class AccountDialogComponent implements OnInit {
 
       this.http.post(`${environment.apiUrl}users`, formData).subscribe(
         (res) => {
+          close();
           Swal.fire({
             icon: 'success',
             title: 'เพิ่มบัญชีสำเร็จ!',
@@ -145,7 +144,6 @@ export class AccountDialogComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500,
           });
-          this.dialogRef.close();
         },
         (error) => {
           this.accountAddForm.controls['username'].setErrors({

@@ -102,6 +102,10 @@
                   {{ item.product_name }}
                 </mat-option>
               </mat-select>
+              <mat-error
+                *ngIf="addProductList.get('addProduct_id').errors?.required"
+                >กรุณาเลือก <strong>รายการสินค้า</strong></mat-error
+              >
             </mat-form-field>
 
             <mat-form-field
@@ -115,6 +119,13 @@
                 formControlName="addPromotion_item_amount"
                 [value]="1"
               />
+              <mat-error
+                *ngIf="
+                  addProductList.get('addPromotion_item_amount').errors
+                    ?.required
+                "
+                >กรุณาระบุ <strong>จำนวนสินค้า</strong></mat-error
+              >
             </mat-form-field>
             <button class="add-btn" id="add" type="add" (click)="addForm()">
               เพิ่ม

@@ -163,6 +163,7 @@ export class PromotionsDialogComponent implements OnInit {
   addForm() {
     this.items = this.promotionForm.get('promotion_items') as FormArray;
     this.items.push(this.createItem());
+    this.addProductList.reset();
   }
 
   removeForm(index) {
@@ -172,7 +173,7 @@ export class PromotionsDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.data.method === 'editPromotion') {
-      if (this.promotionForm.invalid) {
+      if (this.promotionForm.invalid && this.addProductList.invalid) {
         return;
       }
       const payload = this.promotionForm.value;
@@ -189,7 +190,9 @@ export class PromotionsDialogComponent implements OnInit {
         });
     }
     if (this.data.method === 'addPromotion') {
-      if (this.promotionForm.invalid) {
+      if (this.promotionForm.invalid && this.addProductList.invalid) {
+        console.log('blablabla');
+
         return;
       }
 

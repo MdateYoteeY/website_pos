@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Categorys } from 'src/app/model/category';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 import { CategoriesDialogComponent } from './categories-dialog/categories-dialog.component';
 
@@ -34,24 +35,26 @@ export class CategoriesComponent implements AfterViewInit, OnInit {
       .get<Categorys[]>(`${environment.apiUrl}categories`)
       .subscribe((res) => {
         this.dataSource.data = res;
+        console.log(res);
       });
   }
 
   openDialog(method: string, data?: Categorys): void {
-    let dialogRef;
     if (method === 'addCategory') {
-      dialogRef = this.dialog.open(CategoriesDialogComponent, {
+      let dialogRef = this.dialog.open(CategoriesDialogComponent, {
         data: { method: 'addCategory' },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getCategory();
+      });
     } else if (method === 'editCategory') {
-      dialogRef = this.dialog.open(CategoriesDialogComponent, {
+      let dialogRef = this.dialog.open(CategoriesDialogComponent, {
         data: { method: 'editCategory', category: data },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getCategory();
+      });
     }
-
-    dialogRef.afterClosed().subscribe((res) => {
-      this.getCategory();
-    });
   }
 
   editData(data: Categorys): void {
@@ -59,12 +62,40 @@ export class CategoriesComponent implements AfterViewInit, OnInit {
   }
 
   deleteData(data: Categorys): void {
-    this.http
-      .delete(`${environment.apiUrl}categories/` + data.id)
-      .subscribe((res) => {
-        console.log('Category ' + data.category_name + ' has delete!');
-        this.getCategory();
-      });
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบหมวดหมู่ "' + data.category_name + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http
+          .delete(`${environment.apiUrl}categories/` + data.id)
+          .subscribe(
+            (res) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'ลบเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              this.getCategory();
+            },
+            (error) => {
+              Swal.fire({
+                icon: 'error',
+                text: 'หมวดหมู่มีรายการสินค้าอยู่',
+                title: 'เกิดข้อผิดพลาด!',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          );
+      }
+    });
   }
 }
 

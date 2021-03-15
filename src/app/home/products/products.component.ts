@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Products, StatusProducts } from 'src/app/model/product';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +11,7 @@ import { Categorys } from 'src/app/model/category';
 import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Types } from 'src/app/model/type';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-products',
@@ -72,9 +74,8 @@ export class ProductsComponent implements OnInit {
   }
 
   openDialog(method: string, element?: Products): void {
-    let dialogRef;
     if (method === 'editProduct') {
-      dialogRef = this.dialog.open(ProductsDialogComponent, {
+      let dialogRef = this.dialog.open(ProductsDialogComponent, {
         data: {
           method: method,
           product: element,
@@ -82,36 +83,63 @@ export class ProductsComponent implements OnInit {
           statusproduct: this.statusproduct,
         },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getProduct();
+      });
     } else if (method === 'addProduct') {
-      dialogRef = this.dialog.open(ProductsDialogComponent, {
+      let dialogRef = this.dialog.open(ProductsDialogComponent, {
         data: {
           method: method,
           type: this.type,
           statusproduct: this.statusproduct,
         },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getProduct();
+      });
     }
-
-    dialogRef.afterClose().subscribe((res) => {
-      this.getProduct();
-    });
   }
 
   editData(element: Products): void {
     this.openDialog('editProduct', element);
   }
   deleteData(element: Products): void {
-    console.log(element.id);
-    console.log(environment.apiUrl);
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบสินค้า "' + element.product_name + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http
+          .delete(`${environment.apiUrl}products/` + element.id)
+          .subscribe(
+            (res) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'ลบเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              this.getProduct();
+            },
+            (error) => {
+              console.log(error);
 
-    this.http
-      .delete(`${environment.apiUrl}products/` + element.id)
-      .subscribe((res) => {
-        console.log('product ' + element.id + ' has delete!');
-        console.log(res);
-
-        this.getProduct();
-      });
+              Swal.fire({
+                icon: 'error',
+                text: 'เกิดข้อผิดพลาดในการลบสินค้า',
+                title: 'เกิดข้อผิดพลาด!',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          );
+      }
+    });
   }
 }
 

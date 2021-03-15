@@ -9,6 +9,9 @@
           formControlName="category_name"
           placeholder="ชื่อหมวดหมู่.."
         />
+        <mat-error *ngIf="categoryAddForm.get('category_name').errors?.required"
+          >กรุณาระบุ <strong>ชื่อหมวดหมู่</strong></mat-error
+        >
       </mat-form-field>
     </div>
     <div class="btn-group">

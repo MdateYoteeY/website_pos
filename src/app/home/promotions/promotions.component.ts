@@ -50,18 +50,19 @@ export class PromotionsComponent implements OnInit {
           promotion: element,
         },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getPromotion();
+      });
     } else if (method === 'addPromotion') {
       dialogRef = this.dialog.open(PromotionsDialogComponent, {
         data: {
           method: method,
         },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getPromotion();
+      });
     }
-
-    dialogRef.afterClose().subscribe((res) => {
-      this.getPromotion();
-      // this.ngOnInit();
-    });
   }
 
   getPromotion(): void {
