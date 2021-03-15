@@ -1,5 +1,5 @@
 <div class="container">
-  <p>โต๊ะที่นั่ง</p>
+  <p>ประเภทสินค้า</p>
   <div class="header">
     <div class="text-container">
       ค้นหารายการ<input
@@ -22,21 +22,21 @@
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>รหัสประเภทสินค้า</th>
-      <td mat-cell *matCellDef="let element" [value]="element.id">
+      <td mat-cell *matCellDef="let element" >
         {{ element.id }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef>ชื่อประเภทสินค้า</th>
-      <td mat-cell *matCellDef="let element" [value]="element.type_name">
+      <td mat-cell *matCellDef="let element" >
         {{ element.type_name }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef>ชื่อประเภทสินค้า</th>
-      <td mat-cell *matCellDef="let element" [value]="element.category_id">
+      <td mat-cell *matCellDef="let element" >
         {{ element.category }}
       </td>
     </ng-container>

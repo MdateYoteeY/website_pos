@@ -25,7 +25,8 @@ export class HistoryComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<Orders>(ELEMENT_DATA);
   order: Orders;
-
+  i: number;
+j: number;
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   search = new FormControl();
 
@@ -44,8 +45,30 @@ export class HistoryComponent implements OnInit {
       .get(`${environment.apiUrl}orders`, { params })
       .subscribe((res: Orders[]) => {
         this.dataSource.data = res;
-        console.log(res);
+
+        var empire = this.dataSource.data.filter(function (order) {
+          return order.status === 'No Success';
+        });
+        var i = 0;
+        var jediScores = empire.map(function () {
+          return (i += 1);
+        });
+        this.i = i;
+        console.log(this.i);
+
+        var empire = this.dataSource.data.filter(function (order) {
+          return order.status === 'Success';
+        });
+        var j = 0;
+        var jediScores = empire.map(function () {
+          return (j += 1);
+        });
+        this.j = j;
+        console.log(this.j);
       });
+
+
+
   }
 
   openDialog(method: string, element?: Orders): void {
