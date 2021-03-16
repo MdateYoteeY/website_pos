@@ -10,6 +10,86 @@
   align-items: center;
 
   .form-promotion {
+    .mainBox {
+      display: flex;
+      flex-direction: row;
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+      }
+
+      .no1 {
+        display: flex;
+
+        fieldset {
+          border-radius: 5px;
+          border: 1px solid rgb(231, 231, 231);
+          height: auto;
+          margin: 0 0 10px 0;
+          padding-bottom: 5px;
+          display: flex;
+          flex-direction: column;
+
+          .box1 {
+            display: flex;
+          }
+
+          .box2 {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .add-btn {
+            width: fit-content;
+            height: fit-content;
+          }
+
+          legend {
+            font-size: 12pt;
+          }
+        }
+
+        .rm-btn {
+          background: $redButton;
+          transition: .2s;
+          width: fit-content;
+          height: fit-content;
+
+
+          &:hover {
+            background: $redButton;
+            opacity: 0.6;
+          }
+        }
+      }
+
+      .no2 {
+        display: flex;
+        margin-left: 15px;
+        width: 100%;
+        height: 100%;
+        flex: 1;
+
+        img {
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+          border: 1px solid rgb(221, 221, 221);
+          border-radius: 5px;
+          padding: 10px;
+          box-sizing: border-box;
+        }
+
+        input[type="file"] {
+          display: none;
+        }
+      }
+    }
+
+
     .header {
       font-size: 20pt;
       font-weight: 500;
@@ -24,47 +104,6 @@
       text-align: center;
       position: relative;
       width: 100%;
-    }
-
-    fieldset {
-      border-radius: 5px;
-      border: 1px solid rgb(231, 231, 231);
-      height: auto;
-      margin: 0 0 10px 0;
-      padding-bottom: 5px;
-      display: flex;
-      flex-direction: column;
-
-      .box1 {
-        display: flex;
-      }
-
-      .box2 {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .add-btn {
-        width: fit-content;
-        height: fit-content;
-      }
-
-      legend {
-        font-size: 12pt;
-      }
-    }
-
-    .rm-btn {
-      background: $redButton;
-      transition: .2s;
-      width: fit-content;
-      height: fit-content;
-
-
-      &:hover {
-        background: $redButton;
-        opacity: 0.6;
-      }
     }
   }
 

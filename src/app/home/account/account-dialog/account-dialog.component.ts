@@ -33,6 +33,7 @@ export class AccountDialogComponent implements OnInit {
   fileToUpload: File = null;
   img: any;
   urlImage: any;
+  urlDefaultUser = '../../../../assets/defaultPicture.png';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,10 +48,17 @@ export class AccountDialogComponent implements OnInit {
     this.dataDialog = this.data;
 
     if (this.data.method === 'editAccount') {
-      this.accountAddForm.patchValue(this.data.user);
       this.check = false;
       this.passwordView = false;
       this.header = 'แก้ไขบัญชีผู้ใช้งาน';
+
+      this.accountAddForm.patchValue(this.data.user);
+      this.accountAddForm.controls.img.setValue(this.data.user.image);
+      console.log(this.accountAddForm.value);
+
+      if (this.data.user.image) {
+        this.urlImage = `${environment.apiUrl}` + this.data.user.image;
+      }
     }
   }
 
@@ -118,7 +126,7 @@ export class AccountDialogComponent implements OnInit {
       }
 
       let body = this.accountAddForm.getRawValue();
-      var formData: any = new FormData();
+      let formData = new FormData();
       formData.append('user[firstname]', body.firstname);
       formData.append('user[lastname]', body.lastname);
       formData.append('user[phone_number]', body.phone_number);
@@ -133,7 +141,7 @@ export class AccountDialogComponent implements OnInit {
 
       this.http.post(`${environment.apiUrl}users`, formData).subscribe(
         (res) => {
-          close();
+          this.dialogRef.close();
           Swal.fire({
             icon: 'success',
             title: 'เพิ่มบัญชีสำเร็จ!',
@@ -155,30 +163,33 @@ export class AccountDialogComponent implements OnInit {
       if (this.accountAddForm.invalid) {
         return;
       }
-      let body = {};
-      if (this.accountAddForm.getRawValue().password !== null) {
-        body = {
-          firstname: this.accountAddForm.getRawValue().firstname,
-          lastname: this.accountAddForm.getRawValue().lastname,
-          phone_number: this.accountAddForm.getRawValue().phone_number,
-          staff_id: this.accountAddForm.getRawValue().staff_id,
-          username: this.accountAddForm.getRawValue().username,
-          password: this.accountAddForm.getRawValue().password,
-        };
+
+      let body = this.accountAddForm.getRawValue();
+      let formData = new FormData();
+
+      if (body.password !== null) {
+        formData.append('user[firstname]', body.firstname);
+        formData.append('user[lastname]', body.lastname);
+        formData.append('user[phone_number]', body.phone_number);
+        formData.append('user[staff_id]', body.staff_id);
+        formData.append('user[username]', body.username);
+        formData.append('user[password]', body.password);
+        formData.append(
+          'user[password_confirmation]',
+          body.password_confirmation
+        );
+        formData.append('user[img]', body.img);
       } else {
-        body = {
-          firstname: this.accountAddForm.getRawValue().firstname,
-          lastname: this.accountAddForm.getRawValue().lastname,
-          phone_number: this.accountAddForm.getRawValue().phone_number,
-          staff_id: this.accountAddForm.getRawValue().staff_id,
-          username: this.accountAddForm.getRawValue().username,
-        };
+        formData.append('user[firstname]', body.firstname);
+        formData.append('user[lastname]', body.lastname);
+        formData.append('user[phone_number]', body.phone_number);
+        formData.append('user[staff_id]', body.staff_id);
+        formData.append('user[username]', body.username);
+        formData.append('user[img]', body.img);
       }
 
       this.http
-        .put(`${environment.apiUrl}users/` + this.data.user.id, {
-          user: body,
-        })
+        .put(`${environment.apiUrl}users/` + this.data.user.id, formData)
         .subscribe(
           (res) => {
             this.dialogRef.close();

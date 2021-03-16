@@ -1,8 +1,8 @@
 <div class="container">
   <form [formGroup]="productForm">
-    <div class="acc-box-1">
+    <div style="display: flex; flex-direction: row"></div>
+    <div class="box1">
       <p class="header">{{ header }}</p>
-
       <mat-form-field appearance="outline">
         <mat-label>ชื่อสินค้า</mat-label>
         <input
@@ -31,9 +31,7 @@
         </mat-select>
       </mat-form-field> -->
 
-
-
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
         <mat-label>ราคาสินค้า</mat-label>
         <input
           id="product_price"
@@ -63,7 +61,7 @@
           placeholder="จำนวนสินค้า.."
         />
       </mat-form-field> -->
-<!--
+      <!--
       <mat-form-field appearance="outline">
         <mat-label>สถานะสินค้า</mat-label>
         <mat-select id="status" formControlName="status">
@@ -72,10 +70,8 @@
           }}</mat-option>
         </mat-select>
       </mat-form-field> -->
-
-
-
     </div>
+    <div class="box2"></div>
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
       <button id="cancle" (click)="close()">ยกเลิก</button>

@@ -6,7 +6,7 @@ import { method } from './../../../model/model.model';
 
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -36,6 +36,7 @@ export class PromotionDialogComponent implements OnInit {
   productSelected: Products;
 
   displayedColumns: string[] = ['id', 'product_name', 'action'];
+  items: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +48,7 @@ export class PromotionDialogComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -105,12 +107,38 @@ export class PromotionDialogComponent implements OnInit {
       promotion_discount: ['', Validators.required],
       date_start: ['', Validators.required],
       date_end: ['', Validators.required],
-      time: [''],
-      productList: [this.formBuilder.array([]), Validators.required],
+      promotion_items: [this.formBuilder.array([]), Validators.required],
       categoryList: [''],
       typeList: [''],
+      addProduct_id: ['', Validators.required],
+      addPromotion_item_amount: ['', Validators.required],
       img: [null],
     });
+  }
+
+  createItem(data?: any): FormGroup {
+    const result = this.formBuilder.group({
+      product_id: [
+        this.promotionAddForm.value.addProduct_id,
+        Validators.required,
+      ],
+      promotion_item_amount: [
+        this.promotionAddForm.value.addPromotion_item_amount,
+        Validators.required,
+      ],
+    });
+
+    if (data) {
+      result.patchValue(data);
+    }
+
+    return result;
+  }
+
+  removeItem(index) {
+    const items = <FormArray>this.promotionAddForm.get('promotion_items');
+    console.log(items);
+    items.removeAt(index);
   }
 
   getProduct(): void {
@@ -139,9 +167,9 @@ export class PromotionDialogComponent implements OnInit {
     if (this.promotionAddForm.controls['productList'].invalid) {
       return;
     }
-    this.promotionItem.push(this.productSelected);
-    this.dataSource.data = this.promotionItem;
-    console.log(this.promotionItem);
+
+    this.items = <FormArray>this.promotionAddForm.get('promotion_items');
+    this.items.push(this.createItem());
   }
 
   selectedProduct(item: Products): void {
@@ -156,13 +184,9 @@ export class PromotionDialogComponent implements OnInit {
     if (this.data.method === 'addPromotion') {
       this.body = this.promotionAddForm.getRawValue();
 
-      // let body = {
-      //   promotion_name: this.promotionAddForm.getRawValue().promotion_name,
-      //   promotion_discount: this.promotionAddForm.getRawValue().discount,
-      //   date_start: this.promotionAddForm.getRawValue().start_date,
-      //   date_end: this.promotionAddForm.getRawValue().end_date,
-      //   img: null,
-      // };
+      for (const item of this.data.promotion.promotion_items) {
+        this.items.push(this.createItem(item));
+      }
 
       this.http
         .post(`${environment.apiUrl}promotions`, { promotion: this.body })
@@ -170,6 +194,26 @@ export class PromotionDialogComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'เพิ่มโปรโมชั่นสำเร็จ!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.dialogRef.close();
+        });
+    } else {
+      this.body = this.promotionAddForm.getRawValue();
+
+      for (const item of this.data.promotion.promotion_items) {
+        this.items.push(this.createItem(item));
+      }
+
+      this.http
+        .put(`${environment.apiUrl}promotions/` + this.data.promotion.id, {
+          promotion: this.body,
+        })
+        .subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'แก้ไขโปรโมชั่นสำเร็จ!',
             showConfirmButton: false,
             timer: 1500,
           });

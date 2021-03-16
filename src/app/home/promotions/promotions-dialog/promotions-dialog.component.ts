@@ -5,12 +5,11 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { Products } from 'src/app/model/product';
-import { stocklistproduct } from 'src/app/model/stock';
-import { Stocks } from 'src/app/model/stockproduct';
 import { environment } from 'src/environments/environment';
 import { PromotionsComponent } from '../promotions.component';
 import { Categorys } from 'src/app/model/category';
 import { Types } from 'src/app/model/type';
+import { DateRange } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-promotions-dialog',
@@ -43,6 +42,9 @@ export class PromotionsDialogComponent implements OnInit {
   typeID: number;
 
   displayedColumns: string[] = ['product'];
+
+  urlImage: any;
+  urlDefaultUser = '../../../../assets/defaultPicture.png';
 
   constructor(
     private http: HttpClient,
@@ -95,6 +97,22 @@ export class PromotionsDialogComponent implements OnInit {
       });
   }
 
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      const file = (event.target as HTMLInputElement).files[0];
+      this.promotionForm.patchValue({
+        image: file,
+      });
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (event) => {
+        this.urlImage = event.target.result;
+      };
+    }
+  }
+
   checkCateValue(event): void {
     this.cateID = event.value;
     if (event.value === 0) {
@@ -137,7 +155,7 @@ export class PromotionsDialogComponent implements OnInit {
 
     this.addProductList = this.fb.group({
       addProduct_id: ['', Validators.required],
-      addPromotion_item_amount: ['', Validators.required],
+      addPromotion_item_amount: [1, Validators.required],
     });
   }
 
@@ -161,6 +179,10 @@ export class PromotionsDialogComponent implements OnInit {
   }
 
   addForm() {
+    if (this.addProductList.invalid) {
+      return;
+    }
+
     this.items = this.promotionForm.get('promotion_items') as FormArray;
     this.items.push(this.createItem());
     this.addProductList.reset();
@@ -172,12 +194,18 @@ export class PromotionsDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    let date_start = this.promotionForm.get('date_start').value;
+    date_start = `${date_start._i.date}/${date_start._i.month + 1}/${
+      date_start._i.year
+    }`;
+    console.log(date_start);
+    return;
+
     if (this.data.method === 'editPromotion') {
-      if (this.promotionForm.invalid && this.addProductList.invalid) {
+      if (this.promotionForm.invalid) {
         return;
       }
       const payload = this.promotionForm.value;
-
       console.log(payload);
 
       this.http
@@ -185,14 +213,11 @@ export class PromotionsDialogComponent implements OnInit {
           promotion: payload,
         })
         .subscribe((res) => {
-          console.log(res);
           this.dialogRef.close();
         });
     }
     if (this.data.method === 'addPromotion') {
-      if (this.promotionForm.invalid && this.addProductList.invalid) {
-        console.log('blablabla');
-
+      if (this.promotionForm.invalid && this.items.length === 0) {
         return;
       }
 
@@ -202,7 +227,6 @@ export class PromotionsDialogComponent implements OnInit {
       this.http
         .post(`${environment.apiUrl}promotions`, { promotion: payload })
         .subscribe((res) => {
-          console.log(res);
           this.dialogRef.close();
         });
     }
