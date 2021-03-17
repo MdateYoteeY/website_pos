@@ -194,13 +194,6 @@ export class PromotionsDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let date_start = this.promotionForm.get('date_start').value;
-    date_start = `${date_start._i.date}/${date_start._i.month + 1}/${
-      date_start._i.year
-    }`;
-    console.log(date_start);
-    return;
-
     if (this.data.method === 'editPromotion') {
       if (this.promotionForm.invalid) {
         return;
@@ -217,7 +210,7 @@ export class PromotionsDialogComponent implements OnInit {
         });
     }
     if (this.data.method === 'addPromotion') {
-      if (this.promotionForm.invalid && this.items.length === 0) {
+      if (this.promotionForm.invalid) {
         return;
       }
 

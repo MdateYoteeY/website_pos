@@ -34,6 +34,7 @@ export class AccountDialogComponent implements OnInit {
   img: any;
   urlImage: any;
   urlDefaultUser = '../../../../assets/defaultPicture.png';
+  imgIsLoading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -111,6 +112,14 @@ export class AccountDialogComponent implements OnInit {
 
       reader.onload = (event) => {
         this.urlImage = event.target.result;
+      };
+
+      reader.onloadstart = (event) => {
+        this.imgIsLoading = true;
+      };
+
+      reader.onloadend = (event) => {
+        this.imgIsLoading = false;
       };
     }
   }

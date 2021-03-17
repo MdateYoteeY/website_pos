@@ -1,4 +1,3 @@
-
 import { StockList } from './../../../model/stock';
 
 import { Categorys } from './../../../model/category';
@@ -17,7 +16,7 @@ import { Types } from 'src/app/model/type';
 @Component({
   selector: 'app-products-dialog',
   templateUrl: './products-dialog.component.html',
-  styleUrls: ['./products-dialog.component.scss']
+  styleUrls: ['./products-dialog.component.scss'],
 })
 export class ProductsDialogComponent implements OnInit {
   productForm: FormGroup;
@@ -27,7 +26,8 @@ export class ProductsDialogComponent implements OnInit {
   statusproduct: StatusProducts;
   productAdd = true;
   stock: StockList;
-
+  imgIsLoading: boolean;
+  urlImage: string | ArrayBuffer;
 
   constructor(
     private http: HttpClient,
@@ -49,14 +49,36 @@ export class ProductsDialogComponent implements OnInit {
     this.type = this.data.type;
     this.statusproduct = this.data.statusproduct;
 
-
     if (this.data.method === 'editProduct') {
       this.productForm.patchValue(this.data.product);
       this.header = 'แก้ไขสินค้า';
-
     } else if (this.data.method === 'addProduct') {
       this.header = 'เพิ่มสินค้า';
       this.productAdd = !this.productAdd;
+    }
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      const file = (event.target as HTMLInputElement).files[0];
+      this.productForm.patchValue({
+        img: file,
+      });
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (event) => {
+        this.urlImage = event.target.result;
+      };
+
+      reader.onloadstart = (event) => {
+        this.imgIsLoading = true;
+      };
+
+      reader.onloadend = (event) => {
+        this.imgIsLoading = false;
+      };
     }
   }
 
@@ -67,7 +89,6 @@ export class ProductsDialogComponent implements OnInit {
         type_id: this.productForm.getRawValue().type_id,
         product_price: this.productForm.getRawValue().product_price,
         product_amount: this.productForm.getRawValue().product_amount,
-
       };
 
       this.http
@@ -90,15 +111,11 @@ export class ProductsDialogComponent implements OnInit {
       // }
 
       let body = {
-          product_name: this.productForm.getRawValue().product_name,
-          type_id: this.productForm.getRawValue().type_id,
-          product_price: this.productForm.getRawValue().product_price,
-          // product_amount: this.productForm.getRawValue().product_amount,
-
-        };
-
-
-
+        product_name: this.productForm.getRawValue().product_name,
+        type_id: this.productForm.getRawValue().type_id,
+        product_price: this.productForm.getRawValue().product_price,
+        // product_amount: this.productForm.getRawValue().product_amount,
+      };
 
       this.http
         .post(`${environment.apiUrl}products`, { product: body })
@@ -113,4 +130,3 @@ export class ProductsDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 }
-

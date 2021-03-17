@@ -145,6 +145,27 @@
         </mat-form-field>
       </div>
       <div class="box2">
+        <div
+          *ngIf="imgIsLoading"
+          style="
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+            cursor: wait;
+          "
+        >
+          <mat-spinner
+            style="
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 40%;
+              left: 40%;
+              cursor: wait;
+            "
+          ></mat-spinner>
+        </div>
         <label>
           <img [src]="urlImage || urlDefaultUser" />
           <input
