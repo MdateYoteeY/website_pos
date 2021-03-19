@@ -12,7 +12,9 @@ import { Types } from 'src/app/model/type';
 import { DateRange } from '@angular/material/datepicker';
 import { switchMap } from 'rxjs/operators';
 import { Promotion } from 'src/app/model/promotion';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-promotions-dialog',
@@ -225,18 +227,25 @@ export class PromotionsDialogComponent implements OnInit {
       const payload = this.promotionForm.value;
       this.updatePromotion(payload).subscribe((res) => {
         this.dialogRef.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'แก้ไขโปรโมชั่นสำเร็จ!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
     }
     if (this.data.method === 'addPromotion') {
       const payload = this.promotionForm.value;
-      this.createPromotion(payload).subscribe(
-        (res) => {
-          this.dialogRef.close();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      this.createPromotion(payload).subscribe((res) => {
+        this.dialogRef.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'เพิ่มโปรโมชั่นสำเร็จ!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
     }
   }
 
@@ -282,6 +291,7 @@ export class PromotionsDialogComponent implements OnInit {
               formData
             );
           }
+          return of(res);
         })
       );
   }
