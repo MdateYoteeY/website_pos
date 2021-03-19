@@ -12,38 +12,50 @@
 
   form {
     position: relative;
+    display: flex;
+    flex-direction: column;
 
-    .box1 {
+    .header {
+      font-size: 20pt;
+      font-weight: 500;
+      margin: 10px 0 10px 0;
+    }
+
+    .mainBox {
       display: flex;
-      flex-direction: column;
-
-      .header {
-        font-size: 20pt;
-        font-weight: 500;
-        margin: 10px 0 10px 0;
-      }
-
-      .mat-select-panel {
-        background: red;
-      }
-    }
-
-    .btn-changePass {
-      border: none;
-      border-radius: 5px;
-      padding: 15px;
-      cursor: pointer;
-      width: fit-content;
-      height: fit-content;
-      background: rgb(221, 221, 221);
-      transition: .5s;
-      font-size: 10pt;
       position: relative;
+      justify-content: center;
+      align-items: center;
 
-      &:hover {
-        background: rgb(161, 255, 197);
+      .box1 {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        .mat-select-panel {
+          background: red;
+        }
+      }
+
+      .box2 {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        flex: 1;
+
+        img {
+          width: auto;
+          height: 250px;
+          margin-left: 15px;
+          cursor: pointer;
+          border: 1px solid rgb(221, 221, 221);
+          border-radius: 5px;
+          padding: 10px;
+          z-index: 1;
+        }
       }
     }
+
 
     .btn-group {
       text-align: center;

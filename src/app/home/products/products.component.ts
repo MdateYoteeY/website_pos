@@ -31,6 +31,7 @@ export class ProductsComponent implements OnInit {
   dataSource = new MatTableDataSource<Products>(ELEMENT_DATA);
   product: Products;
   type: Types;
+  category: Categorys;
   statusproduct: StatusProducts;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {}
@@ -40,21 +41,20 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProduct();
-    this.getType();
+    this.getCategory();
     this.getstatus_product();
+
     this.search.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
       this.getProduct({ keywords: val });
     });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-
-  getType(): void {
-    this.http.get(`${environment.apiUrl}types`).subscribe((res: Types) => {
-      this.type = res;
-    });
+  getCategory(): void {
+    this.http
+      .get(`${environment.apiUrl}categories`)
+      .subscribe((res: Categorys) => {
+        this.category = res;
+      });
   }
 
   getstatus_product(): void {
@@ -70,6 +70,8 @@ export class ProductsComponent implements OnInit {
       .get(`${environment.apiUrl}products`, { params })
       .subscribe((res: Products[]) => {
         this.dataSource.data = res;
+        this.dataSource.paginator = this.paginator;
+        console.log(res);
       });
   }
 
@@ -79,8 +81,7 @@ export class ProductsComponent implements OnInit {
         data: {
           method: method,
           product: element,
-          type: this.type,
-          statusproduct: this.statusproduct,
+          category: this.category,
         },
       });
       dialogRef.afterClosed().subscribe((res) => {
@@ -90,8 +91,7 @@ export class ProductsComponent implements OnInit {
       let dialogRef = this.dialog.open(ProductsDialogComponent, {
         data: {
           method: method,
-          type: this.type,
-          statusproduct: this.statusproduct,
+          category: this.category,
         },
       });
       dialogRef.afterClosed().subscribe((res) => {

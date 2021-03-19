@@ -5,9 +5,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LoaderService {
-  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    true
+  public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
   );
 
-  constructor() {}
+  constructor() {
+    this.isLoading$.next(false);
+  }
 }

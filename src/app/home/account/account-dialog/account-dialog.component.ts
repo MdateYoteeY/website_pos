@@ -53,9 +53,12 @@ export class AccountDialogComponent implements OnInit {
       this.passwordView = false;
       this.header = 'แก้ไขบัญชีผู้ใช้งาน';
 
-      this.accountAddForm.patchValue(this.data.user);
-      this.accountAddForm.controls.img.setValue(this.data.user.image);
-      console.log(this.accountAddForm.value);
+      this.accountAddForm.patchValue({
+        ...this.data.user,
+        image_url: this.data.user.image,
+      });
+
+      console.log(this.accountAddForm.getRawValue());
 
       if (this.data.user.image) {
         this.urlImage = `${environment.apiUrl}` + this.data.user.image;
@@ -83,21 +86,13 @@ export class AccountDialogComponent implements OnInit {
         username: ['', [Validators.required]],
         password: [null, [Validators.minLength(8)]],
         password_confirmation: [null],
-        img: [''],
+        image: [null],
+        image_url: [null],
       },
       {
         validators: [MustMatch('password', 'password_confirmation')],
       }
     );
-  }
-
-  onFileSelect(event) {
-    this.profile = event.target.value;
-    const file = (event.target as HTMLInputElement).files[0];
-    this.accountAddForm.patchValue({
-      img: file,
-    });
-    console.log(this.profile);
   }
 
   onSelectFile(event) {
@@ -106,7 +101,7 @@ export class AccountDialogComponent implements OnInit {
 
       const file = (event.target as HTMLInputElement).files[0];
       this.accountAddForm.patchValue({
-        img: file,
+        image: file,
       });
       reader.readAsDataURL(event.target.files[0]);
 
@@ -134,8 +129,8 @@ export class AccountDialogComponent implements OnInit {
         return;
       }
 
-      let body = this.accountAddForm.getRawValue();
-      let formData = new FormData();
+      const body = this.accountAddForm.getRawValue();
+      const formData = new FormData();
       formData.append('user[firstname]', body.firstname);
       formData.append('user[lastname]', body.lastname);
       formData.append('user[phone_number]', body.phone_number);
@@ -146,7 +141,7 @@ export class AccountDialogComponent implements OnInit {
         'user[password_confirmation]',
         body.password_confirmation
       );
-      formData.append('user[img]', body.img);
+      formData.append('user[img]', body.image);
 
       this.http.post(`${environment.apiUrl}users`, formData).subscribe(
         (res) => {
@@ -154,10 +149,6 @@ export class AccountDialogComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'เพิ่มบัญชีสำเร็จ!',
-            text:
-              'บัญชี "' +
-              this.accountAddForm.getRawValue().username +
-              '" ถูกเพิ่มเรียบร้อยแล้ว',
             showConfirmButton: false,
             timer: 1500,
           });
@@ -173,28 +164,25 @@ export class AccountDialogComponent implements OnInit {
         return;
       }
 
-      let body = this.accountAddForm.getRawValue();
-      let formData = new FormData();
+      const body = this.accountAddForm.getRawValue();
+      const formData = new FormData();
+
+      formData.append('user[firstname]', body.firstname);
+      formData.append('user[lastname]', body.lastname);
+      formData.append('user[phone_number]', body.phone_number);
+      formData.append('user[staff_id]', body.staff_id);
+      formData.append('user[username]', body.username);
+
+      if (body.image !== body.image_url) {
+        formData.append('user[img]', body.image);
+      }
 
       if (body.password !== null) {
-        formData.append('user[firstname]', body.firstname);
-        formData.append('user[lastname]', body.lastname);
-        formData.append('user[phone_number]', body.phone_number);
-        formData.append('user[staff_id]', body.staff_id);
-        formData.append('user[username]', body.username);
         formData.append('user[password]', body.password);
         formData.append(
           'user[password_confirmation]',
           body.password_confirmation
         );
-        formData.append('user[img]', body.img);
-      } else {
-        formData.append('user[firstname]', body.firstname);
-        formData.append('user[lastname]', body.lastname);
-        formData.append('user[phone_number]', body.phone_number);
-        formData.append('user[staff_id]', body.staff_id);
-        formData.append('user[username]', body.username);
-        formData.append('user[img]', body.img);
       }
 
       this.http

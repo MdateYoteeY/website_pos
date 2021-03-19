@@ -1,77 +1,57 @@
 <div class="container">
   <form [formGroup]="productForm">
-    <div style="display: flex; flex-direction: row"></div>
-    <div class="box1">
-      <p class="header">{{ header }}</p>
-      <mat-form-field appearance="outline">
-        <mat-label>ชื่อสินค้า</mat-label>
-        <input
-          id="product_name"
-          formControlName="product_name"
-          matInput
-          placeholder="ชื่อสินค้า.."
-        />
-      </mat-form-field>
+    <p class="header">{{ header }}</p>
+    <div class="mainBox">
+      <div class="box1">
+        <mat-form-field appearance="outline">
+          <mat-label>ชื่อสินค้า</mat-label>
+          <input
+            id="product_name"
+            formControlName="product_name"
+            matInput
+            placeholder="ชื่อสินค้า.."
+          />
+          <mat-error *ngIf="productForm.get('product_name').errors?.required"
+            >กรุณาระบุ <strong>ชื่อสินค้า</strong></mat-error
+          >
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>ประเภทสินค้า</mat-label>
-        <mat-select id="type" formControlName="type_id">
-          <mat-option *ngFor="let item of type" [value]="item.id">
-            {{ item.type_name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>ประเภทสินค้า</mat-label>
+          <mat-select id="type" formControlName="type_id">
+            <mat-option *ngFor="let item of type" [value]="item.id">
+              {{ item.type_name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="productForm.get('type_id').errors?.required"
+            >กรุณาระบุ <strong>ประเภทสินค้า</strong></mat-error
+          >
+        </mat-form-field>
 
-      <!-- <mat-form-field appearance="outline" *ngIf="!productAdd">
-        <mat-label>สถานะสินค้า</mat-label>
-        <mat-select id="status_product_id" formControlName="status_product_id">
-          <mat-option *ngFor="let item of status_product" [value]="item.id">
-            {{ item.product_status }}s
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
-
-      <mat-form-field appearance="outline">
-        <mat-label>ราคาสินค้า</mat-label>
-        <input
-          id="product_price"
-          formControlName="product_price"
-          matInput
-          placeholder="ราคาสินค้า.."
-        />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" *ngIf="productAdd">
-        <mat-label>จำนวนสินค้า</mat-label>
-        <input
-          id="product_amount"
-          formControlName="product_amount"
-          matInput
-          placeholder=" จำนวนสินค้า.."
-        />
-      </mat-form-field>
-
-      <!-- <mat-form-field appearance="outline">
-        <mat-label>จำนวนสินค้า</mat-label>
-        <input
-          id="product_amount"
-          type="number"
-          formControlName="product_amount"
-          matInput
-          placeholder="จำนวนสินค้า.."
-        />
-      </mat-form-field> -->
-      <!--
-      <mat-form-field appearance="outline">
-        <mat-label>สถานะสินค้า</mat-label>
-        <mat-select id="status" formControlName="status">
-          <mat-option *ngFor="let item of statusproduct" [value]="item.product_status">{{
-            item.product_status
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field> -->
+        <mat-form-field appearance="outline">
+          <mat-label>ราคาสินค้า</mat-label>
+          <input
+            id="product_price"
+            type="number"
+            formControlName="product_price"
+            matInput
+            placeholder="ราคาสินค้า.."
+          />
+          <mat-error *ngIf="productForm.get('product_price').errors?.required"
+            >กรุณาระบุ <strong>ราคาสินค้า</strong></mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="box2">
+        <label>
+          <img [src]="urlImage || urlDefaultUser" />
+          <input
+            type="file"
+            (change)="onSelectFile($event)"
+            style="display: none"
+        /></label>
+      </div>
     </div>
-    <div class="box2"></div>
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
       <button id="cancle" (click)="close()">ยกเลิก</button>
