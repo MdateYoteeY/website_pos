@@ -14,6 +14,7 @@ import { ProductsComponent } from '../products.component';
 import { Products } from 'src/app/model/product';
 import { Types } from 'src/app/model/type';
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products-dialog',
@@ -104,15 +105,14 @@ export class ProductsDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.productForm.invalid) {
+      return;
+    }
+
+    const formData = new FormData();
+    const body = this.productForm.getRawValue();
+
     if (this.data.method === 'editProduct') {
-      if (this.productForm.invalid) {
-        console.log('invalid');
-        return;
-      }
-
-      const body = this.productForm.getRawValue();
-      const formData = new FormData();
-
       formData.append('product[product_name]', body.product_name);
       formData.append('product[type_id]', body.type_id);
       formData.append('product[product_price]', body.product_price);
@@ -121,43 +121,42 @@ export class ProductsDialogComponent implements OnInit {
         formData.append('product[img]', body.image);
       }
 
-      this.http
-        .put(`${environment.apiUrl}products/` + this.data.product.id, formData)
-        .subscribe((res) => {
-          this.dialogRef.close();
-          Swal.fire({
-            icon: 'success',
-            title: 'แก้ไขสินค้าสำเร็จ!',
-            showConfirmButton: false,
-            timer: 1500,
-          });
+      this.updateProduct(formData).subscribe((res) => {
+        this.dialogRef.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'แก้ไขสินค้าสำเร็จ!',
+          showConfirmButton: false,
+          timer: 1500,
         });
+      });
     } else if (this.data.method === 'addProduct') {
-      if (this.productForm.invalid) {
-        console.log('invalid');
-        return;
-      }
-
-      const body = this.productForm.getRawValue();
-      const formData = new FormData();
-
       formData.append('product[product_name]', body.product_name);
       formData.append('product[type_id]', body.type_id);
       formData.append('product[product_price]', body.product_price);
       formData.append('product[img]', body.image);
 
-      this.http
-        .post(`${environment.apiUrl}products`, formData)
-        .subscribe((res) => {
-          this.dialogRef.close();
-          Swal.fire({
-            icon: 'success',
-            title: 'เพิ่มสินค้าสำเร็จ!',
-            showConfirmButton: false,
-            timer: 1500,
-          });
+      this.createProduct(formData).subscribe((res) => {
+        this.dialogRef.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'เพิ่มสินค้าสำเร็จ!',
+          showConfirmButton: false,
+          timer: 1500,
         });
+      });
     }
+  }
+
+  createProduct(formData): Observable<Products> {
+    return this.http.post<Products>(`${environment.apiUrl}products`, formData);
+  }
+
+  updateProduct(formData): Observable<Products> {
+    return this.http.put<Products>(
+      `${environment.apiUrl}products/` + this.data.product.id,
+      formData
+    );
   }
 
   close(): void {

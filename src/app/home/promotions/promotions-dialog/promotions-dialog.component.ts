@@ -28,7 +28,6 @@ export class PromotionsDialogComponent implements OnInit {
   promotionAdd = true;
   promotion: Promotions[] = [];
   addpromotion: Promotions;
-  promotionitem: Promotionitem[] = [];
   categoryValueCheck = false;
 
   items: FormArray;
@@ -73,8 +72,12 @@ export class PromotionsDialogComponent implements OnInit {
         image_url: this.data.promotion.image,
       });
 
-      this.items = this.promotionForm.controls.promotion_items as FormArray;
+      if (!!this.data.promotion.image) {
+        this.urlImage = `${environment.apiUrl}` + this.data.promotion.image;
+        console.log(this.urlImage);
+      }
 
+      this.items = this.promotionForm.controls.promotion_items as FormArray;
       for (const item of this.data.promotion.promotion_items) {
         this.items.push(this.createItem(item));
       }
@@ -220,7 +223,7 @@ export class PromotionsDialogComponent implements OnInit {
 
     if (this.data.method === 'editPromotion') {
       const payload = this.promotionForm.value;
-      this.updatePromotion(payload, this.data.promotion.id).subscribe((res) => {
+      this.updatePromotion(payload).subscribe((res) => {
         this.dialogRef.close();
       });
     }
@@ -262,25 +265,24 @@ export class PromotionsDialogComponent implements OnInit {
       );
   }
 
-  updatePromotion(payload, data): Observable<Promotion> {
+  updatePromotion(payload): Observable<Promotion> {
     return this.http
-      .put<Promotion>(`${environment.apiUrl}promotions/` + data.id, payload)
+      .put<Promotion>(
+        `${environment.apiUrl}promotions/` + this.data.promotion.id,
+        { promotion: payload }
+      )
       .pipe(
         switchMap((res) => {
-          if (!!payload.image) {
+          if (payload.image !== payload.image_url) {
             const formData = new FormData();
             formData.append('promotion[img]', payload.image);
 
             return this.http.put<Promotion>(
-              `${environment.apiUrl}promotions/` + data.id,
+              `${environment.apiUrl}promotions/` + this.data.promotion.id,
               formData
             );
           }
         })
       );
   }
-}
-
-interface Promotionitem {
-  product_id: number;
 }
