@@ -44,6 +44,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CommonModule } from '@angular/common';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.interceptor';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.intercepto
     LoginComponent,
     HomeComponent,
     AuthorizationComponent,
+    UserComponent,
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,4 @@
+import { PromotionsComponent } from './../../promotions/promotions.component';
 import { PromotionComponent } from './../promotion.component';
 import { Promotionitem } from './../../../model/promotion';
 
@@ -14,7 +15,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class ListPromotionDialogComponent implements OnInit {
   displayedColumns = ['ชื่อ', 'จำนวน', 'ราคา'];
   constructor(
-    public dialogRef: MatDialogRef<PromotionComponent>,
+    public dialogRef: MatDialogRef<PromotionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Promotionitem) {
 
     }
