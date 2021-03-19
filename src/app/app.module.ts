@@ -40,6 +40,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { LottieAnimationViewModule } from 'ng-lottie';
 
 import { CommonModule } from '@angular/common';
 import { AuthorizationComponent } from './authorization/authorization.component';
@@ -93,6 +94,7 @@ import { UserComponent } from './user/user.component';
     MatPaginatorModule,
     MatListModule,
     SweetAlert2Module.forRoot(),
+    LottieAnimationViewModule.forRoot(),
   ],
   providers: [
     {

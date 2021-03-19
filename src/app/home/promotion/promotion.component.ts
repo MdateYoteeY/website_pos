@@ -109,7 +109,7 @@ export class PromotionComponent implements OnInit, AfterViewInit {
                 title: 'เกิดข้อผิดพลาด!',
                 showConfirmButton: false,
                 timer: 1500,
-              });
+              }); 
             }
           );
       }

@@ -1,3 +1,5 @@
+import { InterceptorService } from './loader/interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSortModule } from '@angular/material/sort';
@@ -46,6 +48,7 @@ import { PromotionsDialogComponent } from './promotions/promotions-dialog/promot
 import { PromotionEditComponent } from './promotions/promotion-edit/promotion-edit.component';
 import { HistoryComponent } from './history/history.component';
 import { HistoryDialogComponent } from './history/history-dialog/history-dialog.component';
+import { AppComponent } from '../app.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +101,9 @@ import { HistoryDialogComponent } from './history/history-dialog/history-dialog.
     MatAutocompleteModule,
     MaterialFileInputModule,
     MatDividerModule,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
 })
 export class HomeModule {}
