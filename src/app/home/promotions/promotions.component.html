@@ -93,7 +93,9 @@
           *matCellDef="let element"
           (click)="openList(element.promotion_items)"
         >
-          {{ element.status }}
+          <p class="stat status{{ element.status_promotion_id }}">
+            {{ element.status }}
+          </p>
         </td>
       </ng-container>
 
