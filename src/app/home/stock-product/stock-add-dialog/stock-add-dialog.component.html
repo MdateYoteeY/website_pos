@@ -18,8 +18,7 @@
         formArrayName="stock_list"
         *ngFor="
           let item of stocklistForm.get('stock_list')['controls'];
-          let i = index;
-          let isFirst = first
+          let i = index
         "
       >
         <div class="custom-form" [formGroupName]="i">
@@ -35,10 +34,7 @@
               กรุณากรอกเลือกสินค้า
             </mat-error>
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option
-                *ngFor="let option of product"
-                [value]="option.id"
-              >
+              <mat-option *ngFor="let option of product" [value]="option.id">
                 {{ option.product_name }}
               </mat-option>
             </mat-autocomplete>
@@ -68,12 +64,7 @@
               กรุณากรอกราคาสินค้า
             </mat-error>
           </mat-form-field>
-          <button
-            class="form-btn"
-            *ngIf="!isFirst"
-            type="remove"
-            (click)="removeForm(i)"
-          >
+          <button class="form-btn" type="remove" (click)="removeForm(i)">
             ลบ
           </button>
         </div>

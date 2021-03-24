@@ -15,8 +15,6 @@ import { Orders } from 'src/app/model/order';
   styleUrls: ['./history-dialog.component.scss'],
 })
 export class HistoryDialogComponent implements OnInit {
-  orderForm: FormGroup;
-  product_list: FormGroup;
   items: FormArray;
   displayedColumns: string[] = [
     'id',
@@ -41,14 +39,9 @@ export class HistoryDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
-    this.getProduct();
-
     if (this.data.method === 'showOrder') {
-      this.header = 'ฤกษ์เหล้า';
-      const payload = this.orderForm.value;
+      this.header = this.data.order.store.name;
       this.order = this.data.order;
-      console.log(this.order);
     }
   }
 
@@ -59,38 +52,6 @@ export class HistoryDialogComponent implements OnInit {
         this.product = res;
       });
   }
-  initForm(): void {
-    this.orderForm = this.fb.group({
-      table_id: ['', Validators.required],
-      receipt_id: ['', Validators.required],
-      status_order_id: ['', Validators.required],
-      store_id: ['', Validators.required],
-      user_id: ['', Validators.required],
-      order_number: ['', Validators.required],
-      order_list: ['', Validators.required],
-      order_amount: ['', Validators.required],
-      table: ['', Validators.required],
-      status: ['', Validators.required],
-      staff: ['', Validators.required],
-      zone: ['', Validators.required],
-      store: ['', Validators.required],
-      product_item: this.fb.array([]),
-      promotion_item: this.fb.array([]),
-      receipt: ['', Validators.required],
-    });
-  }
-  productItem(data?): FormGroup {
-    return this.fb.group({
-      order_id: ['', Validators.required],
-      product_id: ['', Validators.required],
-      order_amount: ['', Validators.required],
-      total_price: ['', Validators.required],
-      name: ['', Validators.required],
-      price: ['', Validators.required],
-    });
-  }
-
-  onSubmit(): void {}
 
   close(): void {
     this.dialogRef.close();

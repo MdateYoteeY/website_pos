@@ -1,5 +1,7 @@
 @import "~@angular/material/theming";
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300&display=swap");
+// @import "../src/reset.scss";
+@import "../src/nomalize.scss";
 
 @include mat-core();
 $POS-primary: mat-palette($mat-indigo);
@@ -17,23 +19,6 @@ html * {
   box-sizing: border-box;
   font-family: "Kanit", sans-serif;
 
-  .lottie {
-    left: 0 !important;
-    top: 0 !important;
-    z-index: 10000 !important;
-    width: 100% !important;
-    height: 100% !important;
-    position: fixed !important;
-    background: rgba(0, 0, 0, 0.9) !important;
-
-    cursor: pointer !important;
-    visibility: visible !important;
-    transition: visibility 0s, opacity 0.4s linear !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: wait !important;
-  }
 }
 
 html,

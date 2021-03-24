@@ -15,60 +15,45 @@ import { HistoryDialogComponent } from './history-dialog/history-dialog.componen
   styleUrls: ['./history.component.scss'],
 })
 export class HistoryComponent implements OnInit {
-  displayedColumns: string[] = [
-    'id',
-    'name',
-    'list',
-    'number',
-    'status',
-    'action',
-  ];
+  displayedColumns: string[] = ['id', 'name', 'number', 'status', 'action'];
   dataSource = new MatTableDataSource<Orders>(ELEMENT_DATA);
-  order: Orders;
-  i: number;
-j: number;
+  confirmOrder: number;
+  cancleOrder: number;
   constructor(private http: HttpClient, public dialog: MatDialog) {}
   search = new FormControl();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  ngOnInit(): void {
-    this.getOrder();
+  async ngOnInit() {
+    await this.getOrder();
+    if (this.dataSource.data) {
+      this.dataSource.data.filter((order) => {
+        if (order.status === 'No Success') {
+          this.cancleOrder += 1;
+        }
+        return this.cancleOrder;
+      });
+      this.dataSource.data.filter((order) => {
+        if (order.status === 'Success') {
+          this.confirmOrder += 1;
+        }
+        return this.confirmOrder;
+      });
+      console.log(this.confirmOrder);
+      console.log(this.cancleOrder);
+    }
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  getOrder(params?: any): void {
+  async getOrder(params?) {
     this.http
-      .get(`${environment.apiUrl}orders`, { params })
-      .subscribe((res: Orders[]) => {
+      .get<Orders[]>(`${environment.apiUrl}orders`, { params })
+      .subscribe((res) => {
         this.dataSource.data = res;
-
-        var empire = this.dataSource.data.filter(function (order) {
-          return order.status === 'No Success';
-        });
-        var i = 0;
-        var jediScores = empire.map(function () {
-          return (i += 1);
-        });
-        this.i = i;
-        console.log(this.i);
-
-        var empire = this.dataSource.data.filter(function (order) {
-          return order.status === 'Success';
-        });
-        var j = 0;
-        var jediScores = empire.map(function () {
-          return (j += 1);
-        });
-        this.j = j;
-        console.log(this.j);
       });
-
-
-
   }
 
   openDialog(method: string, element?: Orders): void {

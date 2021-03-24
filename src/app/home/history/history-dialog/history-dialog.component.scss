@@ -1,73 +1,72 @@
-.container {
-  width: auto;
-  height: auto;
-  padding: 0;
+.main-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  font-family: Tahoma, Verdana, sans-serif !important;
 
-  form {
+  .mat-divider-vertical {
+    height: 100%;
+    width: 0px;
     position: relative;
-    font-size: 15pt;
+  }
 
-    .box1 {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+  .header {
+    flex-direction: row;
+    position: relative;
+    text-align: center;
+  }
 
-      p {
-        font-size: 15pt;
-        font-weight: normal;
-        margin: 0 0 2px 0;
-      }
+  .body {
+    display: inherit;
+    flex-direction: inherit;
+    text-align: center;
+    width: 100%;
 
-      .header {
-        font-size: 15pt;
-        margin: 0;
-        text-align: center;
-      }
+    table {
+      width: 100%;
 
       tr {
-        th {
-          font-size: 15pt;
-          font-weight: normal;
-        }
+        width: 100%;
       }
     }
-  }
 
-  .btn-group {
-    text-align: center;
-    position: relative;
-    width: 100%;
-  }
-
-  button {
-    padding: 10px 20px 10px 20px;
-    font-size: 12pt;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: .5s;
-    position: relative;
-
-    &:hover {
-      background: inherit;
-      opacity: 0.8;
+    .column-L {
+      float: left;
+      width: 50%;
+      height: auto;
+      text-align: left;
     }
+
+    .column-R {
+      float: right;
+      width: 50%;
+      height: auto;
+      text-align: right;
+    }
+
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .head-table {
+      width: inherit;
+      display: inherit;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .body-table {
+      display: inherit;
+      flex-direction: column;
+      width: inherit;
+    }
+
   }
+
+  .footer {}
 }
-
-mat-divider {
-  border-top-style: dashed;
-  border-top-color: #000;
-  border-width: 2px;
-  margin: 5px 0 5px 0;
-}
-
-#confirm {}
-
-#cancle {}

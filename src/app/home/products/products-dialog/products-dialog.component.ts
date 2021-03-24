@@ -66,10 +66,10 @@ export class ProductsDialogComponent implements OnInit {
   initForm(): void {
     this.productForm = this.fb.group({
       product_name: ['', Validators.required],
-      type_id: [0, Validators.required],
-      product_price: [0, Validators.required],
+      type_id: ['', Validators.required],
+      product_price: ['', Validators.required],
       product_amount: [''],
-      image: [null],
+      image: [null, Validators.required],
       image_url: [null],
     });
   }

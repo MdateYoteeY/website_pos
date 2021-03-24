@@ -56,7 +56,7 @@ export class StockProductComponent implements OnInit {
 
   openDialog(method: string, element?: Stocks): void {
     if (method === 'showStock') {
-      let dialogRef = this.dialog.open(StockDialogComponent, {
+      let dialogRef = this.dialog.open(StockAddDialogComponent, {
         data: {
           method: method,
           stock: element,
