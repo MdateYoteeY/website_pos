@@ -1,3 +1,4 @@
+import { MatDividerModule } from '@angular/material/divider';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -91,6 +92,7 @@ import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.intercepto
     MatSortModule,
     MatPaginatorModule,
     MatListModule,
+  MatDividerModule,
     SweetAlert2Module.forRoot(),
     LottieAnimationViewModule.forRoot(),
   ],

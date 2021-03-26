@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 import { HistoryDialogComponent } from './history-dialog/history-dialog.component';
 import { SumaryDialogComponent } from './sumary-dialog/sumary-dialog.component';
 import { Reports } from 'src/app/model/report';
+import { formatDate } from '@angular/common';
 
 
 
@@ -46,17 +47,21 @@ export class HistoryComponent implements OnInit {
   table: Tables;
   report: Reports;
   dateStart = new FormControl();
+  dateEnd = new FormControl();
+  start = Date();
+  end = Date();
+  val = formatDate(new Date(), 'yyyy/MM/dd', 'en');
   constructor(private http: HttpClient, public dialog: MatDialog) {}
-
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit(): void {
+    this.getReport({ start_date: this.val, end_date: this.val });
     this.initForm();
-    this.productBar();
     this.getPeople();
     this.getOrder();
     this.getReceipt();
     this.getTable();
+    this.productBar();
 
   }
   getReport(params?: any): void {
@@ -64,7 +69,6 @@ export class HistoryComponent implements OnInit {
       .get(`${environment.apiUrl}report`, { params })
       .subscribe((res: Reports[]) => {
         this.dataReport.data = res;
-        console.log(res);
         const maps = res['product'];
         const name = maps.map((maps) => maps['name']);
         const amount = maps.map((maps) => maps['amount']);
@@ -109,9 +113,14 @@ export class HistoryComponent implements OnInit {
   }
   productBar(): void {
     this.dateStart.valueChanges.pipe().subscribe((val) => {
-      this.getReport({ start_date: val, end_date: val });
-
+      this.start = val;
+      this.getReport({ start_date: this.start, end_date: this.end });
     });
+    this.dateEnd.valueChanges.pipe().subscribe((val) => {
+      this.end = val;
+      this.getReport({ start_date: this.start, end_date: this.end });
+    });
+
   }
 
   getPeople(): void {

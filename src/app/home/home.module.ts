@@ -1,3 +1,4 @@
+import { SumaryDialogComponent } from './history/sumary-dialog/sumary-dialog.component';
 import { InterceptorService } from './loader/interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -82,7 +83,7 @@ import { AppComponent } from '../app.component';
     PromotionEditComponent,
     HistoryComponent,
     HistoryDialogComponent,
- 
+    SumaryDialogComponent
   ],
 
   imports: [
@@ -103,8 +104,8 @@ import { AppComponent } from '../app.component';
     MatSortModule,
     MatAutocompleteModule,
     MaterialFileInputModule,
-    MatDividerModule,
     ChartsModule,
+    MatDividerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

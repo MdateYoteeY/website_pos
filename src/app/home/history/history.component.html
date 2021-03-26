@@ -1,14 +1,9 @@
 <div class="flex-container">
-
   <div class="chart-donut">
     <div style="width: 50%; margin-left: 45%">
       <canvas style="width: 100%" id="yearBar"></canvas>
     </div>
-    <div style="position: absolute; right: 0; top: 0">
-      <h5>ออเดอร์ทั้งหมด : {{ dataSource.data.length || 0 }} ออเดอร์</h5>
-      <h5>สำเร็จ : {{ confirmOrder || 0 }} ออเดอร์</h5>
-      <h5>ยกเลิก : {{ cancleOrder || 0 }} ออเดอร์</h5>
-    </div>
+    <div style="position: absolute; right: 0; top: 0"></div>
   </div>
 
   <div
@@ -78,39 +73,20 @@
     <h6>Busy : {{ busy }}</h6>
     <h6>Reserve : {{ reserve }}</h6>
   </div>
-  <div  style="
-      position: absolute;
-      left: 2%;
-      top: 110%;
-      " >
-      <input
-        type="date"
-        placeholder="ค้นหา..."
-        [formControl]="dateStart"
-      />
-      <input
-        type="date"
-        placeholder="ค้นหา..."
-        [formControl]="dateStart"
-      />
-      <!-- <button ></button> -->
-
-    </div>
-  <div  style="
-      position: absolute;
-      right: 0;
-      top: 110%;
-      left: 95%;">
-      <span
-        class="material-icons"
-        mat-raised-button
-
-        (click)="openDialog('showSummary')"
-      >
-        receipt_long
-      </span>
-    </div>
-
+  <div style="position: absolute; left: 2%; top: 110%">
+    <input type="date" placeholder="ค้นหา..." [formControl]="dateStart" />
+    <input type="date" placeholder="ค้นหา..." [formControl]="dateEnd" />
+    <!-- <button ></button> -->
+  </div>
+  <div style="position: absolute; right: 0; top: 110%; left: 95%">
+    <span
+      class="material-icons"
+      mat-raised-button
+      (click)="openDialog('showSummary')"
+    >
+      receipt_long
+    </span>
+  </div>
 
   <div class="sum" style="position: absolute; top: 120%; left: 2%">
     <table mat-table [dataSource]="dataSr" class="mat-elevation-z8">
