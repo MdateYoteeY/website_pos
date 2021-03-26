@@ -74,6 +74,24 @@ table {
       width: max-content;
     }
 
+    .stat {
+      text-align: center;
+      padding: 0 6px 0 6px;
+      border-radius: 20px;
+      width: fit-content;
+      font-size: 11pt;
+      margin: auto;
+      color: white;
+    }
+
+    .status1 {
+      background: $greenButton;
+    }
+
+    .status2 {
+      background: $redButton;
+    }
+
     .edit {
       cursor: pointer;
       opacity: 0;

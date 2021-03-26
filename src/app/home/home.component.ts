@@ -4,6 +4,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 
 import { Router, Event as RouterEvent } from '@angular/router';
 import { LoaderService } from './loader/loader.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,8 @@ import { LoaderService } from './loader/loader.service';
 export class HomeComponent implements OnInit {
   userModel: UserLogin;
   // public loading = true;
+  imageProfile: string;
+  defaultImage = '../../assets/defaultPicture.png';
 
   constructor(
     private router: Router,
@@ -27,6 +30,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.userModel = JSON.parse(localStorage.getItem('currentUser'));
     console.log(this.userModel);
+
+    this.imageProfile =
+      `${environment.apiUrl}` + this.userModel.data_user.image;
   }
 
   logout() {

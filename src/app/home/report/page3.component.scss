@@ -1,1 +1,88 @@
 @import "../../../assets/mainCss.scss";
+
+  .port-1 {
+    position: relative;
+    right: 0;
+    width: 200px;
+    height: 125px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 3px rgba(0,0,0,0.23);
+    font-size: 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    top: 0;
+    padding: 10px;
+    margin-bottom: 5%;
+  }
+  .sum {
+    position: relative;
+
+    width: 1200px;
+    height: 500px;
+    // border: none;
+    // border-radius: px;
+    cursor: pointer;
+
+    // padding: 10px;
+    margin-bottom: 5%;
+  }
+p
+{
+  margin-top: 6%;
+  margin-right: 5%;
+  text-align: end;
+  font-size: 160%;
+  // text-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  // font-weight: 1000;
+}
+
+h6{
+  margin-bottom: 0%;
+  font-size: 60%;
+  margin-right: 5%;
+  //  text-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+}
+h5{
+  margin-bottom: 0%;
+  margin-right: 5%;
+  // text-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+table {
+  width: 100%;
+
+  tr {
+    cursor: pointer;
+    text-align: center;
+
+    th {
+      color: rgb(0, 0, 0);
+      font-size: 12pt;
+      text-align: center;
+      background-color: rgb(255, 255, 255);
+      cursor: default;
+      width: max-content;
+    }
+
+
+    .delete {
+      cursor: pointer;
+      opacity: 0;
+      margin-left: 5px;
+      color: $redButton;
+    }
+
+    &:hover {
+      td {
+        background-color: #DEF9FF;
+      }
+
+      .edit,
+      .delete {
+        opacity: 1;
+      }
+    }
+  }
+
+}
+

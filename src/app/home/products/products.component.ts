@@ -94,10 +94,12 @@ export class ProductsComponent implements OnInit {
           category: this.category,
         },
       });
-      dialogRef.afterClosed().subscribe((res) => {
-        this.getProduct();
-      });
+        dialogRef.afterClosed().subscribe((res) => {
+          this.getProduct();
+        });
     }
+
+
   }
 
   editData(element: Products): void {
@@ -106,7 +108,7 @@ export class ProductsComponent implements OnInit {
   deleteData(element: Products): void {
     Swal.fire({
       title: 'คุณแน่ใจใช่ไหม?',
-      text: 'คุณต้องการลบสินค้า "' + element.product_name + '" ใช่หรือไม่?',
+      text: 'คุณต้องการลบ "' + element.product_name + '" ใช่หรือไม่?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: 'rgb(0, 235, 156)',
@@ -116,30 +118,26 @@ export class ProductsComponent implements OnInit {
       if (result.isConfirmed) {
         this.http
           .delete(`${environment.apiUrl}products/` + element.id)
-          .subscribe(
-            (res) => {
-              Swal.fire({
-                icon: 'success',
-                title: 'ลบเรียบร้อยแล้ว!',
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              this.getProduct();
-            },
-            (error) => {
-              console.log(error);
-
-              Swal.fire({
-                icon: 'error',
-                text: 'เกิดข้อผิดพลาดในการลบสินค้า',
-                title: 'เกิดข้อผิดพลาด!',
-                showConfirmButton: false,
-                timer: 1500,
-              });
-            }
-          );
+          .subscribe((res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'ลบเรียบร้อยแล้ว!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this.getProduct();
+          });
       }
     });
+
+    // this.http
+    //   .delete(`${environment.apiUrl}products/` + element.id)
+    //   .subscribe((res) => {
+    //     console.log('product ' + element.id + ' has delete!');
+    //     console.log(res);
+
+    //     this.getProduct();
+    //   });
   }
 }
 

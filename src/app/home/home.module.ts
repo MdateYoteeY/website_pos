@@ -1,3 +1,4 @@
+import { SumaryDialogComponent } from './history/sumary-dialog/sumary-dialog.component';
 import { InterceptorService } from './loader/interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -38,6 +39,8 @@ import { ListPromotionDialogComponent } from './promotion/list-promotion-dialog/
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
+
+import { ChartsModule } from 'ng2-charts';
 
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { StockEditDailogComponent } from './stock-product/stock-edit-dailog/stock-edit-dailog.component';
@@ -80,6 +83,7 @@ import { AppComponent } from '../app.component';
     PromotionEditComponent,
     HistoryComponent,
     HistoryDialogComponent,
+    SumaryDialogComponent
   ],
 
   imports: [
@@ -100,6 +104,7 @@ import { AppComponent } from '../app.component';
     MatSortModule,
     MatAutocompleteModule,
     MaterialFileInputModule,
+    ChartsModule,
     MatDividerModule,
   ],
   providers: [

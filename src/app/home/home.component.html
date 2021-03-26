@@ -8,12 +8,16 @@
 <div class="container">
   <div class="sidebar">
     <div class="sideBox">
-      <p id="header" routerLink="/home/main" style="cursor: pointer">
-        Hello {{ userModel.data_user.firstname }}!
-      </p>
-      <a style="padding: 0 0 10px 0; font-size: 11pt">
-        status : {{ userModel.data_user.status }}
-      </a>
+      <div class="img-header">
+        <p id="header" routerLink="/home/main" style="cursor: pointer">
+          {{ userModel.data_user.firstname }}!
+        </p>
+        <a style="padding: 0 0 10px 0; font-size: 11pt">
+          status : {{ userModel.data_user.status }} |
+        </a>
+        <a class="logout" (click)="logout()">Logout</a>
+      </div>
+
       <mat-list role="list" dense>
         <p>Products</p>
         <div class="list-menu">
@@ -69,23 +73,34 @@
 
         <p>Report</p>
         <div class="list-menu">
-          <mat-list-item routerLink="report" [routerLinkActive]="['is-active']">
+          <!-- <mat-list-item routerLink="report" [routerLinkActive]="['is-active']">
+            Order
+          </mat-list-item> -->
+          <mat-list-item routerLink="history" [routerLinkActive]="['is-active']">
             Report
           </mat-list-item>
+          <!-- <mat-list-item routerLink="Product" [routerLinkActive]="['is-active']">
+            Month
           <mat-list-item
             routerLink="history"
             [routerLinkActive]="['is-active']"
           >
             History
           </mat-list-item>
+          <mat-list-item routerLink="People" [routerLinkActive]="['is-active']">
+            Year
+          </mat-list-item> -->
+          <!-- <mat-list-item routerLink="sales" [routerLinkActive]="['is-active']">
+            sales
+          </mat-list-item> -->
         </div>
       </mat-list>
     </div>
-    <div class="sideBox2">
+    <!-- <div class="sideBox2">
       <button class="logout" (click)="logout()">
         <span class="material-icons"> exit_to_app </span>
       </button>
-    </div>
+    </div> -->
   </div>
 
   <div class="content">

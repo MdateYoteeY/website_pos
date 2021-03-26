@@ -1,39 +1,33 @@
 <div class="container">
   <form [formGroup]="orderForm">
     <div class="box1">
-      <p class="header">{{ header }}</p>
-      <p>เลขที่ใบเสร็จ:{{ order.receipt.receipt_number }}</p>
-      <p>โทร:{{ order.receipt.phone_number }}</p>
-      <p>วันที่ขาย:{{ order.receipt.created_at }}</p>
-      <p>ใบเสร็จ</p>
+      <p class="header"  style="margin-bottom: 2%;">{{ header }}</p>
+      <mat-divider style="margin-bottom: 2%;margin-top: 0%;"></mat-divider>
+      <p style="margin-bottom: 0%;">เลขที่ใบเสร็จ #123456789{{ order.receipt.receipt_number }}</p>
+      <p style="margin-bottom: 0%;">โทร 042-222356{{ order.receipt.phone_number }}</p>
+      <p style="margin-bottom: 0%;">วันที่ขาย : {{ order.receipt.created_at | date:'dd-MM-yyyy' }} เวลา : {{ order.receipt.created_at | date:'HH:mm:ss' }}</p>
+      <p  style="margin-bottom: 1%;">ใบเสร็จ</p>
     </div>
-    <mat-divider></mat-divider>
-    <!-- <p>---------------------------------------------</p> -->
-    <table>
-      <tr>
-        <th style="text-align: start">จำนวน</th>
-        <th style="text-align: center">รายการ</th>
-        <th style="text-align: end">ราคา</th>
-      </tr>
-      <mat-divider></mat-divider>
-      <tr>
-        <td style="text-align: start"></td>
-        <td style="text-align: center"></td>
-        <td style="text-align: end"></td>
-      </tr>
-    </table>
-    <!-- <p>---------------------------------------------</p> -->
-    <mat-divider></mat-divider>
+    <mat-divider style="margin-bottom: 2%;"></mat-divider>
     <ng-container *ngFor="let item of data.order.product_item">
-      <i
-        >{{ item.order_amount }}:{{ item.name }}@{{ item.price }}:{{
-          item.total_price
-        }}</i
-      >
+      <h3 style="position: absolute;">{{ item.order_amount }}</h3>
+      <h3 style="margin-left: 1%;position: absolute;">{{ item.name }}@{{ item.price }}</h3>
+      <h3 style="text-align: end ">{{item.total_price}}</h3>
     </ng-container>
-    <div class="btn-group">
-      <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>
-      <button id="cancle" (click)="close()">ยกเลิก</button>
-    </div>
+      <ng-container >
+        <mat-divider style="margin-bottom: 2%;margin-top: 2%;"></mat-divider>
+      <p style="margin-bottom: 0%;position: absolute;">ยอดรวม </p>
+      <p style="margin-bottom: 0%;text-align: end;">{{ data.order.receipt.price_all }}</p>
+      <p style="margin-bottom: 0%;position: absolute;">Vat</p>
+      <p style="margin-bottom: 0%;text-align: end;">{{data.order.receipt.vat}}</p>
+      <p style="margin-bottom: 0%;position: absolute;">ส่วนลด</p>
+      <p style="margin-bottom: 0%;text-align: end;">{{data.order.receipt.discount}}</p>
+      <mat-divider style="margin-bottom: 2%;margin-top: 2%;" ></mat-divider>
+      <p style="margin-bottom: 0%;position: absolute;">ทั้งหมด</p>
+      <p style="margin-bottom: 0%;text-align: end;font-size: 18px;font-weight: 800;">{{data.order.receipt.price_all}}</p>
+
+    </ng-container>
+
+
   </form>
 </div>

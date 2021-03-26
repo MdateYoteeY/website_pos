@@ -16,7 +16,7 @@ import { StockProductComponent } from '../page2.component';
 import { PromotionList } from 'src/app/model/promotion';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
 
 @Component({
@@ -31,6 +31,7 @@ export class StockAddDialogComponent implements OnInit {
   header: string;
   stockAdd = true;
   stocklistproduct: stocklistproduct[] = [];
+  subscriptions: Subscription[] = [];
   addstock: Stock;
   stocklist: stocklist[] = [];
   items: FormArray;
@@ -56,14 +57,27 @@ export class StockAddDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProduct();
+    this.initForm();
 
     if (this.data.method === 'addStock') {
-      this.header = 'สต็อคสินค้า';
-      console.log(this.stock);
+      this.header = 'เพิ่มสต็อคสินค้า';
       this.dataarray.push(this.stocklistproduct);
+      this.addForm();
+    } else {
+      this.header = 'แก้ไขสต็อคสินค้า';
+      this.stocklistForm.patchValue(this.data.stock);
+
+      const items = <FormArray>this.stocklistForm.controls.stock_list;
+
+      for (const item of this.data.stock.items) {
+        items.push(this.createItem(item));
+      }
     }
     // this.searchFunction();
-    this.initForm();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((x) => x.unsubscribe());
   }
 
   searchFunction(): void {
@@ -77,16 +91,22 @@ export class StockAddDialogComponent implements OnInit {
 
   initForm(): void {
     this.stocklistForm = this.fb.group({
-      stock_list: this.fb.array([this.createItem()]),
+      stock_list: this.fb.array([]),
     });
   }
 
-  createItem(): FormGroup {
-    return this.fb.group({
+  createItem(data?): FormGroup {
+    const result = this.fb.group({
       product_id: ['', Validators.required],
       price: ['', Validators.required],
       list_amount: ['', Validators.required],
     });
+
+    if (data) {
+      result.patchValue(data);
+    }
+
+    return result;
   }
 
   addForm() {
@@ -105,14 +125,44 @@ export class StockAddDialogComponent implements OnInit {
     }
     const payload = this.stocklistForm.value;
 
-    console.log(payload);
+    if (this.data.method === 'addStock') {
+      this.http
+        .post<Stock>(`${environment.apiUrl}stocks`, { stock: payload })
+        .subscribe((res) => {
+          this.dialogRef.close();
+        });
+    } else if (this.data.method === 'showStock') {
+      this.http
+        .put<Stock>(`${environment.apiUrl}stocks/` + this.data.stock.id, {
+          stock: payload,
+        })
+        .subscribe((res) => {
+          this.dialogRef.close();
+        });
+    }
+  }
 
-    this.http
-      .post(`${environment.apiUrl}stocks`, { stock: payload })
-      .subscribe((res) => {
-        console.log(res);
-        this.dialogRef.close();
-      });
+  calculateTotalPrice(): void {
+    this.subscriptions.push(
+      this.stocklistForm.valueChanges
+        .pipe(debounceTime(1000))
+        .subscribe((change) => {
+          const items = change.Item;
+
+          console.log(items);
+
+          const calculate = items.reduce(
+            (state, value) => {
+              state.price_all += value.price * value.list_amount;
+              state.amount_all += value.list_amount;
+              return state;
+            },
+            { price_all: 0, amount_all: 0 }
+          );
+
+          this.stocklistForm.patchValue(calculate, { emitEvent: false });
+        })
+    );
   }
 
   close(): void {

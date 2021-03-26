@@ -52,6 +52,7 @@ export class StockDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
     this.getProduct();
+    this.header = 'แกไขสต็อคสินค้า';
   }
 
   ngOnDestroy(): void {

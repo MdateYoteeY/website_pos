@@ -36,6 +36,10 @@ export class PromotionsComponent implements OnInit {
     this.getPromotion();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   openList(list): void {
     const ELEMENT_DATA: Promotionitem[] = list;
     const dialogRef = this.dialog.open(ListPromotionDialogComponent, {

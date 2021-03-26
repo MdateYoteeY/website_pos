@@ -1,3 +1,4 @@
+import { MatDividerModule } from '@angular/material/divider';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -93,6 +94,7 @@ import { UserComponent } from './user/user.component';
     MatSortModule,
     MatPaginatorModule,
     MatListModule,
+  MatDividerModule,
     SweetAlert2Module.forRoot(),
     LottieAnimationViewModule.forRoot(),
   ],

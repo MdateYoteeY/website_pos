@@ -37,8 +37,7 @@ export class AuthenticationService {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
 
-            console.log(this.currentUserValue.data_user.status);
-            this.route.navigate(['/home/main']);
+            // this.route.navigate(['/home/main']);
             return user;
           } else {
             console.log('status: ' + user.data_user.status);
