@@ -15,6 +15,9 @@ import { ProductsComponent } from './products/products.component';
 import { TypesComponent } from './types/types.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { HistoryComponent } from './history/history.component';
+import { ReportPeopleComponent } from './report-people/report-people.component';
+import { ReportProductComponent } from './report-product/report-product.component';
+import { ReportSalesComponent } from './report-sales/report-sales.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -57,6 +60,18 @@ const routes: Routes = [
       {
         path: 'history',
         component: HistoryComponent,
+      },
+      {
+        path: 'Product',
+        component: ReportProductComponent,
+      },
+      {
+        path: 'Sales',
+        component: ReportSalesComponent,
+      },
+      {
+        path: 'People',
+        component: ReportPeopleComponent,
       },
       {
         path: 'users',

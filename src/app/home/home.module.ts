@@ -39,6 +39,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { StockEditDailogComponent } from './stock-product/stock-edit-dailog/stock-edit-dailog.component';
 import { TypesComponent } from './types/types.component';
@@ -80,6 +82,7 @@ import { AppComponent } from '../app.component';
     PromotionEditComponent,
     HistoryComponent,
     HistoryDialogComponent,
+ 
   ],
 
   imports: [
@@ -101,6 +104,7 @@ import { AppComponent } from '../app.component';
     MatAutocompleteModule,
     MaterialFileInputModule,
     MatDividerModule,
+    ChartsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

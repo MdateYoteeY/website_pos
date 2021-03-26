@@ -1,12 +1,8 @@
-<div class="container">
-  <p>ออเดอร์</p>
-  <div class="header">
-    <div class="text-container">
-      ค้นหารายการ<input
-        type="text"
-        placeholder="ค้นหา..."
-        [formControl]="search"
-      /><span class="material-icons"> search </span>
+<div class="flex-container">
+
+  <div class="chart-donut">
+    <div style="width: 50%; margin-left: 45%">
+      <canvas style="width: 100%" id="yearBar"></canvas>
     </div>
     <div style="position: absolute; right: 0; top: 0">
       <h5>ออเดอร์ทั้งหมด : {{ dataSource.data.length || 0 }} ออเดอร์</h5>
@@ -14,50 +10,140 @@
       <h5>ยกเลิก : {{ cancleOrder || 0 }} ออเดอร์</h5>
     </div>
   </div>
-  <table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>รหัสออเดอร์</th>
-      <td mat-cell *matCellDef="let element" (click)="editData(element)">
-        {{ element.order_number }}
-      </td>
-    </ng-container>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>โต๊ะ</th>
-      <td mat-cell *matCellDef="let element" (click)="editData(element)">
-        {{ element.table }}
-      </td>
-    </ng-container>
+  <div
+    class="port-1"
+    style="
+      position: absolute;
+      right: 0;
+      top: 5%;
+      left: 2%;
+      background-color: lightskyblue;
+    "
+  >
+    <span class="material-icons">account_circle</span>
+    <p style="position: absolute; right: 5%; top: 0%">{{ sum }}</p>
+    <h5 style="text-align: end">People</h5>
+  </div>
+  <div
+    class="port-1"
+    style="
+      position: absolute;
+      right: 0;
+      top: 5%;
+      left: 20%;
+      background-color: lightgreen;
+    "
+  >
+    <span class="material-icons">receipt</span>
+    <p style="position: absolute; top: 0%; bottom: 10%; right: 5%">
+      {{ dataSr.data.length }}
+    </p>
+    <h5 style="text-align: end">Order</h5>
+    <h6>success : {{ j }}</h6>
+    <h6>no success : {{ i }}</h6>
+    <h6>cancel : {{ cancel }}</h6>
+  </div>
+  <div
+    class="port-1"
+    style="
+      position: absolute;
+      right: 0;
+      top: 60%;
+      left: 2%;
+      background-color: lightpink;
+    "
+  >
+    <span class="material-icons">monetization_on</span>
+    <p style="position: absolute; top: 0%; bottom: 10%; right: 5%">
+      {{ priceAll }}
+    </p>
+    <h5 style="text-align: end">Total Price</h5>
+  </div>
+  <div
+    class="port-1"
+    style="
+      position: absolute;
+      right: 0;
+      top: 60%;
+      left: 20%;
+      background-color: rgba(252, 156, 59, 0.527);
+    "
+  >
+    <span class="material-icons">deck</span>
+    <p style="position: absolute; top: 0%; bottom: 10%; right: 5%">
+      {{ ready }}
+    </p>
+    <h5 style="text-align: end">Table Ready</h5>
+    <h6>Busy : {{ busy }}</h6>
+    <h6>Reserve : {{ reserve }}</h6>
+  </div>
+  <div  style="
+      position: absolute;
+      left: 2%;
+      top: 110%;
+      " >
+      <input
+        type="date"
+        placeholder="ค้นหา..."
+        [formControl]="dateStart"
+      />
+      <input
+        type="date"
+        placeholder="ค้นหา..."
+        [formControl]="dateStart"
+      />
+      <!-- <button ></button> -->
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>สถานะออเดอร์</th>
-      <td mat-cell *matCellDef="let element" (click)="editData(element)">
-        {{ element.status }}
-      </td>
-    </ng-container>
+    </div>
+  <div  style="
+      position: absolute;
+      right: 0;
+      top: 110%;
+      left: 95%;">
+      <span
+        class="material-icons"
+        mat-raised-button
 
-    <ng-container matColumnDef="number">
-      <th mat-header-cell *matHeaderCellDef>จำนวนรายการ</th>
-      <td mat-cell *matCellDef="let element" (click)="editData(element)">
-        {{ element.order_amount }}
-      </td>
-    </ng-container>
+        (click)="openDialog('showSummary')"
+      >
+        receipt_long
+      </span>
+    </div>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <span class="material-icons delete" (click)="deleteData(element)">
-          delete_forever
-        </span>
-      </td>
-    </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+  <div class="sum" style="position: absolute; top: 120%; left: 2%">
+    <table mat-table [dataSource]="dataSr" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>โต๊ะ</th>
+        <td mat-cell *matCellDef="let element" (click)="editData(element)">
+          {{ element.table }}
+        </td>
+      </ng-container>
 
-  <mat-paginator
-    [pageSizeOptions]="[10, 20]"
-    showFirstLastButtons
-  ></mat-paginator>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>สถานะออเดอร์</th>
+        <td mat-cell *matCellDef="let element" (click)="editData(element)">
+          {{ element.status }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="list">
+        <th mat-header-cell *matHeaderCellDef>เลขที่ออเดอร์</th>
+        <td mat-cell *matCellDef="let element" (click)="editData(element)">
+          {{ element.order_number }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef>จำนวนรายการ</th>
+        <td mat-cell *matCellDef="let element" (click)="editData(element)">
+          {{ element.order_amount }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
 </div>

@@ -1,67 +1,33 @@
-<div class="main-container">
-  <div class="header">
-    <h5>{{ header }}</h5>
-    <h5>
-      เลขที่ใบเสร็จ:{{ order.receipt.receipt_number || "ไม่มีเลขที่ใบเสร็จ" }}
-    </h5>
-    <h5>
-      โทร:{{ "#" + order.receipt.phone_number || "ไม่มีหมายเลขโทรศัพท์" }}
-    </h5>
-    <h5>วันที่ขาย:{{ order.receipt.updated_at || "ไม่มีวันที่" }}</h5>
-  </div>
-  <div class="body">
-    <table>
-      <mat-divider></mat-divider>
-      <div class="head-table">
-        <tr>
-          <th style="text-align: start">รายการ</th>
-          <th>จำนวน</th>
-          <th>ราคา</th>
-        </tr>
-      </div>
-      <mat-divider></mat-divider>
-      <div class="body-table">
-        <tr *ngFor="let item of order.product_item">
-          <td style="text-align: start; width: fit-content">{{ item.name }}</td>
-          <td style="text-align: start">{{ item.order_amount }}</td>
-          <td>{{ item.price }}</td>
-        </tr>
-      </div>
-      <mat-divider></mat-divider>
-      <div>
-        <tr>
-          รายการ :
-          {{
-            order.order_list
-          }}
+<div class="container">
+  <form [formGroup]="orderForm">
+    <div class="box1">
+      <p class="header"  style="margin-bottom: 2%;">{{ header }}</p>
+      <mat-divider style="margin-bottom: 2%;margin-top: 0%;"></mat-divider>
+      <p style="margin-bottom: 0%;">เลขที่ใบเสร็จ #123456789{{ order.receipt.receipt_number }}</p>
+      <p style="margin-bottom: 0%;">โทร 042-222356{{ order.receipt.phone_number }}</p>
+      <p style="margin-bottom: 0%;">วันที่ขาย : {{ order.receipt.created_at | date:'dd-MM-yyyy' }} เวลา : {{ order.receipt.created_at | date:'HH:mm:ss' }}</p>
+      <p  style="margin-bottom: 1%;">ใบเสร็จ</p>
+    </div>
+    <mat-divider style="margin-bottom: 2%;"></mat-divider>
+    <ng-container *ngFor="let item of data.order.product_item">
+      <h3 style="position: absolute;">{{ item.order_amount }}</h3>
+      <h3 style="margin-left: 1%;position: absolute;">{{ item.name }}@{{ item.price }}</h3>
+      <h3 style="text-align: end ">{{item.total_price}}</h3>
+    </ng-container>
+      <ng-container >
+        <mat-divider style="margin-bottom: 2%;margin-top: 2%;"></mat-divider>
+      <p style="margin-bottom: 0%;position: absolute;">ยอดรวม </p>
+      <p style="margin-bottom: 0%;text-align: end;">{{ data.order.receipt.price_all }}</p>
+      <p style="margin-bottom: 0%;position: absolute;">Vat</p>
+      <p style="margin-bottom: 0%;text-align: end;">{{data.order.receipt.vat}}</p>
+      <p style="margin-bottom: 0%;position: absolute;">ส่วนลด</p>
+      <p style="margin-bottom: 0%;text-align: end;">{{data.order.receipt.discount}}</p>
+      <mat-divider style="margin-bottom: 2%;margin-top: 2%;" ></mat-divider>
+      <p style="margin-bottom: 0%;position: absolute;">ทั้งหมด</p>
+      <p style="margin-bottom: 0%;text-align: end;font-size: 18px;font-weight: 800;">{{data.order.receipt.price_all}}</p>
 
-          จำนวน :
-          {{
-            order.order_amount
-          }}
-        </tr>
-      </div>
-      <mat-divider></mat-divider>
-      <div class="row">
-        <div class="column-L">
-          <p>ราคารวม</p>
-          <p>Vat 7%</p>
-          <p>ส่วนลด</p>
-          <p>รวมทั้งสิ้น</p>
-          <p>เงินสด</p>
-          <p>เงินทอน</p>
-        </div>
-        <div class="column-R">
-          <p>{{ order.receipt.price_all || 0.0 }}</p>
-          <p>{{ order.receipt.vat || 0.0 }}</p>
-          <p>{{ order.receipt.discount || 0.0 }}</p>
-          <p>{{ order.receipt.price_all || 0.0 }}</p>
-          <p>{{ order.receipt.cash || 0.0 }}</p>
-          <p>{{ order.receipt.change || 0.0 }}</p>
-        </div>
-      </div>
-    </table>
-  </div>
+    </ng-container>
 
-  <div class="footer">footer</div>
+
+  </form>
 </div>

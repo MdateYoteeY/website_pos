@@ -1,113 +1,93 @@
 @import "../../../assets/mainCss.scss";
 
-.header {
-  h5 {
-    font-size: 10pt;
-    margin: 0;
-    font-family: 'kanit';
-  }
+.flex-container{
+  position: relative;
 
-  button {
-    position: absolute;
-    width: auto;
-    background-color: $greenButton;
+    // top: 0;
+    // right: 0;
+    // padding: 10px;
+    // margin-bottom: 5%;
+
+}
+  .port-1 {
+    position: relative;
+    right: 0;
+    width: 200px;
+    height: 125px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 3px rgba(0,0,0,0.23);
     font-size: 20px;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    right: 0;
     top: 0;
     padding: 10px;
+    margin-bottom: 5%;
   }
-
-  .text-container {
-    display: inline-block;
+  .port-2 {
     position: relative;
-    overflow: hidden;
-
-    span {
-      position: absolute;
-      top: 3px;
-      left: 135px;
-    }
-
-    input {
-      width: 250px;
-      height: 30px;
-      min-height: 30px;
-      border-radius: 5px;
-      padding: 5px 5px 5px 40px;
-      border: 1px solid #c4c4c471;
-      font-size: 12pt;
-      margin-left: 10px;
-      color: rgb(90, 90, 90);
-      transition: .2s ease;
-
-      &:active {
-        border: 1px solid #13131371;
-        transition: .2s ease;
-      }
-    }
+    right: 0;
+    width: 120px;
+    height: 45px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 3px rgba(0,0,0,0.23);
+    font-size: 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    top: 0;
+    padding: 10px;
+    margin-bottom: 5%;
   }
-}
+  .sum {
+    position: relative;
 
-h5 {
+    width: 1200px;
+    height: 500px;
+    // border: none;
+    // border-radius: px;
+    cursor: auto;
+
+    // padding: 10px;
+    margin-bottom: 5%;
+  }
+p
+{
+  margin-top: 6%;
+  margin-right: 5%;
   text-align: end;
+  font-size: 160%;
+  // text-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  // font-weight: 1000;
 }
 
+h6{
+  margin-bottom: 0%;
+  font-size: 60%;
+  margin-right: 5%;
+  //  text-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+}
+h5{
+  margin-bottom: 0%;
+  margin-right: 5%;
+  // text-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
 table {
-  width: 80%;
-  margin: 40px 20px 20px 20px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  box-sizing: border-box;
-
-  .Blank,
-  .Busy,
-  .Reserve {
-    text-align: center;
-    width: 60px;
-    padding: 0 4px 0 4px;
-    border-radius: 20px;
-    font-size: 11pt;
-    margin: auto;
-  }
-
-  .Blank {
-    color: #fff;
-    background: $greenButton;
-  }
-
-  .Busy {
-    color: #fff;
-    background: $redButton;
-  }
-
-  .Reserve {
-    color: #fff;
-    background: rgb(255, 230, 0);
-  }
+  width: 100%;
 
   tr {
     cursor: pointer;
     text-align: center;
 
     th {
-      color: white;
+      color: rgb(0, 0, 0);
       font-size: 12pt;
       text-align: center;
-      background-color: rgb(121, 121, 121);
+      background-color: rgb(255, 255, 255);
       cursor: default;
       width: max-content;
     }
 
-    .edit {
-      cursor: pointer;
-      opacity: 0;
-      color: rgb(0, 174, 255);
-
-    }
 
     .delete {
       cursor: pointer;
@@ -127,4 +107,11 @@ table {
       }
     }
   }
+
+}
+
+.material-icons
+{
+cursor: pointer;
+
 }

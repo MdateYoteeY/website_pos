@@ -11,6 +11,8 @@ import { StatusProducts } from './status';
 import { Stock, Stocks } from './stockproduct';
 import { Products } from './product';
 import { PromotionItems } from './promotionitem';
+import { Receipts } from './receipt';
+import { Reports } from './report';
 
 export interface method {
   stock?: Stocks;
@@ -32,6 +34,8 @@ export interface method {
   productitem?: Productitem;
   promotionitem?: PromotionItems;
   order?: Orders;
+  receipt?: Receipts;
+  report?: Reports;
 
 }
 

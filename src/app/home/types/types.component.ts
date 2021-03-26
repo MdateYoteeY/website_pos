@@ -81,7 +81,7 @@ export class TypesComponent implements OnInit {
       });
     }
 
-    dialogRef.afterAllClosed.subscribe((res) => {
+    dialogRef.afterClosed().subscribe((res) => {
       this.getType();
     });
   }
