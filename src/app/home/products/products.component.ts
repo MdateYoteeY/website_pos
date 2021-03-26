@@ -10,6 +10,7 @@ import { Categorys } from 'src/app/model/category';
 import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Types } from 'src/app/model/type';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-products',
@@ -90,28 +91,50 @@ export class ProductsComponent implements OnInit {
           statusproduct: this.statusproduct,
         },
       });
+        dialogRef.afterClosed().subscribe((res) => {
+          this.getProduct();
+        });
     }
 
-    dialogRef.afterClose().subscribe((res) => {
-      this.getProduct();
-    });
+
   }
 
   editData(element: Products): void {
     this.openDialog('editProduct', element);
   }
   deleteData(element: Products): void {
-    console.log(element.id);
-    console.log(environment.apiUrl);
+    Swal.fire({
+      title: 'คุณแน่ใจใช่ไหม?',
+      text: 'คุณต้องการลบ "' + element.product_name + '" ใช่หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(0, 235, 156)',
+      cancelButtonColor: 'rgb(255, 98, 98)',
+      confirmButtonText: 'ยืนยัน',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http
+          .delete(`${environment.apiUrl}products/` + element.id)
+          .subscribe((res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'ลบเรียบร้อยแล้ว!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this.getProduct();
+          });
+      }
+    });
 
-    this.http
-      .delete(`${environment.apiUrl}products/` + element.id)
-      .subscribe((res) => {
-        console.log('product ' + element.id + ' has delete!');
-        console.log(res);
+    // this.http
+    //   .delete(`${environment.apiUrl}products/` + element.id)
+    //   .subscribe((res) => {
+    //     console.log('product ' + element.id + ' has delete!');
+    //     console.log(res);
 
-        this.getProduct();
-      });
+    //     this.getProduct();
+    //   });
   }
 }
 

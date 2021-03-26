@@ -37,6 +37,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { StockEditDailogComponent } from './stock-product/stock-edit-dailog/stock-edit-dailog.component';
 import { TypesComponent } from './types/types.component';
@@ -46,6 +48,13 @@ import { PromotionsDialogComponent } from './promotions/promotions-dialog/promot
 import { PromotionEditComponent } from './promotions/promotion-edit/promotion-edit.component';
 import { HistoryComponent } from './history/history.component';
 import { HistoryDialogComponent } from './history/history-dialog/history-dialog.component';
+import { ReportDialogComponent } from './report/report-dialog/report-dialog.component';
+import { ReportDayComponent } from './report-day/report-day.component';
+import { ReportProductComponent } from './report-product/report-product.component';
+import { ReportPeopleComponent } from './report-people/report-people.component';
+import { ReportSalesComponent } from './report-sales/report-sales.component';
+import { ReportBillComponent } from './report-bill/report-bill.component';
+import { SumaryDialogComponent } from './history/sumary-dialog/sumary-dialog.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +86,13 @@ import { HistoryDialogComponent } from './history/history-dialog/history-dialog.
     PromotionEditComponent,
     HistoryComponent,
     HistoryDialogComponent,
+    ReportDialogComponent,
+    ReportDayComponent,
+    ReportProductComponent,
+    ReportPeopleComponent,
+    ReportSalesComponent,
+    ReportBillComponent,
+    SumaryDialogComponent,
   ],
 
   imports: [
@@ -98,6 +114,7 @@ import { HistoryDialogComponent } from './history/history-dialog/history-dialog.
     MatAutocompleteModule,
     MaterialFileInputModule,
     MatDividerModule,
+    ChartsModule,
   ],
 })
 export class HomeModule {}
