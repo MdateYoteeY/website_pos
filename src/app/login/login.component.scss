@@ -17,14 +17,14 @@ html {
   display: flex;
   width: 100%;
   height: 100%;
-  padding: 0;
-  margin: 0;
+  justify-content: center;
+  align-items: center;
 
   .body-image {
-    position: relative;
+    position: fixed;
     width: 100%;
     height: 100%;
-    background-image: url("../../assets/image/bar-bg.jpg");
+    // background-image: url("../../assets/image/bar-bg.jpg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -33,7 +33,7 @@ html {
     .logo {
       width: 100%;
       height: 100%;
-      background-image: url("../../assets/image/logo.png");
+      // background-image: url("../../assets/image/logo.png");
       background-position: center;
       background-repeat: no-repeat;
       filter: drop-shadow(0 5px 15px rgb(0, 0, 0));
@@ -43,16 +43,28 @@ html {
 
   .body {
     display: flex;
-    width: fit-content;
-    height: 95%;
+    max-width: 400px;
+    min-width: 250px;
+    height: fit-content;
     display: inline-block;
     position: relative;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.001);
+    background: rgba(134, 134, 134, 0.274); //linear-gradient(rgba(134, 134, 134, 0.274), rgba(255, 255, 255, 0.363));
     right: 0;
 
+    img {
+      width: 50%;
+      position: absolute;
+      z-index: 999;
+      top: -100px;
+      left: 100px;
+      background: white;
+      border-radius: 100%;
+      filter: drop-shadow(0 5px 15px rgb(231, 231, 231));
+
+    }
+
     .body-login {
-      width: 300px;
+      width: fit-content;
       padding: 30px;
       display: flex;
       flex-direction: column;
@@ -60,42 +72,51 @@ html {
       align-items: center;
       position: relative;
       border-radius: 5px;
-      background: linear-gradient(rgba(255, 255, 255, 0.274), rgba(255, 255, 255, 0.007));
+      filter: drop-shadow(0 5px 15px rgb(184, 184, 184));
+      background-color: rgb(255, 255, 255);
       opacity: 1;
 
       mat-form-field {
-        color: white;
         width: 100%;
-        min-width: 300px;
 
         input {
           padding-left: 10px;
-          font-size: 18pt;
-          color: white;
+          font-size: 15pt;
         }
 
-        mat-label {
-          color: white;
-        }
+        mat-label {}
       }
 
-      button {
-        bottom: 0;
-        margin-top: 10px;
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
-        height: max-content;
-        border-radius: 5px;
-        color: white;
-        font-size: 13pt;
-        padding: 7px;
-        border: none;
-        cursor: pointer;
-        transition: .3s;
-        outline: none;
+        flex-direction: column;
+
+        button {
+          bottom: 0;
+          margin-top: 10px;
+          width: 60%;
+          height: max-content;
+          border-radius: 5px;
+          color: white;
+          font-size: 13pt;
+          padding: 7px;
+          border: none;
+          cursor: pointer;
+          transition: .3s;
+          outline: none;
+        }
       }
 
       .login {
         background: rgb(0, 162, 255);
+        transition: .2s ease;
+
+        &:hover {
+          background: rgb(102, 199, 255);
+        }
       }
 
       .register {

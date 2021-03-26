@@ -28,20 +28,67 @@
 
     .sideBox {
       position: sticky;
-      display: flex;
+      display: inherit;
       flex-direction: column;
-      top: 20px;
+      // top: 20px;
       border-radius: 10px;
       width: 100%;
-      height: max-content;
+      height: fit-content;
       flex: 1;
       z-index: 1;
 
+      .img-header {
+        display: block;
+        width: fit-content;
+        height: auto;
+        width: 100%;
+        background: rgb(230, 230, 230);
+        border-radius: 5px;
+        padding: 15px;
+
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+          width: fit-content;
+        }
+
+        .column-L {
+          float: left;
+          height: auto;
+          text-align: left;
+          margin: 0 5px 0 0;
+        }
+
+        .column-R {
+          height: auto;
+          text-align: left;
+          width: fit-content;
+
+        }
+      }
 
       #header {
-        font-size: 25pt;
+        font-size: 20pt;
         font-weight: 600;
       }
+
+      .logout {
+        background: rgb(255, 98, 98);
+        border-radius: 15px;
+        padding: 1px 5px 1px 5px;
+        margin: 0 0 0 5px;
+        color: white;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+          background: rgba(255, 98, 98, 0.582);
+        }
+
+      }
+
+
 
 
       mat-list {
