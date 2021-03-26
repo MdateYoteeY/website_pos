@@ -1,146 +1,118 @@
 <div class="container">
   <form class="form-promotion" [formGroup]="promotionForm">
     <p class="header">{{ header }}</p>
-    <ng-container>
-      <div style="display: flex; width: 100%">
-        <mat-form-field
-          appearance="outline"
-          style="margin-right: 15px; flex: 1"
-        >
-          <mat-label>ชื่อโปรโมชั่น</mat-label>
-          <input
-            id="promotion_name"
-            formControlName="promotion_name"
-            matInput
-            placeholder="ชื่อโปรโมชั่น..."
-          />
-          <mat-error
-            *ngIf="promotionForm.get('promotion_name').errors?.required"
-            >กรุณาระบุ <strong>ชื่อโปรโมชั่น</strong></mat-error
+    <div class="mainBox">
+      <div class="box no1">
+        <div style="display: flex; width: 100%">
+          <mat-form-field
+            appearance="outline"
+            style="margin-right: 15px; flex: 1"
           >
-        </mat-form-field>
+            <mat-label>ชื่อโปรโมชั่น</mat-label>
+            <input
+              id="promotion_name"
+              formControlName="promotion_name"
+              matInput
+              placeholder="ชื่อโปรโมชั่น..."
+            />
+            <mat-error
+              *ngIf="promotionForm.get('promotion_name').errors?.required"
+              >กรุณาระบุ <strong>ชื่อโปรโมชั่น</strong></mat-error
+            >
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" style="width: 100px">
-          <mat-label>ส่วนลด %</mat-label>
-          <input
-            id="discount"
-            formControlName="promotion_discount"
-            type="number"
-            matInput
-            placeholder="ส่วนลด %.."
-          />
+          <mat-form-field appearance="outline" style="width: 100px">
+            <mat-label>ส่วนลด %</mat-label>
+            <input
+              id="discount"
+              formControlName="promotion_discount"
+              type="number"
+              matInput
+              placeholder="ส่วนลด %.."
+            />
+            <mat-error
+              *ngIf="promotionForm.get('promotion_discount').errors?.required"
+              >กรุณาระบุ <strong>ส่วนลด</strong></mat-error
+            >
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>ช่วงเวลาของโปรโมชั่น</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate id="date_start" formControlName="date_start" />
+            <input matEndDate id="date_end" formControlName="date_end" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
           <mat-error
-            *ngIf="promotionForm.get('promotion_discount').errors?.required"
-            >กรุณาระบุ <strong>ส่วนลด</strong></mat-error
-          >
-        </mat-form-field>
-      </div>
-
-      <mat-form-field appearance="outline" style="width: 100%">
-        <mat-label>ช่วงเวลาของโปรโมชั่น</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate id="start_date" formControlName="date_start" />
-          <input matEndDate id="end_date" formControlName="date_end" />
-        </mat-date-range-input>
-        <mat-error
-          *ngIf="
-            promotionForm.get('date_start').errors?.required ||
-            promotionForm.get('date_end').errors?.required
-          "
-          >กรุณาระบุ <strong>ช่วงเวลาของโปรโมชั่น</strong></mat-error
-        >
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
-
-      <fieldset>
-        <legend>เพิ่มรายการสินค้า</legend>
-        <form [formGroup]="addProductList">
-          <div class="box1">
-            <mat-form-field
-              appearance="outline"
-              style="margin-right: 15px; width: 100px"
-            >
-              <mat-label>หมวดหมู่</mat-label>
-              <mat-select
-                id="categoryList"
-                (selectionChange)="checkCateValue($event)"
-              >
-                <mat-option [value]="0">ทุกหมวดหมู่</mat-option>
-                <mat-option
-                  *ngFor="let item of categoryList"
-                  [value]="item.id"
-                  >{{ item.category_name }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field
-              appearance="outline"
-              style="margin-right: 15px; width: 100px"
-              *ngIf="categoryValueCheck"
-            >
-              <mat-label>ประเภท</mat-label>
-              <mat-select
-                id="typeList"
-                (selectionChange)="checkTypeValue($event)"
-              >
-                <mat-option [value]="0">ทุกประเภท</mat-option>
-                <mat-option *ngFor="let item of typeList" [value]="item.id">{{
-                  item.type_name
-                }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field
-              appearance="outline"
-              style="width: 100%; margin-right: 15px"
-            >
-              <mat-label>ชื่อสินค้า</mat-label>
-              <mat-select id="product_id" formControlName="addProduct_id">
-                <mat-option *ngFor="let item of productList" [value]="item.id">
-                  {{ item.product_name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field
-              appearance="outline"
-              style="width: 80px; margin-right: 15px"
-            >
-              <mat-label>จำนวน</mat-label>
-              <input
-                matInput
-                type="number"
-                formControlName="addPromotion_item_amount"
-                [value]="1"
-              />
-            </mat-form-field>
-            <button class="add-btn" id="add" type="add" (click)="addForm()">
-              เพิ่ม
-            </button>
-          </div>
-        </form>
-
-        <div class="box2">
-          <ng-container
-            formArrayName="promotion_items"
-            *ngFor="
-              let item of promotionForm.get('promotion_items')['controls'];
-              let i = index
+            *ngIf="
+              promotionForm.get('date_start').errors?.required ||
+              promotionForm.get('date_end').errors?.required
             "
+            >กรุณาระบุ <strong>ช่วงเวลาของโปรโมชั่น</strong></mat-error
           >
-            <div class="custom-form" [formGroupName]="i" style="display: flex">
+        </mat-form-field>
+
+        <fieldset>
+          <legend>เพิ่มรายการสินค้า</legend>
+          <form [formGroup]="addProductList">
+            <div class="box1">
+              <mat-form-field
+                appearance="outline"
+                style="margin-right: 15px; width: 100px"
+              >
+                <mat-label>หมวดหมู่</mat-label>
+                <mat-select
+                  id="categoryList"
+                  (selectionChange)="checkCateValue($event)"
+                >
+                  <mat-option [value]="0">ทุกหมวดหมู่</mat-option>
+                  <mat-option
+                    *ngFor="let item of categoryList"
+                    [value]="item.id"
+                    >{{ item.category_name }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field
+                appearance="outline"
+                style="margin-right: 15px; width: 100px"
+                *ngIf="categoryValueCheck"
+              >
+                <mat-label>ประเภท</mat-label>
+                <mat-select
+                  id="typeList"
+                  (selectionChange)="checkTypeValue($event)"
+                >
+                  <mat-option [value]="0">ทุกประเภท</mat-option>
+                  <mat-option *ngFor="let item of typeList" [value]="item.id">{{
+                    item.type_name
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
               <mat-form-field
                 appearance="outline"
                 style="width: 100%; margin-right: 15px"
               >
                 <mat-label>ชื่อสินค้า</mat-label>
-                <mat-select formControlName="product_id">
-                  <mat-option *ngFor="let item of products" [value]="item.id">
+                <mat-select id="product_id" formControlName="addProduct_id">
+                  <mat-option
+                    *ngFor="let item of productList"
+                    [value]="item.id"
+                  >
                     {{ item.product_name }}
                   </mat-option>
                 </mat-select>
+                <mat-error
+                  *ngIf="addProductList.get('addProduct_id').errors?.required"
+                  >กรุณาเลือก <strong>รายการสินค้า</strong></mat-error
+                >
               </mat-form-field>
 
               <mat-form-field
@@ -151,19 +123,76 @@
                 <input
                   matInput
                   type="number"
-                  formControlName="promotion_item_amount"
+                  formControlName="addPromotion_item_amount"
                   [value]="1"
                 />
+                <mat-error
+                  *ngIf="
+                    addProductList.get('addPromotion_item_amount').errors
+                      ?.required
+                  "
+                  >กรุณาระบุ <strong>จำนวนสินค้า</strong></mat-error
+                >
               </mat-form-field>
-
-              <button class="rm-btn" type="remove" (click)="removeForm(i)">
-                ลบ
+              <button class="add-btn" id="add" type="add" (click)="addForm()">
+                เพิ่ม
               </button>
             </div>
-          </ng-container>
-        </div>
-      </fieldset>
-    </ng-container>
+          </form>
+
+          <div class="box2">
+            <ng-container
+              formArrayName="promotion_items"
+              *ngFor="
+                let item of promotionForm.get('promotion_items')['controls'];
+                let i = index
+              "
+            >
+              <div
+                class="custom-form"
+                [formGroupName]="i"
+                style="display: flex"
+              >
+                <mat-form-field
+                  appearance="outline"
+                  style="width: 100%; margin-right: 15px"
+                >
+                  <mat-label>ชื่อสินค้า</mat-label>
+                  <mat-select formControlName="product_id">
+                    <mat-option *ngFor="let item of products" [value]="item.id">
+                      {{ item.product_name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field
+                  appearance="outline"
+                  style="width: 80px; margin-right: 15px"
+                >
+                  <mat-label>จำนวน</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="promotion_item_amount"
+                    [value]="0 || 1"
+                  />
+                </mat-form-field>
+
+                <button class="rm-btn" type="remove" (click)="removeForm(i)">
+                  ลบ
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </fieldset>
+      </div>
+      <div class="box no2">
+        <label>
+          <img  [src]="urlImage || urlDefaultUser" />
+          <input type="file" (change)="onSelectFile($event)"
+        /></label>
+      </div>
+    </div>
 
     <div class="btn-group">
       <button id="confirm" type="submit" (click)="onSubmit()">ยืนยัน</button>

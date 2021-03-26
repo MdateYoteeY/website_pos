@@ -101,12 +101,6 @@ export class StockAddDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.stocklistForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'เกิดข้อผิดพลาด!',
-        showConfirmButton: false,
-        timer: 1500,
-      });
       return;
     }
     const payload = this.stocklistForm.value;

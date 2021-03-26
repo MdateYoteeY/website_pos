@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { ErrorResponse, Users, method } from './../../../model/model.model';
 import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -33,6 +34,8 @@ export class AccountDialogComponent implements OnInit {
   fileToUpload: File = null;
   img: any;
   urlImage: any;
+  urlDefaultUser = '../../../../assets/defaultPicture.png';
+  imgIsLoading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,10 +50,20 @@ export class AccountDialogComponent implements OnInit {
     this.dataDialog = this.data;
 
     if (this.data.method === 'editAccount') {
-      this.accountAddForm.patchValue(this.data.user);
       this.check = false;
       this.passwordView = false;
       this.header = 'แก้ไขบัญชีผู้ใช้งาน';
+
+      this.accountAddForm.patchValue({
+        ...this.data.user,
+        image_url: this.data.user.image,
+      });
+
+      console.log(this.accountAddForm.getRawValue());
+
+      if (this.data.user.image) {
+        this.urlImage = `${environment.apiUrl}` + this.data.user.image;
+      }
     }
   }
 
@@ -74,21 +87,13 @@ export class AccountDialogComponent implements OnInit {
         username: ['', [Validators.required]],
         password: [null, [Validators.minLength(8)]],
         password_confirmation: [null],
-        img: [''],
+        image: [null],
+        image_url: [null],
       },
       {
         validators: [MustMatch('password', 'password_confirmation')],
       }
     );
-  }
-
-  onFileSelect(event) {
-    this.profile = event.target.value;
-    const file = (event.target as HTMLInputElement).files[0];
-    this.accountAddForm.patchValue({
-      img: file,
-    });
-    console.log(this.profile);
   }
 
   onSelectFile(event) {
@@ -97,12 +102,20 @@ export class AccountDialogComponent implements OnInit {
 
       const file = (event.target as HTMLInputElement).files[0];
       this.accountAddForm.patchValue({
-        img: file,
+        image: file,
       });
       reader.readAsDataURL(event.target.files[0]);
 
       reader.onload = (event) => {
         this.urlImage = event.target.result;
+      };
+
+      reader.onloadstart = (event) => {
+        this.imgIsLoading = true;
+      };
+
+      reader.onloadend = (event) => {
+        this.imgIsLoading = false;
       };
     }
   }
@@ -112,15 +125,14 @@ export class AccountDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.accountAddForm.invalid) {
+      return;
+    }
+
+    const body = this.accountAddForm.getRawValue();
+
     if (this.data.method !== 'editAccount') {
-      if (this.accountAddForm.invalid) {
-        return;
-      }
-
-      // console.log(this.accountAddForm.getRawValue());
-
-      let body = this.accountAddForm.getRawValue();
-      var formData: any = new FormData();
+      const formData = new FormData();
       formData.append('user[firstname]', body.firstname);
       formData.append('user[lastname]', body.lastname);
       formData.append('user[phone_number]', body.phone_number);
@@ -131,21 +143,17 @@ export class AccountDialogComponent implements OnInit {
         'user[password_confirmation]',
         body.password_confirmation
       );
-      formData.append('user[img]', body.img);
+      formData.append('user[img]', body.image);
 
-      this.http.post(`${environment.apiUrl}users`, formData).subscribe(
+      this.createAccount(formData).subscribe(
         (res) => {
+          this.dialogRef.close();
           Swal.fire({
             icon: 'success',
             title: 'เพิ่มบัญชีสำเร็จ!',
-            text:
-              'บัญชี "' +
-              this.accountAddForm.getRawValue().username +
-              '" ถูกเพิ่มเรียบร้อยแล้ว',
             showConfirmButton: false,
             timer: 1500,
           });
-          this.dialogRef.close();
         },
         (error) => {
           this.accountAddForm.controls['username'].setErrors({
@@ -154,50 +162,53 @@ export class AccountDialogComponent implements OnInit {
         }
       );
     } else if (this.data.method === 'editAccount') {
-      if (this.accountAddForm.invalid) {
-        return;
-      }
-      let body = {};
-      if (this.accountAddForm.getRawValue().password !== null) {
-        body = {
-          firstname: this.accountAddForm.getRawValue().firstname,
-          lastname: this.accountAddForm.getRawValue().lastname,
-          phone_number: this.accountAddForm.getRawValue().phone_number,
-          staff_id: this.accountAddForm.getRawValue().staff_id,
-          username: this.accountAddForm.getRawValue().username,
-          password: this.accountAddForm.getRawValue().password,
-        };
-      } else {
-        body = {
-          firstname: this.accountAddForm.getRawValue().firstname,
-          lastname: this.accountAddForm.getRawValue().lastname,
-          phone_number: this.accountAddForm.getRawValue().phone_number,
-          staff_id: this.accountAddForm.getRawValue().staff_id,
-          username: this.accountAddForm.getRawValue().username,
-        };
+      const formData = new FormData();
+      formData.append('user[firstname]', body.firstname);
+      formData.append('user[lastname]', body.lastname);
+      formData.append('user[phone_number]', body.phone_number);
+      formData.append('user[staff_id]', body.staff_id);
+      formData.append('user[username]', body.username);
+
+      if (body.image !== body.image_url) {
+        formData.append('user[img]', body.image);
       }
 
-      this.http
-        .put(`${environment.apiUrl}users/` + this.data.user.id, {
-          user: body,
-        })
-        .subscribe(
-          (res) => {
-            this.dialogRef.close();
-            Swal.fire({
-              icon: 'success',
-              title: 'แก้ไขบัญชีสำเร็จ!',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          },
-          (error) => {
-            this.accountAddForm.controls['username'].setErrors({
-              userAlready: true,
-            });
-          }
+      if (body.password !== null) {
+        formData.append('user[password]', body.password);
+        formData.append(
+          'user[password_confirmation]',
+          body.password_confirmation
         );
+      }
+
+      this.updateAccount(formData).subscribe(
+        (res) => {
+          this.dialogRef.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'แก้ไขบัญชีสำเร็จ!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        },
+        (error) => {
+          this.accountAddForm.controls['username'].setErrors({
+            userAlready: true,
+          });
+        }
+      );
     }
+  }
+
+  createAccount(formData): Observable<Users> {
+    return this.http.post<Users>(`${environment.apiUrl}users`, formData);
+  }
+
+  updateAccount(formData): Observable<Users> {
+    return this.http.put<Users>(
+      `${environment.apiUrl}users/` + this.data.user.id,
+      formData
+    );
   }
 
   close(): void {

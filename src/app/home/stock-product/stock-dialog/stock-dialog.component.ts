@@ -52,7 +52,6 @@ export class StockDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
     this.getProduct();
-
   }
 
   ngOnDestroy(): void {
@@ -141,8 +140,11 @@ export class StockDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    const payload = this.stockForm.value;
+    if (this.stockForm.invalid) {
+      return;
+    }
 
+    const payload = this.stockForm.value;
     console.log(payload);
     this.http
       .post(`${environment.apiUrl}stocks`, { stock: payload })
@@ -155,11 +157,4 @@ export class StockDialogComponent implements OnInit, OnDestroy {
   close(): void {
     this.dialogRef.close();
   }
-}
-
-function StockEditDailogComponent(
-  StockEditDailogComponent: any,
-  arg1: { data: { method: any; stock: any; product: any } }
-) {
-  throw new Error('Function not implemented.');
 }

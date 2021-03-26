@@ -16,6 +16,24 @@ $POS-theme: mat-light-theme((color: (primary: $POS-primary,
 html * {
   box-sizing: border-box;
   font-family: "Kanit", sans-serif;
+
+  .lottie {
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+
+    cursor: pointer !important;
+    visibility: visible !important;
+    transition: visibility 0s, opacity 0.4s linear !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: wait !important;
+  }
 }
 
 html,
@@ -27,9 +45,10 @@ body {
   background: rgb(236, 236, 236);
   position: relative;
 
+
   ::-webkit-scrollbar {
     background-color: white;
-    width: 10px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-track {
@@ -42,21 +61,6 @@ body {
     border: 1px solid cyan;
     border-radius: 5px;
   }
-
-  table {
-    min-width: 450px;
-    overflow: scroll;
-  }
-
-  // /* Border */
-  // .mat-form-field-appearance-outline .mat-form-field-outline {
-  //   color: white;
-  // }
-
-  // /* Font color */
-  // input.mat-input-element {
-  //   color: white;
-  // }
 }
 
 html,

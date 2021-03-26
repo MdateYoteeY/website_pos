@@ -5,12 +5,16 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { method } from 'src/app/model/model.model';
 import { Products } from 'src/app/model/product';
-import { stocklistproduct } from 'src/app/model/stock';
-import { Stocks } from 'src/app/model/stockproduct';
 import { environment } from 'src/environments/environment';
 import { PromotionsComponent } from '../promotions.component';
 import { Categorys } from 'src/app/model/category';
 import { Types } from 'src/app/model/type';
+import { DateRange } from '@angular/material/datepicker';
+import { switchMap } from 'rxjs/operators';
+import { Promotion } from 'src/app/model/promotion';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-promotions-dialog',
@@ -26,7 +30,6 @@ export class PromotionsDialogComponent implements OnInit {
   promotionAdd = true;
   promotion: Promotions[] = [];
   addpromotion: Promotions;
-  promotionitem: Promotionitem[] = [];
   categoryValueCheck = false;
 
   items: FormArray;
@@ -43,6 +46,10 @@ export class PromotionsDialogComponent implements OnInit {
   typeID: number;
 
   displayedColumns: string[] = ['product'];
+
+  urlImage: any;
+  urlDefaultUser = '../../../../assets/defaultPicture.png';
+  imgIsLoading: boolean;
 
   constructor(
     private http: HttpClient,
@@ -62,11 +69,17 @@ export class PromotionsDialogComponent implements OnInit {
       this.dataarray.push(this.promotion);
     } else if (this.data.method === 'editPromotion') {
       this.header = 'แก้ไขโปรโมชั่น';
-      console.log(this.data.promotion);
-      this.promotionForm.patchValue(this.data.promotion);
+      this.promotionForm.patchValue({
+        ...this.data.promotion,
+        image_url: this.data.promotion.image,
+      });
+
+      if (!!this.data.promotion.image) {
+        this.urlImage = `${environment.apiUrl}` + this.data.promotion.image;
+        console.log(this.urlImage);
+      }
 
       this.items = this.promotionForm.controls.promotion_items as FormArray;
-
       for (const item of this.data.promotion.promotion_items) {
         this.items.push(this.createItem(item));
       }
@@ -93,6 +106,34 @@ export class PromotionsDialogComponent implements OnInit {
       .subscribe((res: Categorys) => {
         this.categoryList = res;
       });
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      const file = (event.target as HTMLInputElement).files[0];
+      this.promotionForm.patchValue({
+        image: file,
+      });
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (event) => {
+        this.urlImage = event.target.result;
+      };
+
+      reader.onload = (event) => {
+        this.urlImage = event.target.result;
+      };
+
+      reader.onloadstart = (event) => {
+        this.imgIsLoading = true;
+      };
+
+      reader.onloadend = (event) => {
+        this.imgIsLoading = false;
+      };
+    }
   }
 
   checkCateValue(event): void {
@@ -133,11 +174,13 @@ export class PromotionsDialogComponent implements OnInit {
       date_start: ['', Validators.required],
       date_end: ['', Validators.required],
       promotion_items: this.fb.array([]),
+      image: [null],
+      image_url: [null],
     });
 
     this.addProductList = this.fb.group({
       addProduct_id: ['', Validators.required],
-      addPromotion_item_amount: ['', Validators.required],
+      addPromotion_item_amount: [1, Validators.required],
     });
   }
 
@@ -161,8 +204,13 @@ export class PromotionsDialogComponent implements OnInit {
   }
 
   addForm() {
+    if (this.addProductList.invalid) {
+      return;
+    }
+
     this.items = this.promotionForm.get('promotion_items') as FormArray;
     this.items.push(this.createItem());
+    this.addProductList.reset();
   }
 
   removeForm(index) {
@@ -171,45 +219,80 @@ export class PromotionsDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.promotionForm.invalid) {
+      return;
+    }
+
     if (this.data.method === 'editPromotion') {
-      if (this.promotionForm.invalid) {
-        return;
-      }
       const payload = this.promotionForm.value;
-
-      console.log(payload);
-
-      this.http
-        .put(`${environment.apiUrl}promotions/` + this.data.promotion.id, {
-          promotion: payload,
-        })
-        .subscribe((res) => {
-          console.log(res);
-          this.dialogRef.close();
+      this.updatePromotion(payload).subscribe((res) => {
+        this.dialogRef.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'แก้ไขโปรโมชั่นสำเร็จ!',
+          showConfirmButton: false,
+          timer: 1500,
         });
+      });
     }
     if (this.data.method === 'addPromotion') {
-      if (this.promotionForm.invalid) {
-        return;
-      }
-
       const payload = this.promotionForm.value;
-      console.log(payload);
-
-      this.http
-        .post(`${environment.apiUrl}promotions`, { promotion: payload })
-        .subscribe((res) => {
-          console.log(res);
-          this.dialogRef.close();
+      this.createPromotion(payload).subscribe((res) => {
+        this.dialogRef.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'เพิ่มโปรโมชั่นสำเร็จ!',
+          showConfirmButton: false,
+          timer: 1500,
         });
+      });
     }
   }
 
   close(): void {
     this.dialogRef.close();
   }
-}
 
-interface Promotionitem {
-  product_id: number;
+  createPromotion(payload): Observable<Promotion> {
+    return this.http
+      .post<Promotion>(`${environment.apiUrl}promotions`, {
+        promotion: payload,
+      })
+      .pipe(
+        switchMap((res) => {
+          if (!!payload.image) {
+            const formData = new FormData();
+            formData.append('promotion[img]', payload.image);
+
+            return this.http.put<Promotion>(
+              `${environment.apiUrl}promotions/` + res.id,
+              formData
+            );
+          }
+          return of(res);
+        })
+      );
+  }
+
+  updatePromotion(payload): Observable<Promotion> {
+    return this.http
+      .put<Promotion>(
+        `${environment.apiUrl}promotions/` + this.data.promotion.id,
+        { promotion: payload }
+      )
+      .pipe(
+        switchMap((res) => {
+          if (payload.image !== payload.image_url) {
+            const formData = new FormData();
+            formData.append('promotion[img]', payload.image);
+
+            return this.http.put<Promotion>(
+              `${environment.apiUrl}promotions/` + this.data.promotion.id,
+              formData
+            );
+          }
+          return of(res);
+        })
+      );
+  }
 }

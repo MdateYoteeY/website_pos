@@ -11,7 +11,7 @@
         name="img"
         placeholder="เลือกไฟล์.."
       /> -->
-        <div>
+        <div style="width: auto; display: flex">
           <mat-form-field appearance="outline" style="margin-right: 15px">
             <mat-label>ชื่อจริง</mat-label>
             <input
@@ -145,18 +145,34 @@
         </mat-form-field>
       </div>
       <div class="box2">
-        <img [src]="urlImage" />
-        <mat-form-field appearance="outline">
-          <mat-label>เลือกรูปโปรไฟล์</mat-label>
-          <ngx-mat-file-input
+        <div
+          *ngIf="imgIsLoading"
+          style="
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+            cursor: wait;
+          "
+        >
+          <mat-spinner
+            style="
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 40%;
+              left: 40%;
+              cursor: wait;
+            "
+          ></mat-spinner>
+        </div>
+        <label>
+          <img [src]="urlImage || urlDefaultUser" />
+          <input
             type="file"
-            class="chooseFile"
             (change)="onSelectFile($event)"
-            name="img"
-            placeholder="เลือกไฟล์.."
-          ></ngx-mat-file-input>
-          <mat-icon matSuffix></mat-icon>
-        </mat-form-field>
+            style="display: none"
+        /></label>
       </div>
     </div>
     <div class="btn-group">

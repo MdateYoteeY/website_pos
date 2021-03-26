@@ -12,6 +12,7 @@ import { Orders } from 'src/app/model/order';
 import { Peoples } from 'src/app/model/people';
 import { Receipts } from 'src/app/model/receipt';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 import { HistoryDialogComponent } from './history-dialog/history-dialog.component';
 import { SumaryDialogComponent } from './sumary-dialog/sumary-dialog.component';
 import { Reports } from 'src/app/model/report';

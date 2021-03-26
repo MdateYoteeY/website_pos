@@ -64,21 +64,21 @@ export class AccountComponent implements OnInit {
         });
     }
 
-    let dialogRef;
-
     if (method === 'editAccount') {
-      dialogRef = this.dialog.open(AccountDialogComponent, {
+      let dialogRef = this.dialog.open(AccountDialogComponent, {
         data: { method: method, user: userEdit, staff: this.staff },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getUser();
+      });
     } else {
-      dialogRef = this.dialog.open(AccountDialogComponent, {
+      let dialogRef = this.dialog.open(AccountDialogComponent, {
         data: { staff: this.staff },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getUser();
+      });
     }
-
-    dialogRef.afterClosed().subscribe((res) => {
-      this.getUser();
-    });
   }
 
   editData(data: Users): void {

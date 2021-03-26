@@ -1,8 +1,9 @@
 import { UserLogin } from './../model/model.model';
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
-import { Users } from '../model/model.model';
+
+import { Router, Event as RouterEvent } from '@angular/router';
+import { LoaderService } from './loader/loader.service';
 
 @Component({
   selector: 'app-home',
@@ -11,10 +12,17 @@ import { Users } from '../model/model.model';
 })
 export class HomeComponent implements OnInit {
   userModel: UserLogin;
+  // public loading = true;
+
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    public loaderService: LoaderService
   ) {}
+
+  get loading$() {
+    return this.loaderService.isLoading$;
+  }
 
   ngOnInit(): void {
     this.userModel = JSON.parse(localStorage.getItem('currentUser'));

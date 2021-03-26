@@ -56,26 +56,28 @@ export class StockProductComponent implements OnInit {
 
   openDialog(method: string, element?: Stocks): void {
     if (method === 'showStock') {
-      const dialogRef = this.dialog.open(StockDialogComponent, {
+      let dialogRef = this.dialog.open(StockDialogComponent, {
         data: {
           method: method,
           stock: element,
           product: this.product,
         },
+      });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getStock();
       });
     } else if (method === 'addStock') {
-      const dialogRef = this.dialog.open(StockAddDialogComponent, {
+      let dialogRef = this.dialog.open(StockAddDialogComponent, {
         data: {
           method: method,
           stock: element,
           product: this.product,
         },
       });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.getStock();
+      });
     }
-
-    this.dialog.afterAllClosed.subscribe((res) => {
-      this.getStock();
-    });
   }
 
   showstock(element: Stocks): void {
@@ -88,7 +90,7 @@ export class StockProductComponent implements OnInit {
   deleteData(element: Stocks): void {
     Swal.fire({
       title: 'คุณแน่ใจใช่ไหม?',
-      // text: 'คุณต้องการลบโต๊ะ "' + element.id + '" ใช่หรือไม่?',
+      text: 'คุณต้องการลบรายการคลังที่ "' + element.id + '" ใช่หรือไม่?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: 'rgb(0, 235, 156)',
