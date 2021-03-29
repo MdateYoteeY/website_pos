@@ -46,6 +46,7 @@ import { LottieAnimationViewModule } from 'ng-lottie';
 import { CommonModule } from '@angular/common';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,7 @@ import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.intercepto
     MatSortModule,
     MatPaginatorModule,
     MatListModule,
-  MatDividerModule,
+    MatDividerModule,
     SweetAlert2Module.forRoot(),
     LottieAnimationViewModule.forRoot(),
   ],
@@ -102,6 +103,7 @@ import { BasicAuthInterceptor } from './_helpers/BasicAuthInterceptor.intercepto
       useClass: BasicAuthInterceptor,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

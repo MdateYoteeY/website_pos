@@ -36,8 +36,7 @@ export class AuthenticationService {
           if (user.data_user.status === 'Admin') {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
-
-            // this.route.navigate(['/home/main']);
+            this.route.navigate(['/home/main']);
             return user;
           } else {
             console.log('status: ' + user.data_user.status);

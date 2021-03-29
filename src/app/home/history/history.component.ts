@@ -50,7 +50,7 @@ export class HistoryComponent implements OnInit {
   dateEnd = new FormControl();
   start = Date();
   end = Date();
-  val = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+  val = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   constructor(private http: HttpClient, public dialog: MatDialog) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
