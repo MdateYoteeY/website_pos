@@ -1,3 +1,4 @@
+import { UserComponent } from './user/user.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
