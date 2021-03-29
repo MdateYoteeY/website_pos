@@ -54,6 +54,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
     LoginComponent,
     HomeComponent,
     AuthorizationComponent,
+    UserComponent,
   ],
   imports: [
     CommonModule,

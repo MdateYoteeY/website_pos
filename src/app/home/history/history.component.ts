@@ -48,9 +48,9 @@ export class HistoryComponent implements OnInit {
   report: Reports;
   dateStart = new FormControl();
   dateEnd = new FormControl();
-  start = Date();
-  end = Date();
-  val = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  start = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+  end = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+  val = formatDate(new Date(), 'yyyy/MM/dd', 'en');
   constructor(private http: HttpClient, public dialog: MatDialog) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -69,7 +69,7 @@ export class HistoryComponent implements OnInit {
       .get(`${environment.apiUrl}report`, { params })
       .subscribe((res: Reports[]) => {
         this.dataReport.data = res;
-        const maps = res['product'];
+        const maps = res['products'];
         const name = maps.map((maps) => maps['name']);
         const amount = maps.map((maps) => maps['amount']);
         // console.log(reformattedArray);
@@ -80,6 +80,7 @@ export class HistoryComponent implements OnInit {
             labels: name,
             datasets: [
               {
+                label: "product",
                 data: amount,
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.5)',
